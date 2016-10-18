@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical">
+
+        <RatingBar
+            android:id="@+id/reviewListItemRatingBar1"
+            style="?android:attr/ratingBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:progressDrawable="@drawable/rating_drawable_red"
+            android:stepSize="1"
+            android:visibility="gone" />
+
+        <RatingBar
+            android:id="@+id/reviewListItemRatingBar"
+            style="?android:attr/ratingBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:layout_marginTop="3dp"
+            android:gravity="center"
+            android:isIndicator="true"
+            android:progressDrawable="@drawable/rating_bar"
+            android:rating="5"
+            android:stepSize="1"
+            android:theme="@style/RatingBar.Indicator" />
+
+        <TextView
+            android:id="@+id/reviewListItemDescriptionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:lineSpacingExtra="5dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/reviewListItemNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="by Name"
+                android:textColor="@color/textcolorGray"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/reviewListItemDaysTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2 days ago"
+                android:textColor="@color/textcolorGray"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/textcolorGray" />
+</LinearLayout>

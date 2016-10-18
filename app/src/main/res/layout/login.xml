@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/landingbg"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="72dp"
+                android:src="@drawable/logo" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageView2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="88dp"
+                android:background="@drawable/login"
+                android:orientation="vertical"
+                android:padding="30dp">
+
+                <TextView
+                    style="@style/textview.style"
+                    android:layout_gravity="center"
+                    android:text="Login with Phone" />
+
+                <android.support.design.widget.TextInputLayout style="@style/InputTextView.style">
+
+                    <EditText
+                        android:id="@+id/phoneNoEditText"
+                        style="@style/editText.stype"
+                        android:inputType="number"
+                        android:maxLength="10"
+                        android:hint="Phone Number" />
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="HoneyB will send a one time SMS to verify your phone number. Carrier SMS charges may apply."
+                    android:textColor="@color/textcolorGray"
+                    android:textSize="@dimen/text_sixe_small" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignTop="@+id/linearLayout"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="145dp"
+                android:background="@drawable/tick" />
+
+            <TextView
+                android:id="@+id/registerTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/loginButton"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="Register Now"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/text_sixe_normal" />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
