@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/followerCv"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="7dp"
+        app:cardUseCompatPadding="true"
+        app:elevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".75">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/follower_profile_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    app:civ_border_color="#f3f3f3"
+                    app:civ_border_width=".5dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="7dp"
+                android:layout_weight="1.3"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/followerOnlineImageView"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:paddingTop="6dp"
+                        android:src="@drawable/on" />
+
+                    <TextView
+                        android:id="@+id/followerNameTextView"
+                        style="@style/textview.style"
+                        android:layout_width="match_parent"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:paddingLeft="3dp"
+                        android:text="Vendor" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/followerKmTextView"
+                    style="@style/textview.style"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="7dp"
+                    android:maxLines="1"
+                    android:paddingLeft="5dp"
+                    android:text=""
+                    android:textColor="@color/textcolorLight"
+                    android:textSize="@dimen/text_sixe_small" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="7dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/followerNotificationStatusImageview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5" />
+
+                    <ImageView
+                        android:id="@+id/followerCallImageview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        android:src="@drawable/call" />
+
+                    <ImageView
+                        android:id="@+id/followerLocateImageview"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        android:src="@drawable/locate"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/textcolorGray"></View>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".6"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="10dp">
+
+                <ImageView
+                    android:id="@+id/followerratingImageView"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp" />
+
+                <TextView
+                    android:id="@+id/followerRatingTextView"
+                    style="@style/textview.style"
+                    android:layout_marginTop="3dp"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/followerRatingCountTextView"
+                    style="@style/textview.style"
+                    android:layout_marginTop="3dp"
+                    android:text=""
+                    android:textColor="@color/textcolorLight"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/onOffFollowerStatusImageView"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/close"
+                android:visibility="visible" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

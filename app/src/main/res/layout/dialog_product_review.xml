@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Add Review"
+        android:textColor="@color/colorPrimary"
+        android:textSize="22sp" />
+
+    <RatingBar
+        android:id="@+id/vendorDetailsRatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:numStars="5"
+        android:progressDrawable="@drawable/rating_drawable_red_large"
+        android:stepSize="1"
+        android:theme="@style/RatingBar.Indicator" />
+
+    <EditText
+        android:id="@+id/vendorDetailsEditText"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/background_edit_text"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:maxLength="150"
+        android:padding="5dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/vendorDetailsCancelButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:theme="@style/myButton" />
+
+        <Button
+            android:id="@+id/vendorDetailsSubmitButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Submit"
+            android:textAllCaps="false"
+            android:theme="@style/myButton" />
+    </LinearLayout>
+
+</LinearLayout>
