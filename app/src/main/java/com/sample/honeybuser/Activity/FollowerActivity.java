@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.sample.honeybuser.Adapter.FollowersAdapter;
@@ -33,6 +35,7 @@ public class FollowerActivity extends NavigationBarActivity {
     private ArrayList<FollowerListModel> followerList = new ArrayList<FollowerListModel>();
     private FollowersAdapter adapter;
     private Gson gson = new Gson();
+    private TextView followerTextView;
 
 
     @Override
@@ -42,6 +45,7 @@ public class FollowerActivity extends NavigationBarActivity {
         //setSelectTab("follower");
         setSelected(Selected.FOLLOWER);
         setTitle("Alerts");
+        followerTextView = (TextView) findViewById(R.id.noRecordTextView);
         followerListRecyclerView = (RecyclerView) findViewById(R.id.followerListRecyclerView);
         followerListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new FollowersAdapter(FollowerActivity.this, followerList);
@@ -68,8 +72,8 @@ public class FollowerActivity extends NavigationBarActivity {
     }
 
     private void getData() {
-        String lat = "13.034223";
-        String lang = "80.2443443";
+        String lat = String.valueOf(DashBoardActivity.distanceLatLng.latitude);
+        String lang = String.valueOf(DashBoardActivity.distanceLatLng.longitude);
         String type = "sales";
         GetResponseFromServer.getWebService(FollowerActivity.this, TAG).getFollowerList(FollowerActivity.this, lat, lang, type, new VolleyResponseListerner() {
             @Override
@@ -80,6 +84,10 @@ public class FollowerActivity extends NavigationBarActivity {
                     for (int i = 0; i < object.getJSONArray("vendors").length(); i++) {
                         followerList.add(gson.fromJson(object.getJSONArray("vendors").getJSONObject(i).toString(), FollowerListModel.class));
                     }
+                } else {
+                    followerListRecyclerView.setVisibility(View.GONE);
+                    followerTextView.setVisibility(View.VISIBLE);
+                    followerTextView.setText(response.getString("message"));
                 }
                 adapter.notifyDataSetChanged();
 

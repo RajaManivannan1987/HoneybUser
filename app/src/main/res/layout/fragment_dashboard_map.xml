@@ -12,4 +12,6 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp" />
 
+    <include layout="@layout/common_textview" />
+
 </LinearLayout>

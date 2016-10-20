@@ -62,7 +62,7 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.Cust
             holder.followerLocateImageview.setVisibility(View.VISIBLE);
         } else {
             holder.followerOnlineImageView.setImageResource(R.drawable.off);
-            holder.followerLocateImageview.setVisibility(View.GONE);
+            holder.followerLocateImageview.setVisibility(View.INVISIBLE);
         }
         if (list.get(position).getNotification_status().startsWith("Y")) {
             holder.followerNotificationStatusImageview.setImageResource(R.drawable.bellon);
@@ -109,9 +109,7 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.Cust
                         }
                     });
 
-                }/*else {
-                    CommonWebserviceMethods.setFollows(context,TAG,list.get(position).getVendor_id(),"3");
-                }*/
+                }
             }
         });
         holder.followerNotificationStatusImageview.setOnClickListener(new View.OnClickListener() {
@@ -122,19 +120,6 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.Cust
                         @Override
                         public void yes() {
                             CommonWebserviceMethods.removeNtification(context, TAG, list.get(position).getVendor_id());
-                            /*GetResponseFromServer.getWebService(context, TAG).removeNotification(context, list.get(position).getVendor_id(), new VolleyResponseListerner() {
-                                @Override
-                                public void onResponse(JSONObject response) throws JSONException {
-                                    if (response.getString("status").equalsIgnoreCase("1")) {
-                                        ActionCompletedSingleton.getActionCompletedSingleton().ActionCompleted();
-                                    }
-                                }
-
-                                @Override
-                                public void onError(String message, String title) {
-
-                                }
-                            });*/
                         }
 
                         @Override
@@ -144,19 +129,6 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.Cust
                     });
                 } else {
                     CommonWebserviceMethods.setNtification(context, TAG, list.get(position).getVendor_id());
-                    /*GetResponseFromServer.getWebService(context, TAG).setNotification(context, list.get(position).getVendor_id(), new VolleyResponseListerner() {
-                        @Override
-                        public void onResponse(JSONObject response) throws JSONException {
-                            if (response.getString("status").equalsIgnoreCase("1")) {
-                                ActionCompletedSingleton.getActionCompletedSingleton().ActionCompleted();
-                            }
-                        }
-
-                        @Override
-                        public void onError(String message, String title) {
-
-                        }
-                    });*/
                 }
             }
         });

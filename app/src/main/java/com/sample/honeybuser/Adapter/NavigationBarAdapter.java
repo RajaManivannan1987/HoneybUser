@@ -17,13 +17,13 @@ import com.sample.honeybuser.R;
 
 public class NavigationBarAdapter extends BaseAdapter {
     Context context;
-    private String[] listName = {"Street", "Alerts", "Search", "Settings", "About"};
+    private String[] listName = {"Street", "Alerts", "Search", "Settings"};
     private int[] listImage = {
-            R.drawable.delivery,
-            R.drawable.delivery_red,
-            R.drawable.delivery,
-            R.drawable.delivery_red,
-            R.drawable.delivery,
+            R.drawable.street,
+            R.drawable.bell,
+            R.drawable.search,
+            R.drawable.settings,
+
     };
     private LayoutInflater inflater;
 
@@ -56,7 +56,7 @@ public class NavigationBarAdapter extends BaseAdapter {
         TextView nameTextView = (TextView) view.findViewById(R.id.navigationTextView);
         ImageView imageView = (ImageView) view.findViewById(R.id.navigationImageView);
         nameTextView.setText(listName[i]);
-        //imageView.setImageResource(listImage[i]);
+        imageView.setImageResource(listImage[i]);
         return view;
     }
 }

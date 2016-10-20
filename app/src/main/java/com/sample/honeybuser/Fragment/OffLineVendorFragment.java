@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.sample.honeybuser.Adapter.OnLineVendorListAdapter;
@@ -39,6 +40,7 @@ public class OffLineVendorFragment extends Fragment {
     private Gson gson = new Gson();
     private String lat, lang;
     private Bundle bundle;
+    private TextView txtView;
 
     private List<OnLineVendorListModel> list = new ArrayList<OnLineVendorListModel>();
 
@@ -50,6 +52,7 @@ public class OffLineVendorFragment extends Fragment {
             lat = bundle.getString("lat");
             lang = bundle.getString("lang");
         }
+        txtView = (TextView) view.findViewById(R.id.noRecordTextView);
         offLineVendorRecyclerView = (RecyclerView) view.findViewById(R.id.offLineVendorRecyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -92,6 +95,10 @@ public class OffLineVendorFragment extends Fragment {
                         for (int i = 0; i < jsonObject.getJSONArray("vendors").length(); i++) {
                             list.add(gson.fromJson(jsonObject.getJSONArray("vendors").getJSONObject(i).toString(), OnLineVendorListModel.class));
                         }
+                    } else {
+                        offLineVendorRecyclerView.setVisibility(View.GONE);
+                        txtView.setVisibility(View.VISIBLE);
+                        txtView.setText(response.getString("message"));
                     }
                     adapter.notifyDataSetChanged();
 

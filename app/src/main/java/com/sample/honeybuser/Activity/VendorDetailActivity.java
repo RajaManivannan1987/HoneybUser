@@ -19,7 +19,9 @@ import com.sample.honeybuser.R;
 import com.sample.honeybuser.Singleton.Complete;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.AlertDialogManager;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
+import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.ReviewDialog;
 import com.sample.honeybuser.Utility.Fonts.WebServices.CommonWebserviceMethods;
+import com.sample.honeybuser.Utility.Fonts.WebServices.ConstandValue;
 import com.sample.honeybuser.Utility.Fonts.WebServices.GetResponseFromServer;
 import com.squareup.picasso.Picasso;
 
@@ -44,7 +46,9 @@ public class VendorDetailActivity extends CommonActionBar {
     private ArrayList<Ratings> arrayList = new ArrayList<>();
     private RatingsAdapter adapter;
     private Gson gson = new Gson();
-    private String phoneNo, follow, vendor_Id;
+    private String phoneNo, follow, vendor_Id = "";
+    private String isReview = "";
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,11 +72,13 @@ public class VendorDetailActivity extends CommonActionBar {
         Complete.ratingDialogInstance().setListener(new SaveCompletedInterface() {
             @Override
             public void completed() {
-                if (getIntent().getExtras() != null) {
-                    String vendorId = getIntent().getExtras().getString("vendor_id");
-                    getData(vendorId);
-                    //getRatings(vendorId);
-                }
+                getData(vendor_Id);
+            }
+        });
+        Complete.ratingReloadDialogInstance().setListener(new SaveCompletedInterface() {
+            @Override
+            public void completed() {
+                getRatings(vendor_Id);
             }
         });
         vendorlocateImagiview.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +93,20 @@ public class VendorDetailActivity extends CommonActionBar {
                 CommonMethods.callFunction(VendorDetailActivity.this, phoneNo);
             }
         });
+        addReviewTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isReview.equalsIgnoreCase("N")) {
+                    ReviewDialog reviewDialog = new ReviewDialog();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(ConstandValue.vendorId, vendor_Id);
+                    reviewDialog.setArguments(bundle);
+                    reviewDialog.show(getFragmentManager(), "Review Dialog");
+                } else {
+                    addReviewTextView.setText("");
+                }
+            }
+        });
         vendorNotifyImagiview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,20 +114,7 @@ public class VendorDetailActivity extends CommonActionBar {
                     AlertDialogManager.listenerDialogBox(VendorDetailActivity.this, "Remove!", "Remove alert?", new DialogBoxInterface() {
                         @Override
                         public void yes() {
-                            CommonWebserviceMethods.removeFollows(VendorDetailActivity.this,TAG,vendor_Id,"2");
-//                            GetResponseFromServer.getWebService(VendorDetailActivity.this, TAG).removeFollow(VendorDetailActivity.this, vendor_Id, new VolleyResponseListerner() {
-//                                @Override
-//                                public void onResponse(JSONObject response) throws JSONException {
-//                                    if (response.getString("status").equalsIgnoreCase("1")) {
-//                                        Complete.ratingDialogInstance().orderCompleted();
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void onError(String message, String title) {
-//
-//                                }
-//                            });
+                            CommonWebserviceMethods.removeFollows(VendorDetailActivity.this, TAG, vendor_Id, "2");
                         }
 
                         @Override
@@ -117,22 +124,7 @@ public class VendorDetailActivity extends CommonActionBar {
                     });
 
                 } else {
-                    CommonWebserviceMethods.setFollows(VendorDetailActivity.this,TAG,vendor_Id,"2");
-
-//                    GetResponseFromServer.getWebService(VendorDetailActivity.this, TAG).setFollow(VendorDetailActivity.this, vendor_Id, new VolleyResponseListerner() {
-//                        @Override
-//                        public void onResponse(JSONObject response) throws JSONException {
-//                            if (response.getString("status").equalsIgnoreCase("1")) {
-//                                Complete.ratingDialogInstance().orderCompleted();
-//                            }
-//
-//                        }
-//
-//                        @Override
-//                        public void onError(String message, String title) {
-//
-//                        }
-//                    });
+                    CommonWebserviceMethods.setFollows(VendorDetailActivity.this, TAG, vendor_Id, "2");
                 }
             }
         });
@@ -142,9 +134,9 @@ public class VendorDetailActivity extends CommonActionBar {
     protected void onResume() {
         super.onResume();
         if (getIntent().getExtras() != null) {
-            String vendorId = getIntent().getExtras().getString("vendor_id");
-            getData(vendorId);
-            getRatings(vendorId);
+            vendor_Id = getIntent().getExtras().getString("vendor_id");
+            getData(vendor_Id);
+            getRatings(vendor_Id);
         }
     }
 
@@ -179,7 +171,7 @@ public class VendorDetailActivity extends CommonActionBar {
                     phoneNo = jsonObject.getString("phone_no");
                     follow = jsonObject.getString("follow");
                     vendor_Id = jsonObject.getString("vendor_id");
-
+                    isReview = jsonObject.getString("already_rated");
                     if (follow.equalsIgnoreCase("Y")) {
                         vendorNotifyImagiview.setImageResource(R.drawable.notify);
                     } else {

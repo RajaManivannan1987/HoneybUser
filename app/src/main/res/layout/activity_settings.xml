@@ -9,11 +9,14 @@
         android:layout_height="match_parent"
         android:gravity="center">
 
-        <TextView
-            style="@style/textview.style"
-            android:gravity="center"
+        <Button
             android:id="@+id/logoutButton"
-            android:text="Logout" />
+            android:layout_width="120dp"
+            android:layout_height="?actionBarSize"
+            android:gravity="center"
+            android:text="Logout"
+            android:textAllCaps="false"
+            android:theme="@style/myButton" />
     </LinearLayout>
 
 </LinearLayout>

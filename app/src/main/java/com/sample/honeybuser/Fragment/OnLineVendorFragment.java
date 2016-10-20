@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.sample.honeybuser.Adapter.OnLineVendorListAdapter;
@@ -42,6 +43,7 @@ public class OnLineVendorFragment extends Fragment {
     private List<OnLineVendorListModel> list = new ArrayList<OnLineVendorListModel>();
     private String lat, lang;
     private Bundle bundle;
+    private TextView txtView;
 
     @Nullable
     @Override
@@ -52,6 +54,7 @@ public class OnLineVendorFragment extends Fragment {
             lat = bundle.getString("lat");
             lang = bundle.getString("lang");
         }
+        txtView = (TextView) view.findViewById(R.id.noRecordTextView);
         recyclerView = (RecyclerView) view.findViewById(R.id.onLineVendorList);
         session = new Session(getActivity(), TAG);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -95,6 +98,10 @@ public class OnLineVendorFragment extends Fragment {
                         for (int i = 0; i < jsonObject.getJSONArray("vendors").length(); i++) {
                             list.add(gson.fromJson(jsonObject.getJSONArray("vendors").getJSONObject(i).toString(), OnLineVendorListModel.class));
                         }
+                    } else {
+                        recyclerView.setVisibility(View.GONE);
+                        txtView.setVisibility(View.VISIBLE);
+                        txtView.setText(response.getString("message"));
                     }
                     adapter.notifyDataSetChanged();
 

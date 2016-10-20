@@ -72,6 +72,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/MyAppTheme" />
         <activity
+            android:name=".Activity.BusinessVendorActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:theme="@style/MyAppTheme" />
+        <activity
             android:name=".Utility.Fonts.WebServices.CommonWebserviceMethods"
             android:label=""
             android:screenOrientation="portrait"

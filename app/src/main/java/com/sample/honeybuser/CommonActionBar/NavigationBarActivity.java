@@ -27,10 +27,13 @@ import com.sample.honeybuser.Activity.FollowerActivity;
 import com.sample.honeybuser.Activity.SearchActivity;
 import com.sample.honeybuser.Activity.SettingsActivity;
 import com.sample.honeybuser.Adapter.NavigationBarAdapter;
+import com.sample.honeybuser.EnumClass.IntentClasses;
 import com.sample.honeybuser.EnumClass.Selected;
 import com.sample.honeybuser.InterFaceClass.ChangeLocationListener;
 import com.sample.honeybuser.R;
 import com.sample.honeybuser.Singleton.ChangeLocationSingleton;
+import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
+import com.sample.honeybuser.Utility.Fonts.Sharedpreferences.Session;
 
 /**
  * Created by IM0033 on 10/5/2016.
@@ -44,7 +47,9 @@ public class NavigationBarActivity extends AppCompatActivity {
     private ImageView menuImageView, searchImageView;
     private NavigationBarAdapter navigationBarAdapter;
     private Toolbar toolbar;
-    public TextView distanceTextView, locationTextView, titleTextView;
+    private View headerSection, footerSection;
+    public TextView distanceTextView, locationTextView, titleTextView, UserNameTextView;
+
     //public static String locationName;
     private Selected selected;
     private ImageView tab1, tab2, tab3;
@@ -58,6 +63,9 @@ public class NavigationBarActivity extends AppCompatActivity {
 
         drawerLayout = (DrawerLayout) findViewById(R.id.actionBarViewDrawerLayout);
         drawerList = (ListView) findViewById(R.id.actionBarViewListView);
+        headerSection = getLayoutInflater().inflate(R.layout.menu_header, null, false);
+        footerSection = getLayoutInflater().inflate(R.layout.menu_footer, null, false);
+        UserNameTextView = (TextView) headerSection.findViewById(R.id.usernameEditext);
         distanceTextView = (TextView) findViewById(R.id.actionBarViewDistanceTextView);
         locationTextView = (TextView) findViewById(R.id.actionBarViewPlaceTextView);
         titleTextView = (TextView) findViewById(R.id.actionBarViewTitleTextView);
@@ -70,36 +78,33 @@ public class NavigationBarActivity extends AppCompatActivity {
         // set navigation list
         menuImageView = (ImageView) findViewById(R.id.actionBarViewMenuImageView);
         navigationBarAdapter = new NavigationBarAdapter(NavigationBarActivity.this);
+        drawerList.addHeaderView(headerSection);
+        drawerList.addFooterView(footerSection);
         drawerList.setAdapter(navigationBarAdapter);
         drawerList.setAnimation(new AnimationSet(true));
+        UserNameTextView.setText(Session.getSession(NavigationBarActivity.this, TAG).getName());
 
         tab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (Selected.DASHBOARD != selected) {
-                    startActivity(new Intent(NavigationBarActivity.this, DashBoardActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
-//                    CommonMethods.commonIntent(NavigationBarActivity.this, IntentClasses.DASHBOARD);
+                    CommonMethods.commonIntent(NavigationBarActivity.this, IntentClasses.DASHBOARD);
                 }
-                //changeBottonTabColor(tab1);
             }
         });
         tab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (Selected.FOLLOWER != selected) {
-                    startActivity(new Intent(NavigationBarActivity.this, FollowerActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
-
-//                    CommonMethods.commonIntent(NavigationBarActivity.this, IntentClasses.FOLLOWER);
+                    CommonMethods.commonIntent(NavigationBarActivity.this, IntentClasses.FOLLOWER);
                 }
-                //changeBottonTabColor(tab2);
             }
         });
         tab3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (Selected.SEARCH != selected) {
-                    startActivity(new Intent(NavigationBarActivity.this, SearchActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
-//                    CommonMethods.commonIntent(NavigationBarActivity.this, IntentClasses.FOLLOWER);
+                    CommonMethods.commonIntent(NavigationBarActivity.this, IntentClasses.SEARCH);
                 }
             }
         });
@@ -110,25 +115,18 @@ public class NavigationBarActivity extends AppCompatActivity {
                     TextView nameTextView = (TextView) view.findViewById(R.id.navigationTextView);
                     switch (nameTextView.getText().toString().toLowerCase().trim()) {
                         case "street":
-                            startActivity(new Intent(NavigationBarActivity.this, DashBoardActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
-//                            CommonMethods.commonIntent(NavigationBarActivity.this, IntentClasses.SETTINGS);
+                            CommonMethods.commonIntent(NavigationBarActivity.this, IntentClasses.DASHBOARD);
                             break;
                         case "alerts":
-                            startActivity(new Intent(NavigationBarActivity.this, FollowerActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
-//                            CommonMethods.commonIntent(NavigationBarActivity.this, IntentClasses.SETTINGS);
+                            CommonMethods.commonIntent(NavigationBarActivity.this, IntentClasses.FOLLOWER);
                             break;
                         case "search":
-                            startActivity(new Intent(NavigationBarActivity.this, SearchActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
-//                            CommonMethods.commonIntent(NavigationBarActivity.this, IntentClasses.SETTINGS);
+                            CommonMethods.commonIntent(NavigationBarActivity.this, IntentClasses.SEARCH);
                             break;
                         case "settings":
-                            startActivity(new Intent(NavigationBarActivity.this, SettingsActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
-//                            CommonMethods.commonIntent(NavigationBarActivity.this, IntentClasses.SETTINGS);
+                            CommonMethods.commonIntent(NavigationBarActivity.this, IntentClasses.SETTINGS);
                             break;
-                        case "about":
-                            startActivity(new Intent(NavigationBarActivity.this, SettingsActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
-//                            CommonMethods.commonIntent(NavigationBarActivity.this, IntentClasses.SETTINGS);
-                            break;
+
                         default:
                             break;
                     }
@@ -158,20 +156,6 @@ public class NavigationBarActivity extends AppCompatActivity {
         });
 
     }
-
-//    public void changeBottonTabColor(ImageView tab) {
-//        deselectAll();
-//        if (tab.equals(tab1)) {
-//            tab1.setImageResource(R.drawable.street);
-//        } else if (tab.equals(tab2)) {
-//            tab2.setImageResource(R.drawable.bell);
-//        } else if (tab.equals(tab3)) {
-//            tab3.setImageResource(R.drawable.search);
-//        } else {
-//            deselectAll();
-//        }
-//
-//    }
 
     public void setSelected(Selected selected) {
         this.selected = selected;
@@ -219,22 +203,6 @@ public class NavigationBarActivity extends AppCompatActivity {
 
             }
         });
-    }
-//    public void setSelectTab(String tabName) {
-//        deselectAll();
-//        if (tabName.equals("dashboard")) {
-//            tab1.setImageResource(R.drawable.street);
-//        } else if (tabName.equals("follower")) {
-//            tab2.setImageResource(R.drawable.bell);
-//        } else {
-//            deselectAll();
-//        }
-//    }
-
-    private void deselectAll() {
-        tab1.setImageResource(R.drawable.streetgray);
-        tab2.setImageResource(R.drawable.bellgray);
-        tab3.setImageResource(R.drawable.searchgray);
     }
 
     public void setView(int viewLayout) {

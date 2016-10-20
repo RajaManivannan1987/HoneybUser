@@ -28,6 +28,8 @@ import com.sample.honeybuser.Activity.LocationCheckActivity;
 import com.sample.honeybuser.Activity.LoginActivity;
 import com.sample.honeybuser.Activity.OTPActivity;
 import com.sample.honeybuser.Activity.RegistrationActivity;
+import com.sample.honeybuser.Activity.SearchActivity;
+import com.sample.honeybuser.Activity.SettingsActivity;
 import com.sample.honeybuser.EnumClass.FragmentType;
 import com.sample.honeybuser.EnumClass.IntentClasses;
 import com.sample.honeybuser.R;
@@ -41,7 +43,7 @@ import java.io.Serializable;
  */
 public class CommonMethods extends AppCompatActivity {
 
-    public static void commonIntent(Context context, IntentClasses intentValue) {
+    public static void commonIntent(Activity context, IntentClasses intentValue) {
         Serializable act = null;
         switch (intentValue) {
             case LOGIN:
@@ -61,6 +63,12 @@ public class CommonMethods extends AppCompatActivity {
                 break;
             case LOCATIONCHECK:
                 act = LocationCheckActivity.class;
+                break;
+            case SEARCH:
+                act = SearchActivity.class;
+                break;
+            case SETTINGS:
+                act = SettingsActivity.class;
                 break;
         }
         context.startActivity(new Intent(context, (Class<?>) act).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
@@ -146,6 +154,14 @@ public class CommonMethods extends AppCompatActivity {
             case OFFLINE:
                 text = "";
                 image = (isSelected) ? ContextCompat.getDrawable(context, R.drawable.offline) : ContextCompat.getDrawable(context, R.drawable.offlineoff);
+                break;
+            case PRODUCT:
+                text = "";
+                image = (isSelected) ? ContextCompat.getDrawable(context, R.drawable.products) : ContextCompat.getDrawable(context, R.drawable.productsblk);
+                break;
+            case VENDOR:
+                text = "";
+                image = (isSelected) ? ContextCompat.getDrawable(context, R.drawable.vendor) : ContextCompat.getDrawable(context, R.drawable.vendorblk);
                 break;
 
         }

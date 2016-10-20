@@ -113,4 +113,12 @@
         <item name="colorControlActivated">@color/colorPrimary</item>
         <item name="android:progressDrawable">@drawable/rating_drawable_red</item>
     </style>
+
+    <style name="DialogActivity" parent="Theme.AppCompat.Light.Dialog">
+        <item name="windowNoTitle">true</item>
+        <item name="android:typeface">monospace</item>
+        <item name="android:backgroundDimAmount">0.6</item>
+        <!--<item name="android:backgroundDimEnabled">false</item>-->
+        <item name="android:windowBackground">@color/windows_background</item>
+    </style>
 </resources>

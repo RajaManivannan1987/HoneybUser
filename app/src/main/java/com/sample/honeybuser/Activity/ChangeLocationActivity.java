@@ -50,17 +50,14 @@ public class ChangeLocationActivity extends CommonActionBar implements PlaceSele
     private List<String> distanceList = new ArrayList<String>();
     private List<ChangeAddress> addressList = new ArrayList<ChangeAddress>();
     private String lat, lang;
-
-
     private Gson gson = new Gson();
-    public static String KmDistance = "0.3";
+
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setView(R.layout.activity_change_location);
-        // setContentView(R.layout.activity_change_location);
         setTitle("Change Loction");
         hideNotification();
         autocompleteFragment = (PlaceAutocompleteFragment)

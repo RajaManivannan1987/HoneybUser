@@ -24,9 +24,9 @@ public class SearchViewPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new VendorSearchFragment();
-            case 1:
                 return new ProductSearchFragment();
+            case 1:
+                return new VendorSearchFragment();
             default:
                 return null;
         }

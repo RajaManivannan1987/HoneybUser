@@ -70,7 +70,7 @@ public class OnLineVendorListAdapter extends RecyclerView.Adapter<OnLineVendorLi
             holder.onLineRatingCountTextView.setVisibility(View.GONE);
         }
         if (type.equalsIgnoreCase("0")) {
-            holder.locateImage.setVisibility(View.GONE);
+            holder.locateImage.setVisibility(View.INVISIBLE);
         }
         if (list.get(position).getFollow().startsWith("Y")) {
             holder.notifyImage.setImageResource(R.drawable.notify);

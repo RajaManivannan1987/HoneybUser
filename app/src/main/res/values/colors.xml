@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#e2393c</color>
-    <color name="colorPrimaryDark">#d32f2e</color>
+    <color name="colorPrimary">#E2393C</color>
+    <color name="colorPrimaryDark">#D32F2E</color>
     <color name="colorAccent">#d02f42</color>
+    <color name="tabColor">#D32F2E</color>
     <color name="white">#ffffff</color>
     <color name="textcolor">#020102</color>
     <color name="textcolorLight">#9e9d9e</color>
     <color name="textcolorGray">#d3d3d3</color>
     <color name="hintColor">#f9f9f9</color>
+    <color name="windows_background">#7fffffff</color>
 </resources>

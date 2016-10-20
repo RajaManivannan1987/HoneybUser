@@ -51,7 +51,7 @@
                 android:layout_alignBottom="@+id/vendorRatingtextView"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="25dp"
-                android:text="Add Review"
+                android:text="Add Reviews"
                 android:textColor="@color/colorPrimary" />
 
             <ImageView

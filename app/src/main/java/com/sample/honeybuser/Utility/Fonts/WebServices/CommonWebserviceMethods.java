@@ -56,6 +56,8 @@ public class CommonWebserviceMethods extends AppCompatActivity {
                         Complete.offerDialogInstance().orderCompleted();
                     } else if (type.equalsIgnoreCase("3")) {
                         ActionCompletedSingleton.getActionCompletedSingleton().ActionCompleted();
+                    } else if (type.equalsIgnoreCase("4")) {
+                        Complete.getVendorSearch().orderCompleted();
                     } else {
                         Complete.ratingDialogInstance().orderCompleted();
 
@@ -82,6 +84,8 @@ public class CommonWebserviceMethods extends AppCompatActivity {
                         Complete.offerDialogInstance().orderCompleted();
                     } else if (type.equalsIgnoreCase("3")) {
                         ActionCompletedSingleton.getActionCompletedSingleton().ActionCompleted();
+                    } else if (type.equalsIgnoreCase("4")) {
+                        Complete.getVendorSearch().orderCompleted();
                     } else {
                         Complete.ratingDialogInstance().orderCompleted();
                     }

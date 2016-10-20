@@ -285,6 +285,65 @@ public class GetResponseFromServer {
         setResponse1(context, ConstandValue.SERVER_URL + "user/logout", listerner, jsonObject);
     }
 
+    public void getProductList(Context context, double latitude, double longitude, String distance, VolleyResponseListerner listerner) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("user_id", session.getUserId());
+            jsonObject.put("api_key", session.getApiKey());
+            jsonObject.put("latitude", latitude + "");
+            jsonObject.put("longitude", longitude + "");
+            jsonObject.put("distance", distance);
+            jsonObject.put("language", session.getDefaultLanguage());
+        } catch (JSONException e) {
+            Log.e(TAG + " " + TAG, e.getMessage());
+        }
+        setResponse(context, ConstandValue.SERVER_URL + "vendor/product_search", listerner, jsonObject);
+    }
+
+    public void getSearchVendorList(Context context, double latitude, double longitude, VolleyResponseListerner listerner) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("user_id", session.getUserId());
+            jsonObject.put("api_key", session.getApiKey());
+            jsonObject.put("latitude", latitude + "");
+            jsonObject.put("longitude", longitude + "");
+            jsonObject.put("language", session.getDefaultLanguage());
+        } catch (JSONException e) {
+            Log.e(TAG + " " + TAG, e.getMessage());
+        }
+        setResponse1(context, ConstandValue.SERVER_URL + "vendor/search_api", listerner, jsonObject);
+    }
+
+    public void addRating(Context context, String vendorId, String rating, String review, VolleyResponseListerner listerner) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("user_id", session.getUserId());
+            jsonObject.put("api_key", session.getApiKey());
+            jsonObject.put("vendor_id", vendorId);
+            jsonObject.put("star_rating", rating);
+            jsonObject.put("review", review);
+        } catch (JSONException e) {
+            Log.e(TAG + " " + TAG, e.getMessage());
+        }
+        setResponse(context, ConstandValue.SERVER_URL + "vendor/add_rating", listerner, jsonObject);
+    }
+
+    public void getBusinessVendorList(Context context, String latitude, String longitude, String distance, String business_id, final VolleyResponseListerner listerner) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("user_id", session.getUserId());
+            jsonObject.put("api_key", session.getApiKey());
+            jsonObject.put("latitude", latitude);
+            jsonObject.put("longitude", longitude);
+            jsonObject.put("distance", distance);
+            jsonObject.put("business_id", business_id);
+            jsonObject.put("language", session.getDefaultLanguage());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        setResponse(context, ConstandValue.SERVER_URL + "vendor/business_vendors", listerner, jsonObject);
+    }
+
     private void setResponse(Context context, String url, final VolleyResponseListerner listerner, JSONObject jsonObject) {
         volleyClass.volleyPostData(context, url, jsonObject, new VolleyResponseListerner() {
             @Override
