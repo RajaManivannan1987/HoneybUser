@@ -64,7 +64,7 @@ public class ChangeLocationActivity extends CommonActionBar implements PlaceSele
                 getFragmentManager().findFragmentById(R.id.autocomplete_fragment);
         autocompleteFragment.setHint("Enter new address");
         autocompleteFragment.getView().setBackground(getResources().getDrawable(R.drawable.background_edit_text));
-        autocompleteFragment.getView().setPadding(15, 0, 15, 0);
+//        autocompleteFragment.getView().setPadding(15, 0, 15, 0);
         autocompleteFragment.setOnPlaceSelectedListener(this);
 
         /*distanceList.add("0.1");
