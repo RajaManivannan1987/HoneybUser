@@ -12,6 +12,7 @@ public class Complete {
     private static Complete ratingReloadDialogInstance = new Complete();
     private static Complete offerDialogInstance = new Complete();
     private static Complete getVendorSearch = new Complete();
+    private static Complete getBusinessList = new Complete();
 
     private SaveCompletedInterface completedInterface;
 
@@ -29,6 +30,10 @@ public class Complete {
 
     public static Complete getVendorSearch() {
         return getVendorSearch;
+    }
+
+    public static Complete getBusinessList() {
+        return getBusinessList;
     }
 
     public static Complete ratingReloadDialogInstance() {

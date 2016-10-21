@@ -32,95 +32,86 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class BusinessVendorAdapter extends RecyclerView.Adapter<BusinessVendorAdapter.CustomHolder> {
     private String TAG = "BusinessVendorAdapter";
     private ArrayList<BusinessVendorModel> list;
-    Activity context;
+    Activity activity;
 
     public BusinessVendorAdapter(Activity context, ArrayList<BusinessVendorModel> businessList) {
-        this.context = context;
+        this.activity = context;
         this.list = businessList;
     }
 
     @Override
     public BusinessVendorAdapter.CustomHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new CustomHolder(LayoutInflater.from(context).inflate(R.layout.follower_list_item, parent, false));
+        return new CustomHolder(LayoutInflater.from(activity).inflate(R.layout.business_vendor_list_item, parent, false));
     }
 
     @Override
     public void onBindViewHolder(BusinessVendorAdapter.CustomHolder holder, final int position) {
         if (!list.get(position).getBusiness_icon().equalsIgnoreCase("")) {
-            Picasso.with(context).load(list.get(position).getBusiness_icon()).into(holder.follower_profile_image);
+            Picasso.with(activity).load(list.get(position).getBusiness_icon()).into(holder.imageView);
         } else {
-            holder.follower_profile_image.setImageResource(R.drawable.no_image);
+            holder.imageView.setImageResource(R.drawable.no_image);
         }
-        if (list.get(position).getIs_online().equalsIgnoreCase("Y")) {
-            holder.followerOnlineImageView.setImageResource(R.drawable.on);
-            holder.followerLocateImageview.setVisibility(View.VISIBLE);
+        if (list.get(position).getNew_vendor().startsWith("N")) {
+            holder.ratingImageView.setImageResource(R.drawable.star);
+            holder.onLineRatingTextView.setText(list.get(position).getStar_rating());
+            holder.onLineRatingCountTextView.setText("(" + list.get(position).getRating_count() + " Ratings)");
         } else {
-            holder.followerOnlineImageView.setImageResource(R.drawable.off);
-            holder.followerLocateImageview.setVisibility(View.INVISIBLE);
+            holder.ratingImageView.setImageResource(R.drawable.new_icon);
+            holder.onLineRatingTextView.setVisibility(View.GONE);
+            holder.onLineRatingCountTextView.setVisibility(View.GONE);
         }
-        if (list.get(position).getNotification_status().startsWith("Y")) {
-            holder.followerNotificationStatusImageview.setImageResource(R.drawable.bellon);
+        if (list.get(position).getIs_online().equalsIgnoreCase("N")) {
+            holder.isOnlineImageView.setImageResource(R.drawable.off);
+            holder.locateImage.setVisibility(View.INVISIBLE);
         } else {
-            holder.followerNotificationStatusImageview.setImageResource(R.drawable.belloff);
+            holder.isOnlineImageView.setImageResource(R.drawable.on);
+            holder.locateImage.setVisibility(View.VISIBLE);
         }
-        holder.followerratingImageView.setImageResource(R.drawable.star);
-        holder.followerRatingTextView.setText(list.get(position).getStar_rating());
-        holder.followerRatingCountTextView.setText("(" + list.get(position).getRating_count() + " Ratings)");
-        holder.followerNameTextView.setText(list.get(position).getName());
-        holder.followerKmTextView.setText(list.get(position).getDistance() + " km away");
-        holder.followerCallImageview.setOnClickListener(new View.OnClickListener() {
+        if (list.get(position).getFollow().startsWith("Y")) {
+            holder.notifyImage.setImageResource(R.drawable.notify);
+        } else {
+            holder.notifyImage.setImageResource(R.drawable.nonotify);
+        }
+        holder.vendorName.setText(list.get(position).getName());
+        holder.distance.setText(list.get(position).getDistance() + " Km away");
+        holder.callImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonMethods.callFunction(context, list.get(position).getPhone_no());
+                CommonMethods.callFunction(activity, list.get(position).getPhone_no());
             }
         });
-        holder.followerLocateImageview.setOnClickListener(new View.OnClickListener() {
+        holder.locateImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonWebserviceMethods.getVendorLocation(context, TAG, list.get(position).getVendor_id());
+                CommonWebserviceMethods.getVendorLocation(activity, TAG, list.get(position).getVendor_id());
             }
         });
-        holder.followerCv.setOnClickListener(new View.OnClickListener() {
+        holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, VendorDetailActivity.class).putExtra("vendor_id", list.get(position).getVendor_id()));
+                activity.startActivity(new Intent(activity, VendorDetailActivity.class).putExtra("vendor_id", list.get(position).getVendor_id()));
             }
         });
-        holder.onOffFollowerStatusImageView.setOnClickListener(new View.OnClickListener() {
+        holder.notifyImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (list.get(position).getFollow().equalsIgnoreCase("Y")) {
-                    AlertDialogManager.listenerDialogBox(context, "Remove!", "Remove Follow?", new DialogBoxInterface() {
-                        @Override
-                        public void yes() {
-                            CommonWebserviceMethods.removeFollows(context, TAG, list.get(position).getVendor_id(), "3");
-                        }
-
-                        @Override
-                        public void no() {
-
-                        }
-                    });
-
-                }
-            }
-        });
-        holder.followerNotificationStatusImageview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (list.get(position).getNotification_status().equalsIgnoreCase("Y")) {
-                    AlertDialogManager.listenerDialogBox(context, "Disable!", "Disable Alert for this vendor?", new DialogBoxInterface() {
-                        @Override
-                        public void yes() {
-                            CommonWebserviceMethods.removeNtification(context, TAG, list.get(position).getVendor_id());
-                        }
-                        @Override
-                        public void no() {
-                        }
-                    });
+                if (list.get(position).getFollow().equalsIgnoreCase("N")) {
+                    CommonWebserviceMethods.setFollows(activity, TAG, list.get(position).getVendor_id(), "5");
                 } else {
-                    CommonWebserviceMethods.setNtification(context, TAG, list.get(position).getVendor_id());
+                    AlertDialogManager.listenerDialogBox(activity, "Remove!", "Remove alert?", new DialogBoxInterface() {
+                        @Override
+                        public void yes() {
+                            CommonWebserviceMethods.removeFollows(activity, TAG, list.get(position).getVendor_id(), "5");
+                        }
+
+                        @Override
+                        public void no() {
+
+                        }
+                    });
+
                 }
+
             }
         });
     }
@@ -131,25 +122,24 @@ public class BusinessVendorAdapter extends RecyclerView.Adapter<BusinessVendorAd
     }
 
     public class CustomHolder extends RecyclerView.ViewHolder {
-        public ImageView onOffFollowerStatusImageView, followerratingImageView, followerOnlineImageView, followerCallImageview, followerLocateImageview, followerNotificationStatusImageview;
-        public CircleImageView follower_profile_image;
-        private CardView followerCv;
-        public TextView followerRatingCountTextView, followerRatingTextView, followerKmTextView, followerNameTextView;
+        public CircleImageView imageView;
+        public TextView vendorName, distance, onLineRatingTextView, onLineRatingCountTextView;
+        public ImageView ratingImageView, notifyImage, callImage, locateImage, isOnlineImageView;
+        public CardView cv;
 
         public CustomHolder(View itemView) {
             super(itemView);
-            followerRatingCountTextView = (TextView) itemView.findViewById(R.id.followerRatingCountTextView);
-            followerRatingTextView = (TextView) itemView.findViewById(R.id.followerRatingTextView);
-            followerKmTextView = (TextView) itemView.findViewById(R.id.followerKmTextView);
-            followerNameTextView = (TextView) itemView.findViewById(R.id.followerNameTextView);
-            follower_profile_image = (CircleImageView) itemView.findViewById(R.id.follower_profile_image);
-            followerratingImageView = (ImageView) itemView.findViewById(R.id.followerratingImageView);
-            followerOnlineImageView = (ImageView) itemView.findViewById(R.id.followerOnlineImageView);
-            followerLocateImageview = (ImageView) itemView.findViewById(R.id.followerLocateImageview);
-            followerCallImageview = (ImageView) itemView.findViewById(R.id.followerCallImageview);
-            followerNotificationStatusImageview = (ImageView) itemView.findViewById(R.id.followerNotificationStatusImageview);
-            followerCv = (CardView) itemView.findViewById(R.id.followerCv);
-            onOffFollowerStatusImageView = (ImageView) itemView.findViewById(R.id.onOffFollowerStatusImageView);
+            imageView = (CircleImageView) itemView.findViewById(R.id.b_vender_profile_image);
+            vendorName = (TextView) itemView.findViewById(R.id.b_onlineVendorNameTextView);
+            distance = (TextView) itemView.findViewById(R.id.b_onlineVendorKmTextView);
+            ratingImageView = (ImageView) itemView.findViewById(R.id.b_ratingImageView);
+            onLineRatingTextView = (TextView) itemView.findViewById(R.id.b_onLineRatingTextView);
+            onLineRatingCountTextView = (TextView) itemView.findViewById(R.id.b_onLineRatingCountTextView);
+            isOnlineImageView = (ImageView) itemView.findViewById(R.id.b_businessOnlineImageView);
+            notifyImage = (ImageView) itemView.findViewById(R.id.b_notifyImage);
+            callImage = (ImageView) itemView.findViewById(R.id.b_callImage);
+            locateImage = (ImageView) itemView.findViewById(R.id.b_locateImage);
+            cv = (CardView) itemView.findViewById(R.id.b_cv);
         }
     }
 }

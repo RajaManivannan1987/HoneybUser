@@ -11,10 +11,13 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.sample.honeybuser.Adapter.BusinessVendorAdapter;
+import com.sample.honeybuser.Adapter.OnLineVendorListAdapter;
 import com.sample.honeybuser.CommonActionBar.CommonActionBar;
+import com.sample.honeybuser.InterFaceClass.SaveCompletedInterface;
 import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
 import com.sample.honeybuser.Models.BusinessVendorModel;
 import com.sample.honeybuser.R;
+import com.sample.honeybuser.Singleton.Complete;
 import com.sample.honeybuser.Utility.Fonts.WebServices.GetResponseFromServer;
 
 import org.json.JSONException;
@@ -31,7 +34,8 @@ public class BusinessVendorActivity extends CommonActionBar {
     private RecyclerView businessListRecyclerView;
     private ArrayList<BusinessVendorModel> businessList = new ArrayList<>();
     private BusinessVendorAdapter adapter;
-    private String business_id = "", distance = "";
+    //    private OnLineVendorListAdapter adapter;
+    private String business_id = "", distance = "", businessName = "";
     private Gson gson = new Gson();
     private TextView businessListTextView;
 
@@ -39,13 +43,20 @@ public class BusinessVendorActivity extends CommonActionBar {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setView(R.layout.activity_business_vendor);
-        setTitle("Business List");
+
         hideNotification();
         businessListTextView = (TextView) findViewById(R.id.noRecordTextView);
         businessListRecyclerView = (RecyclerView) findViewById(R.id.businessListRecyclerView);
         businessListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BusinessVendorAdapter(BusinessVendorActivity.this, businessList);
+//        adapter = new OnLineVendorListAdapter(BusinessVendorActivity.this, businessList);
         businessListRecyclerView.setAdapter(adapter);
+        Complete.getBusinessList().setListener(new SaveCompletedInterface() {
+            @Override
+            public void completed() {
+                getBusinessList(business_id);
+            }
+        });
     }
 
     @Override
@@ -66,6 +77,8 @@ public class BusinessVendorActivity extends CommonActionBar {
             public void onResponse(JSONObject response) throws JSONException {
                 businessList.clear();
                 if (response.getString("status").equalsIgnoreCase("1")) {
+                    businessName = response.getString("business_name");
+                    setTitle(businessName);
                     for (int i = 0; i < response.getJSONArray("data").length(); i++) {
                         businessList.add(gson.fromJson(response.getJSONArray("data").getJSONObject(i).toString(), BusinessVendorModel.class));
                     }

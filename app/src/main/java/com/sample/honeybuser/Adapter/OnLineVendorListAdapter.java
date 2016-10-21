@@ -89,7 +89,6 @@ public class OnLineVendorListAdapter extends RecyclerView.Adapter<OnLineVendorLi
             @Override
             public void onClick(View v) {
                 CommonWebserviceMethods.getVendorLocation(activity,TAG,list.get(position).getVendor_id());
-                //CommonMethods.locationDirection(activity, list.get(position).getLatitude(), list.get(position).getLongitude());
             }
         });
         holder.cv.setOnClickListener(new View.OnClickListener() {
@@ -103,50 +102,11 @@ public class OnLineVendorListAdapter extends RecyclerView.Adapter<OnLineVendorLi
             public void onClick(View v) {
                 if (list.get(position).getFollow().equalsIgnoreCase("N")) {
                     CommonWebserviceMethods.setFollows(activity,TAG,list.get(position).getVendor_id(),type);
-                    /*GetResponseFromServer.getWebService(activity, TAG).setFollow(activity, list.get(position).getVendor_id(), new VolleyResponseListerner() {
-                        @Override
-                        public void onResponse(JSONObject response) throws JSONException {
-                            if (response.getString("status").equalsIgnoreCase("1")) {
-                                if (type.equalsIgnoreCase("0")) {
-                                    Complete.getInstance().orderCompleted();
-                                } else {
-                                    Complete.offerDialogInstance().orderCompleted();
-                                    // ActionCompletedSingleton.actionCompletedSingleton().ActionCompleted();
-
-                                }
-
-                            }
-
-                        }
-
-                        @Override
-                        public void onError(String message, String title) {
-
-                        }
-                    });*/
                 } else {
                     AlertDialogManager.listenerDialogBox(activity, "Remove!", "Remove alert?", new DialogBoxInterface() {
                         @Override
                         public void yes() {
                             CommonWebserviceMethods.removeFollows(activity,TAG,list.get(position).getVendor_id(),type);
-                            /*GetResponseFromServer.getWebService(activity, TAG).removeFollow(activity, list.get(position).getVendor_id(), new VolleyResponseListerner() {
-                                @Override
-                                public void onResponse(JSONObject response) throws JSONException {
-                                    if (response.getString("status").equalsIgnoreCase("1")) {
-                                        if (type.equalsIgnoreCase("0")) {
-                                            Complete.getInstance().orderCompleted();
-                                        } else {
-                                            //ActionCompletedSingleton.actionCompletedSingleton().ActionCompleted();
-                                            Complete.offerDialogInstance().orderCompleted();
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onError(String message, String title) {
-
-                                }
-                            });*/
                         }
 
                         @Override

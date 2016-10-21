@@ -22,12 +22,15 @@ public class Session {
     private static final String PHONE = "phone";
     private static final String STATUS = "status";
     private static final String MOBILE_VERIFIED = "mobile_no_verified";
+
+
+    private static String language;
     //private static final String UUID = "uuid";
-   // private static final String SEND_BIRD_USER_ID = "sendbird_user_id";
-   // private static final String SEND_BIRD_PROFILE_PICTURE = "sendbird_profile_picture";
+    // private static final String SEND_BIRD_USER_ID = "sendbird_user_id";
+    // private static final String SEND_BIRD_PROFILE_PICTURE = "sendbird_profile_picture";
     private static final String API_KEY = "api_key";
-    private static final String DEFAULT_LANGUAGE = "default_language";
-   // private static final String SEND_BIRD_API = "sendbird_api";
+    public static String DEFAULT_LANGUAGE = "default_language";
+    // private static final String SEND_BIRD_API = "sendbird_api";
     //private static final String OTP_TYPE = "otp_type";
     //private static final String REFERRAL_CODE = "referral_code";
 
@@ -60,18 +63,21 @@ public class Session {
             editor.putString(PHONE, logincheck.getString(PHONE));
             editor.putString(MOBILE_VERIFIED, logincheck.getString(MOBILE_VERIFIED));
             editor.putString(API_KEY, logincheck.getString(API_KEY));
-            //editor.putString(UUID, logincheck.getString(UUID));
             editor.putString(DEFAULT_LANGUAGE, logincheck.getString(DEFAULT_LANGUAGE));
-            Log.d(DEFAULT_LANGUAGE, logincheck.getString(DEFAULT_LANGUAGE));
-            //editor.putString(SEND_BIRD_USER_ID, logincheck.getString(SEND_BIRD_USER_ID));
-           // editor.putString(SEND_BIRD_PROFILE_PICTURE, logincheck.getString(SEND_BIRD_PROFILE_PICTURE));
-            //editor.putString(SEND_BIRD_API, logincheck.getString(SEND_BIRD_API));
+            setLanguage(logincheck.getString(DEFAULT_LANGUAGE));
             editor.commit();
         } catch (JSONException e) {
             Log.e(TAG, e.getMessage());
         }
     }
 
+    public static String getLanguage() {
+        return language;
+    }
+
+    public static void setLanguage(String language) {
+        Session.language = language;
+    }
 
     public boolean isLogin() {
         return pref.getBoolean(IS_LOGIN, false);
@@ -101,6 +107,7 @@ public class Session {
         return pref.getString(API_KEY, "");
     }
 
+
 //    public String getUUID() {
 //        return pref.getString(UUID, "");
 //    }
@@ -113,6 +120,7 @@ public class Session {
 //    public String getReferralCode() {
 //        return pref.getString(REFERRAL_CODE, "");
 //    }
+
 
     public String getDefaultLanguage() {
         return pref.getString(DEFAULT_LANGUAGE, "");

@@ -241,6 +241,7 @@
             </android.support.v7.widget.Toolbar>
         </LinearLayout>
 
+
         <ListView
             android:id="@+id/actionBarViewListView"
             android:layout_width="260dp"
@@ -250,6 +251,8 @@
             android:choiceMode="singleChoice"
             android:dividerHeight="0dp"
             android:drawSelectorOnTop="true" />
+
+
     </android.support.v4.widget.DrawerLayout>
 
 </LinearLayout>

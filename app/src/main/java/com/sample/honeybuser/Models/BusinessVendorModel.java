@@ -18,6 +18,17 @@ public class BusinessVendorModel {
     private String follow;
     private String notification_status;
     private String phone_no;
+    private String new_vendor;
+
+
+    public String getNew_vendor() {
+        return new_vendor;
+    }
+
+    public void setNew_vendor(String new_vendor) {
+        this.new_vendor = new_vendor;
+    }
+
 
     public String getPhone_no() {
         return phone_no;
