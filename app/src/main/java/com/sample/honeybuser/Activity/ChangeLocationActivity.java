@@ -153,11 +153,11 @@ public class ChangeLocationActivity extends CommonActionBar implements PlaceSele
                 if (response.getString("status").equalsIgnoreCase("1")) {
                     //String dis = distanceAdapter.getDistance();
                     //LatLng addres = addressAdapter.selectedPosition();
+
                     ChangeLocationSingleton.getInstance().locationChanges(dragPosition, distanceAdapter.getDistance(), location);
-                    //ChangeLocationSingleton.getInstance().locationChanges(dragPosition, distanceAdapter.getDistance(), location);
                     // Complete.getInstance().orderCompleted();
                     //NavigationBarActivity.locationName = location;
-                    startActivity(new Intent(ChangeLocationActivity.this, DashBoardActivity.class).putExtra("lat", lat).putExtra("lang", lang));
+                    //startActivity(new Intent(ChangeLocationActivity.this, DashBoardActivity.class).putExtra("lat", lat).putExtra("lang", lang));
                     finish();
                 }
 
@@ -165,7 +165,7 @@ public class ChangeLocationActivity extends CommonActionBar implements PlaceSele
 
             @Override
             public void onError(String message, String title) {
-
+                new AlertDialogManager().showAlertDialog(ChangeLocationActivity.this, title, message, false);
             }
         });
 
