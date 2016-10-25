@@ -90,8 +90,9 @@ public class AddressRecyclerViewAdapter extends RecyclerView.Adapter<AddressRecy
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChangeLocationSingleton.getInstance().locationChanges(new LatLng(Double.parseDouble(addressList.get(position).getLatitude()), Double.parseDouble(addressList.get(position).getLongitude())), DistanceSelectRecyclerViewAdapter.distanc, addressList.get(position).getTitle());
-                activity.startActivity(new Intent(activity, DashBoardActivity.class).putExtra("lat", addressList.get(position).getLatitude()).putExtra("lang", addressList.get(position).getLongitude()));
+                ChangeLocationSingleton.getInstance().locationChanges(new LatLng(Double.parseDouble(addressList.get(position).getLatitude()), Double.parseDouble(addressList.get(position).getLongitude())), null, null);
+//                ChangeLocationSingleton.getInstance().locationChanges(new LatLng(Double.parseDouble(addressList.get(position).getLatitude()), Double.parseDouble(addressList.get(position).getLongitude())), DistanceSelectRecyclerViewAdapter.distanc, addressList.get(position).getTitle());
+//                activity.startActivity(new Intent(activity, DashBoardActivity.class).putExtra("lat", addressList.get(position).getLatitude()).putExtra("lang", addressList.get(position).getLongitude()));
                 activity.finish();
                 if (position == selectedPosition) {
                     selectedPosition = -1;
