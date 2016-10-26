@@ -1,14 +1,25 @@
 package com.sample.honeybuser.GCMClasses;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
+import com.sample.honeybuser.Activity.LocationCheckActivity;
 import com.sample.honeybuser.R;
 import com.sample.honeybuser.Utility.Fonts.Sharedpreferences.Session;
+import com.sample.honeybuser.Utility.Fonts.WebServices.ConstandValue;
 
 import org.json.JSONObject;
+
+import java.util.Calendar;
 
 /**
  * Created by IM028 on 4/20/16.
@@ -40,16 +51,16 @@ public class GCMListener extends GcmListenerService {
         String channelUrl = "";
         String senderName = "";
         receiverUUID = "";
-        if (type.equalsIgnoreCase("message")) {
-            try {
-                JSONObject sendbird = new JSONObject(data.get("sendbird").toString());
-                channelUrl = sendbird.getJSONObject("channel").getString("channel_url");
-                receiverUUID = sendbird.getJSONObject("recipient").getString("id");
-                senderName = sendbird.getJSONObject("sender").getString("name");
-            } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
-            }
-        }
+//        if (type.equalsIgnoreCase("message")) {
+//            try {
+//                JSONObject sendbird = new JSONObject(data.get("sendbird").toString());
+//                channelUrl = sendbird.getJSONObject("channel").getString("channel_url");
+//                receiverUUID = sendbird.getJSONObject("recipient").getString("id");
+//                senderName = sendbird.getJSONObject("sender").getString("name");
+//            } catch (Exception e) {
+//                Log.e(TAG, e.getMessage());
+//            }
+//        }
 
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
@@ -96,24 +107,22 @@ public class GCMListener extends GcmListenerService {
      */
 
     private void sendNotification(CharSequence message, String type, String id, String channelUrl, Uri soundUri) {
-        //  By raja
-        /*Intent intent = new Intent(this, LocationCheckActivity.class).putExtra(ConstantValues.notificationType, type).putExtra(ConstantValues.vendorId, id).putExtra(ConstantValues.channelUrl, channelUrl);
+        Intent intent = new Intent(this, LocationCheckActivity.class).putExtra(ConstandValue.notificationType, type).putExtra(ConstandValue.vendorId, id).putExtra(ConstandValue.channelUrl, channelUrl);
         Log.d(TAG, "Notification Type - " + type);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, (int) Calendar.getInstance().getTimeInMillis(), intent, PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_media_route_on_0_mono_dark)
+                .setSmallIcon(R.drawable.logo)
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText(message)
-
                 .setAutoCancel(true)
                 .setSound(soundUri)
                 .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify((int) Calendar.getInstance().getTimeInMillis(), notificationBuilder.build());*/
+        notificationManager.notify((int) Calendar.getInstance().getTimeInMillis(), notificationBuilder.build());
     }
 }

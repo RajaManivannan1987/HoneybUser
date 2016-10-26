@@ -10,7 +10,12 @@ import android.util.Log;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.sample.honeybuser.Application.MyApplication;
+import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
 import com.sample.honeybuser.Utility.Fonts.Sharedpreferences.Session;
+import com.sample.honeybuser.Utility.Fonts.WebServices.GetResponseFromServer;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by IM028 on 4/20/16.
@@ -36,7 +41,7 @@ public class RegistrationIntentService extends IntentService {
             Log.i(TAG, "GCM Registration Token: " + token);
             if (new Session(this, TAG).isLogin()) {
                 // By raja
-             /*   new WebServices(this, TAG).saveDeviceId(token, new VolleyResponseListerner() {
+                GetResponseFromServer.getWebService(this, TAG).saveDeviceId(this,token, new VolleyResponseListerner() {
                     @Override
                     public void onResponse(JSONObject response) throws JSONException {
 
@@ -46,7 +51,7 @@ public class RegistrationIntentService extends IntentService {
                     public void onError(String message, String title) {
 
                     }
-                });*/
+                });
             }
             MyApplication.deviceId = token;
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);

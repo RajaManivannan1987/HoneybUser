@@ -1,5 +1,6 @@
 package com.sample.honeybuser.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import com.sample.honeybuser.CommonActionBar.NavigationBarActivity;
 import com.sample.honeybuser.EnumClass.IntentClasses;
 import com.sample.honeybuser.InterFaceClass.DialogBoxInterface;
 import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
+import com.sample.honeybuser.MapIntegration.LocationServiceUpdated;
 import com.sample.honeybuser.R;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.AlertDialogManager;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
@@ -58,6 +60,7 @@ public class SettingsActivity extends NavigationBarActivity {
                             public void onResponse(JSONObject response) throws JSONException {
                                 if (response.getString("status").equalsIgnoreCase("1")) {
                                     Session.getSession(SettingsActivity.this, TAG).clearSession();
+                                    stopService(new Intent(SettingsActivity.this, LocationServiceUpdated.class));
                                     CommonMethods.commonIntent(SettingsActivity.this, IntentClasses.REGISTRATION);
                                 }
                             }

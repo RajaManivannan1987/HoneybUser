@@ -171,11 +171,8 @@ public class NavigationBarActivity extends AppCompatActivity {
                 public void locationChanged(LatLng latLng, String distance, String address) {
                     if (distance != null && !distance.equalsIgnoreCase("")) {
                         distanceTextView.setText(" " + distance + " km ");
-                    } else {
-                        distanceTextView.setText(" " + distance + " km ");
                     }
                     if (address != null && !address.equalsIgnoreCase("")) {
-                        //locationName = address;
                         locationTextView.setText(address);
                     }
                 }

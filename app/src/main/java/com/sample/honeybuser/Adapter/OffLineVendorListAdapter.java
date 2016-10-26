@@ -1,7 +1,6 @@
 package com.sample.honeybuser.Adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -13,19 +12,13 @@ import android.widget.TextView;
 
 import com.sample.honeybuser.Activity.VendorDetailActivity;
 import com.sample.honeybuser.InterFaceClass.DialogBoxInterface;
-import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
+import com.sample.honeybuser.Models.OffLineVendorListModel;
 import com.sample.honeybuser.Models.OnLineVendorListModel;
 import com.sample.honeybuser.R;
-import com.sample.honeybuser.Singleton.ActionCompletedSingleton;
-import com.sample.honeybuser.Singleton.Complete;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.AlertDialogManager;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
 import com.sample.honeybuser.Utility.Fonts.WebServices.CommonWebserviceMethods;
-import com.sample.honeybuser.Utility.Fonts.WebServices.GetResponseFromServer;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -35,13 +28,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Im033 on 10/7/2016.
  */
 
-public class OnLineVendorListAdapter extends RecyclerView.Adapter<OnLineVendorListAdapter.CustomHolder> {
+public class OffLineVendorListAdapter extends RecyclerView.Adapter<OffLineVendorListAdapter.CustomHolder> {
     private String TAG = "OnLineVendorListAdapter";
     private Activity activity;
-    private List<OnLineVendorListModel> list;
+    private List<OffLineVendorListModel> list;
     private String type;
 
-    public OnLineVendorListAdapter(Activity context, List<OnLineVendorListModel> arraylist, String type) {
+    public OffLineVendorListAdapter(Activity context, List<OffLineVendorListModel> arraylist, String type) {
         this.list = arraylist;
         this.activity = context;
         this.type = type;
@@ -76,9 +69,9 @@ public class OnLineVendorListAdapter extends RecyclerView.Adapter<OnLineVendorLi
         } else {
             holder.notifyImage.setImageResource(R.drawable.nonotify);
         }
-       /* if (list.get(position).getIs_available().equalsIgnoreCase("Y")){
+     /*   if (list.get(position).getIs_available().equalsIgnoreCase("Y")) {
             holder.vendorListOnlineImageView.setImageResource(R.drawable.on);
-        }else {
+        } else {
             holder.vendorListOnlineImageView.setImageResource(R.drawable.off);
         }*/
         holder.vendorName.setText(list.get(position).getName());
@@ -92,7 +85,7 @@ public class OnLineVendorListAdapter extends RecyclerView.Adapter<OnLineVendorLi
         holder.locateImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonWebserviceMethods.getVendorLocation(activity,TAG,list.get(position).getVendor_id());
+                CommonWebserviceMethods.getVendorLocation(activity, TAG, list.get(position).getVendor_id());
             }
         });
         holder.cv.setOnClickListener(new View.OnClickListener() {
@@ -105,12 +98,12 @@ public class OnLineVendorListAdapter extends RecyclerView.Adapter<OnLineVendorLi
             @Override
             public void onClick(View v) {
                 if (list.get(position).getFollow().equalsIgnoreCase("N")) {
-                    CommonWebserviceMethods.setFollows(activity,TAG,list.get(position).getVendor_id(),type);
+                    CommonWebserviceMethods.setFollows(activity, TAG, list.get(position).getVendor_id(), "1");
                 } else {
                     AlertDialogManager.listenerDialogBox(activity, "Remove!", "Remove alert?", new DialogBoxInterface() {
                         @Override
                         public void yes() {
-                            CommonWebserviceMethods.removeFollows(activity,TAG,list.get(position).getVendor_id(),type);
+                            CommonWebserviceMethods.removeFollows(activity, TAG, list.get(position).getVendor_id(), "1");
                         }
 
                         @Override
@@ -133,7 +126,7 @@ public class OnLineVendorListAdapter extends RecyclerView.Adapter<OnLineVendorLi
     public class CustomHolder extends RecyclerView.ViewHolder {
         public CircleImageView imageView;
         public TextView vendorName, distance, onLineRatingTextView, onLineRatingCountTextView;
-        public ImageView ratingImageView, notifyImage, callImage, locateImage,vendorListOnlineImageView;
+        public ImageView ratingImageView, notifyImage, callImage, locateImage, vendorListOnlineImageView;
         public CardView cv;
 
         public CustomHolder(View itemView) {
@@ -148,8 +141,7 @@ public class OnLineVendorListAdapter extends RecyclerView.Adapter<OnLineVendorLi
             callImage = (ImageView) itemView.findViewById(R.id.callImage);
             locateImage = (ImageView) itemView.findViewById(R.id.locateImage);
             cv = (CardView) itemView.findViewById(R.id.cv);
-            vendorListOnlineImageView= (ImageView) itemView.findViewById(R.id.vendorListOnlineImageView);
-
+            vendorListOnlineImageView = (ImageView) itemView.findViewById(R.id.vendorListOnlineImageView);
         }
     }
 }

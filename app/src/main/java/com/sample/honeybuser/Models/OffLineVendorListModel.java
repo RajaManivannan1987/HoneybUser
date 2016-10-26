@@ -4,7 +4,7 @@ package com.sample.honeybuser.Models;
  * Created by Im033 on 10/7/2016.
  */
 
-public class OnLineVendorListModel {
+public class OffLineVendorListModel {
     private String vendor_id;
     private String name;
     private String phone_no;
@@ -27,6 +27,7 @@ public class OnLineVendorListModel {
 
 
     private String static_store;
+
     public String getFollow() {
         return follow;
     }
@@ -36,7 +37,6 @@ public class OnLineVendorListModel {
     }
 
 
-
     public String getNew_vendor() {
         return new_vendor;
     }
@@ -44,7 +44,6 @@ public class OnLineVendorListModel {
     public void setNew_vendor(String new_vendor) {
         this.new_vendor = new_vendor;
     }
-
 
 
     public String getVendor_id() {

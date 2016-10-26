@@ -41,6 +41,7 @@ import com.sample.honeybuser.Models.Vendor;
 import com.sample.honeybuser.R;
 import com.sample.honeybuser.Singleton.ChangeLocationSingleton;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
+import com.sample.honeybuser.Utility.Fonts.CustomViewPager;
 import com.sample.honeybuser.Utility.Fonts.WebServices.ConstandValue;
 import com.sample.honeybuser.Utility.Fonts.WebServices.GetResponseFromServer;
 
@@ -58,11 +59,8 @@ import java.util.Locale;
 
 public class DashBoardActivity extends NavigationBarActivity implements TabLayout.OnTabSelectedListener {
     private String TAG = "DashBoardActivity";
-    private GoogleMap googleMap;
-    private MapAddMarker mapAddMarker;
-
     private TabLayout tabLayout;
-    private ViewPager dashBoardViewPager;
+    private CustomViewPager dashBoardViewPager;
     private FragmentType fragmentType = FragmentType.ONLINE;
     private TabLayout.Tab onlineTab, offlineTab;
     private ImageView mapChangeIcon;
@@ -79,7 +77,8 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
     private FrameLayout mapFrameLayout;
     private TouchableWrapper touchFrameLayout;
     private SupportMapFragment mapView;
-    private Gson gson = new Gson();
+    private GoogleMap googleMap;
+    private MapAddMarker mapAddMarker;
 
 
     public void setFragmentType(FragmentType fragmentType) {
@@ -113,12 +112,14 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
         touchFrameLayout = (TouchableWrapper) findViewById(R.id.mobileStoreFragmentTouchableWrapper);
         mapView = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mobileStoreFragmentMapFragment));
 
-        dashBoardViewPager = (ViewPager) findViewById(R.id.dashBoardViewPager);
+        dashBoardViewPager = (CustomViewPager) findViewById(R.id.dashBoardViewPager);
         mapChangeIcon = (ImageView) findViewById(R.id.mapChangeIcon);
         onlineTab = tabLayout.newTab().setText(CommonMethods.getTabHeading(DashBoardActivity.this, FragmentType.ONLINE, true));
         tabLayout.addTab(onlineTab);
         offlineTab = tabLayout.newTab().setText(CommonMethods.getTabHeading(DashBoardActivity.this, FragmentType.OFFLINE, false));
         tabLayout.addTab(offlineTab);
+        dashBoardViewPager.setSwipeable(false);
+
 
         if (getIntent().getExtras() != null) {
             lat = getIntent().getExtras().getString("lat");
@@ -129,11 +130,11 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
             lat = String.valueOf(MyApplication.locationInstance().getLocation().getLatitude());
             lang = String.valueOf(MyApplication.locationInstance().getLocation().getLongitude());
             dashBoardViewPager.setAdapter(new DashBoardViewPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), String.valueOf(MyApplication.locationInstance().getLocation().getLatitude()), String.valueOf(MyApplication.locationInstance().getLocation().getLongitude())));
-            // getVendorLocation();
+            //getVendorLocation();
         }
 
         dashBoardViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        dashBoardViewPager.setCurrentItem(0);
+        //dashBoardViewPager.setCurrentItem(0);
         tabLayout.setOnTabSelectedListener(this);
 
         touchFrameLayout.setTouchInterface(new TouchInterface() {
@@ -227,6 +228,7 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
                 checkMapView();
             }
         });
+
         ChangeLocationSingleton.getInstance().setChangeLocationListener(new ChangeLocationListener() {
             @Override
             public void locationChanged(LatLng latLng, String distance, String address) {
@@ -247,13 +249,13 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
                         }
                     }
                     previousDistance = distance;
-                    distanceTextView.setText(" " + distance + " km ");
+                   // distanceTextView.setText(" " + distance + " km ");
                 } else {
-                    distanceTextView.setText(" " + distance + " km ");
+                    //distanceTextView.setText(" " + distance + " km ");
                 }
-                if (address != null && !address.equalsIgnoreCase("")) {
+                /*if (address != null && !address.equalsIgnoreCase("")) {
                     locationTextView.setText(address);
-                }
+                }*/
             }
         });
     }
@@ -271,6 +273,7 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
         }
         return vendor;
     }
+
 
     private void setGoogleMap(GoogleMap googleMap) {
         this.googleMap = googleMap;

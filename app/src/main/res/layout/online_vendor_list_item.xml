@@ -10,9 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="110dp"
         android:layout_marginBottom="5dp"
-        app:elevation="0dp"
+        android:layout_marginTop="7dp"
         app:cardUseCompatPadding="true"
-        android:layout_marginTop="7dp">
+        app:elevation="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,16 +45,27 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/onlineVendorNameTextView"
-                    style="@style/textview.style"
+                <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:paddingLeft="5dp"
-                    android:text="Vendor"
-                    android:textSize="@dimen/text_sixe_normal" />
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/vendorListOnlineImageView"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:paddingTop="6dp" />
+
+                    <TextView
+                        android:id="@+id/onlineVendorNameTextView"
+                        style="@style/textview.style"
+                        android:layout_width="match_parent"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:paddingLeft="3dp"
+                        android:text="Vendor" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/onlineVendorKmTextView"

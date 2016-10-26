@@ -55,6 +55,7 @@ public class AddressRecyclerViewAdapter extends RecyclerView.Adapter<AddressRecy
     public void onBindViewHolder(CustomViewHolder holder, final int position) {
         holder.titleTextView.setText(addressList.get(position).getTitle());
         holder.contentTextView.setText(addressList.get(position).getAddress());
+
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -87,7 +88,7 @@ public class AddressRecyclerViewAdapter extends RecyclerView.Adapter<AddressRecy
                 return false;
             }
         });
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ChangeLocationSingleton.getInstance().locationChanges(new LatLng(Double.parseDouble(addressList.get(position).getLatitude()), Double.parseDouble(addressList.get(position).getLongitude())), null, null);

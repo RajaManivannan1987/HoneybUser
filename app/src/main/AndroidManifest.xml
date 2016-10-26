@@ -110,6 +110,9 @@
         <service
             android:name=".GCMClasses.RegistrationIntentService"
             android:exported="false" />
+        <service
+            android:name=".MapIntegration.LocationServiceUpdated"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.gms.version"

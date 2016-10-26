@@ -32,6 +32,20 @@ public class GetResponseFromServer {
         session = new Session(context, TAG);
     }
 
+    public void saveDeviceId(Context context, String deviceId, final VolleyResponseListerner listerner) {
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("user_id", session.getUserId());
+            jsonObject.put("api_key", session.getApiKey());
+            jsonObject.put("device_id", deviceId);
+            jsonObject.put("type_of_os", "android");
+        } catch (JSONException e) {
+            Log.e(TAG + " " + TAG, e.getMessage());
+        }
+        setResponse1(context, ConstandValue.SERVER_URL + "user/save_device_id", listerner, jsonObject);
+    }
+
     public void login(Context context, String phoneNo, final VolleyResponseListerner listerner) {
         JSONObject jsonObject = new JSONObject();
         try {
@@ -82,8 +96,8 @@ public class GetResponseFromServer {
             jsonObject.put("latitude", latitude);
             jsonObject.put("longitude", longitude);
             jsonObject.put("os_type", "android");
-            jsonObject.put("type", type);
-            jsonObject.put("language",  session.getLanguage());
+            jsonObject.put("status", type);
+            jsonObject.put("language", session.getLanguage());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -114,7 +128,7 @@ public class GetResponseFromServer {
             jsonObject.put("latitude", latitude);
             jsonObject.put("longitude", longitude);
             jsonObject.put("type", type);
-            jsonObject.put("language",  session.getLanguage());
+            jsonObject.put("language", session.getLanguage());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -169,7 +183,7 @@ public class GetResponseFromServer {
         } catch (JSONException e) {
             Log.e(TAG + " " + TAG, e.getMessage());
         }
-        setResponse(context, ConstandValue.SERVER_URL + "user/location", listerner, jsonObject);
+        setResponse1(context, ConstandValue.SERVER_URL + "user/location", listerner, jsonObject);
     }
 
     public void setFollow(Context context, String vendorId, VolleyResponseListerner listerner) {
@@ -305,7 +319,7 @@ public class GetResponseFromServer {
             jsonObject.put("latitude", latitude + "");
             jsonObject.put("longitude", longitude + "");
             jsonObject.put("distance", distance);
-            jsonObject.put("language",  session.getLanguage());
+            jsonObject.put("language", session.getLanguage());
         } catch (JSONException e) {
             Log.e(TAG + " " + TAG, e.getMessage());
         }
@@ -319,7 +333,7 @@ public class GetResponseFromServer {
             jsonObject.put("api_key", session.getApiKey());
             jsonObject.put("latitude", latitude + "");
             jsonObject.put("longitude", longitude + "");
-            jsonObject.put("language",  session.getLanguage());
+            jsonObject.put("language", session.getLanguage());
         } catch (JSONException e) {
             Log.e(TAG + " " + TAG, e.getMessage());
         }
@@ -349,7 +363,7 @@ public class GetResponseFromServer {
             jsonObject.put("longitude", longitude);
             jsonObject.put("distance", distance);
             jsonObject.put("business_id", business_id);
-            jsonObject.put("language",  session.getLanguage());
+            jsonObject.put("language", session.getLanguage());
         } catch (JSONException e) {
             e.printStackTrace();
         }

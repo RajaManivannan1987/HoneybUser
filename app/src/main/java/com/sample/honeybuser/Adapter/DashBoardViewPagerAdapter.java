@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.sample.honeybuser.Fragment.OffLineVendorFragment;
-import com.sample.honeybuser.Fragment.OnLineVendorFragment;
+import com.sample.honeybuser.Fragment.OnLineMapFragment;
+import com.sample.honeybuser.Fragment.VendorListFragment;
 
 /**
  * Created by IM0033 on 10/6/2016.
@@ -36,12 +36,12 @@ public class DashBoardViewPagerAdapter extends FragmentStatePagerAdapter {
         bundle.putString("lang", lang);
         switch (position) {
             case 0:
-                fragment = new OnLineVendorFragment();
+                fragment = new VendorListFragment();
                 fragment.setArguments(bundle);
                 break;
 
             case 1:
-                fragment = new OffLineVendorFragment();
+                fragment = new OnLineMapFragment();
                 fragment.setArguments(bundle);
                 break;
             default:

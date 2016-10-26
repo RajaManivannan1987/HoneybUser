@@ -191,7 +191,7 @@ public class LocationServiceUpdated extends Service {
         if (timerTask != null)
             timerTask.cancel();
         stopSelf();
-        Log.v(TAG, "DONE");
+        Log.v(TAG, "Location Stop");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
@@ -253,7 +253,7 @@ public class LocationServiceUpdated extends Service {
             @Override
             public void onResponse(JSONObject response) throws JSONException {
                 if (response.getString("status").equalsIgnoreCase("1")) {
-                    Log.d("response", response.toString());
+                    //Log.d("response", response.toString());
                 }
             }
 

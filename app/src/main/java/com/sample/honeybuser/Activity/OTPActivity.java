@@ -1,5 +1,6 @@
 package com.sample.honeybuser.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.sample.honeybuser.EnumClass.IntentClasses;
+import com.sample.honeybuser.GCMClasses.RegistrationIntentService;
 import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
 import com.sample.honeybuser.R;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
@@ -56,7 +58,7 @@ public class OTPActivity extends AppCompatActivity {
 //                            if (response.getString("token_status").equalsIgnoreCase("1")) {
                             if (response.getString("status").equalsIgnoreCase("1")) {
                                 Session.getSession(OTPActivity.this, TAG).createSession(response.getJSONObject("data"));
-
+                                startService(new Intent(OTPActivity.this, RegistrationIntentService.class));
 //                                    if (languageFlag) {
                                 CommonMethods.commonIntent(OTPActivity.this, IntentClasses.LOCATIONCHECK);
                                 finish();
