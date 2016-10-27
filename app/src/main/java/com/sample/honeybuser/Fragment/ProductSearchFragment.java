@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.sample.honeybuser.Activity.DashBoardActivity;
 import com.sample.honeybuser.Adapter.Product05SearchAdapter;
 import com.sample.honeybuser.Adapter.Product3KmSearchAdapter;
+import com.sample.honeybuser.Application.MyApplication;
 import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
 import com.sample.honeybuser.Models.FiveKmProductSearchModel;
 import com.sample.honeybuser.Models.ThreeKmProductSearchModel;
@@ -41,6 +42,8 @@ public class ProductSearchFragment extends Fragment {
     boolean includeEdge = true;
     private Gson gson = new Gson();
 
+    private String lat = "", lang = "";
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,6 +60,8 @@ public class ProductSearchFragment extends Fragment {
         adapter05km = new Product05SearchAdapter(getActivity(), fiveKmVendorList);
         fiveKmVendorRecyclerView.setAdapter(adapter05km);
         threeKmVendorRecyclerView.setAdapter(adapter3Km);
+
+
         return view;
     }
 
@@ -67,7 +72,16 @@ public class ProductSearchFragment extends Fragment {
     }
 
     private void getData() {
-        GetResponseFromServer.getWebService(getActivity(), TAG).getProductList(getActivity(), DashBoardActivity.distanceLatLng.latitude, DashBoardActivity.distanceLatLng.longitude, "0.50", new VolleyResponseListerner() {
+        if (DashBoardActivity.distanceLatLng != null) {
+            lat = String.valueOf(DashBoardActivity.distanceLatLng.latitude);
+            lang = String.valueOf(DashBoardActivity.distanceLatLng.longitude);
+        } else {
+            if (MyApplication.locationInstance().getLocation() != null) {
+                lat = String.valueOf(MyApplication.locationInstance().getLocation().getLatitude());
+                lang = String.valueOf(MyApplication.locationInstance().getLocation().getLongitude());
+            }
+        }
+        GetResponseFromServer.getWebService(getActivity(), TAG).getProductList(getActivity(), lat, lang, "0.50", new VolleyResponseListerner() {
             @Override
             public void onResponse(JSONObject response) throws JSONException {
                 threeKmVendorList.clear();
@@ -89,7 +103,7 @@ public class ProductSearchFragment extends Fragment {
     }
 
     private void getFiveKmProductList() {
-        GetResponseFromServer.getWebService(getActivity(), TAG).getProductList(getActivity(), DashBoardActivity.distanceLatLng.latitude, DashBoardActivity.distanceLatLng.longitude, "3.00", new VolleyResponseListerner() {
+        GetResponseFromServer.getWebService(getActivity(), TAG).getProductList(getActivity(), lat, lang, "3.00", new VolleyResponseListerner() {
             @Override
             public void onResponse(JSONObject response) throws JSONException {
                 fiveKmVendorList.clear();

@@ -149,18 +149,18 @@ public class CommonMethods extends AppCompatActivity {
         switch (fragmentType) {
             case ONLINE:
                 text = "";
-                image = (isSelected) ? ContextCompat.getDrawable(context, R.drawable.online) : ContextCompat.getDrawable(context, R.drawable.onlineoff);
+                image = (isSelected) ? ContextCompat.getDrawable(context, R.drawable.listtabon) : ContextCompat.getDrawable(context, R.drawable.listtaboff);
                 break;
             case OFFLINE:
                 text = "";
-                image = (isSelected) ? ContextCompat.getDrawable(context, R.drawable.offline) : ContextCompat.getDrawable(context, R.drawable.offlineoff);
+                image = (isSelected) ? ContextCompat.getDrawable(context, R.drawable.maptabon) : ContextCompat.getDrawable(context, R.drawable.maptaboff);
                 break;
             case PRODUCT:
-                text = "";
+                text = "Products";
                 image = (isSelected) ? ContextCompat.getDrawable(context, R.drawable.products) : ContextCompat.getDrawable(context, R.drawable.productsblk);
                 break;
             case VENDOR:
-                text = "";
+                text = "Vendors";
                 image = (isSelected) ? ContextCompat.getDrawable(context, R.drawable.vendor) : ContextCompat.getDrawable(context, R.drawable.vendorblk);
                 break;
 
@@ -171,9 +171,8 @@ public class CommonMethods extends AppCompatActivity {
         ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_BASELINE);
         sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         sb.setSpan(new CustomTypefaceSpan("", Typeface.MONOSPACE), 3, text.length() + 3, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-        sb.setSpan(new AbsoluteSizeSpan((int) context.getResources().getDimension(R.dimen.text_sixe_small)), 3, text.length() + 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//resize size
+        sb.setSpan(new AbsoluteSizeSpan((int) context.getResources().getDimension(R.dimen.text_sixe_large)), 3, text.length() + 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//resize size
         return sb;
     }
-
 }
 

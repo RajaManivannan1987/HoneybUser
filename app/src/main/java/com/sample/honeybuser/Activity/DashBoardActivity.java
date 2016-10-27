@@ -9,37 +9,23 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.gson.Gson;
 import com.sample.honeybuser.Adapter.DashBoardViewPagerAdapter;
-import com.sample.honeybuser.Application.MyApplication;
 import com.sample.honeybuser.CommonActionBar.NavigationBarActivity;
 import com.sample.honeybuser.EnumClass.FragmentType;
 import com.sample.honeybuser.EnumClass.Selected;
 import com.sample.honeybuser.InterFaceClass.ChangeLocationListener;
-import com.sample.honeybuser.InterFaceClass.TouchInterface;
 import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
 import com.sample.honeybuser.MapIntegration.MapAddMarker;
-import com.sample.honeybuser.MapIntegration.MapUtils;
-import com.sample.honeybuser.MapIntegration.TouchableWrapper;
 import com.sample.honeybuser.Models.Vendor;
 import com.sample.honeybuser.R;
 import com.sample.honeybuser.Singleton.ChangeLocationSingleton;
+import com.sample.honeybuser.Singleton.Complete;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
 import com.sample.honeybuser.Utility.Fonts.CustomViewPager;
 import com.sample.honeybuser.Utility.Fonts.WebServices.ConstandValue;
@@ -63,21 +49,21 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
     private CustomViewPager dashBoardViewPager;
     private FragmentType fragmentType = FragmentType.ONLINE;
     private TabLayout.Tab onlineTab, offlineTab;
-    private ImageView mapChangeIcon;
+    //private ImageView mapChangeIcon;
     private List<Vendor> listVendor = new ArrayList<Vendor>();
     private LatLng location = new LatLng(0d, 0d);
     String adres = "";
-    public static LatLng distanceLatLng = new LatLng(0d, 0d);
+    public static LatLng distanceLatLng = null;
     public static String locationName;
     private String distance = "5.0", previousDistance = "5.0";
     private static String lat, lang;
     private boolean mapboolean = true;
     private boolean flagIsOnTouched = true;
     private boolean isMove = false;
-    private FrameLayout mapFrameLayout;
-    private TouchableWrapper touchFrameLayout;
-    private SupportMapFragment mapView;
-    private GoogleMap googleMap;
+    //private FrameLayout mapFrameLayout;
+    //private TouchableWrapper touchFrameLayout;
+    //private SupportMapFragment mapView;
+    //private GoogleMap googleMap;
     private MapAddMarker mapAddMarker;
 
 
@@ -88,14 +74,14 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
     private void onLine() {
         //getVendorLocation();
         setFragmentType(FragmentType.ONLINE);
-        mapAddMarker.removeAll();
+        //mapAddMarker.removeAll();
         listVendor.clear();
     }
 
     private void offLine() {
         //getVendorLocation();
         setFragmentType(FragmentType.OFFLINE);
-        mapAddMarker.removeAll();
+        //mapAddMarker.removeAll();
         listVendor.clear();
     }
 
@@ -108,36 +94,24 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
         //enableMyLocation();
         tabLayout = (TabLayout) findViewById(R.id.dashboardMapActivityTabLayout);
         //tabLayout.setSelectedTabIndicatorHeight(0);
-        mapFrameLayout = (FrameLayout) findViewById(R.id.mobileStoreFragmentLocationMapFrameLayout);
-        touchFrameLayout = (TouchableWrapper) findViewById(R.id.mobileStoreFragmentTouchableWrapper);
-        mapView = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mobileStoreFragmentMapFragment));
+        //mapFrameLayout = (FrameLayout) findViewById(R.id.mobileStoreFragmentLocationMapFrameLayout);
+        // touchFrameLayout = (TouchableWrapper) findViewById(R.id.mobileStoreFragmentTouchableWrapper);
+        // mapView = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mobileStoreFragmentMapFragment));
 
         dashBoardViewPager = (CustomViewPager) findViewById(R.id.dashBoardViewPager);
-        mapChangeIcon = (ImageView) findViewById(R.id.mapChangeIcon);
+        //mapChangeIcon = (ImageView) findViewById(R.id.mapChangeIcon);
         onlineTab = tabLayout.newTab().setText(CommonMethods.getTabHeading(DashBoardActivity.this, FragmentType.ONLINE, true));
         tabLayout.addTab(onlineTab);
         offlineTab = tabLayout.newTab().setText(CommonMethods.getTabHeading(DashBoardActivity.this, FragmentType.OFFLINE, false));
         tabLayout.addTab(offlineTab);
         dashBoardViewPager.setSwipeable(false);
-
-
-        if (getIntent().getExtras() != null) {
-            lat = getIntent().getExtras().getString("lat");
-            lang = getIntent().getExtras().getString("lang");
-            dashBoardViewPager.setAdapter(new DashBoardViewPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), getIntent().getExtras().getString("lat"), getIntent().getExtras().getString("lang")));
-            //getVendorLocation();
-        } else {
-            lat = String.valueOf(MyApplication.locationInstance().getLocation().getLatitude());
-            lang = String.valueOf(MyApplication.locationInstance().getLocation().getLongitude());
-            dashBoardViewPager.setAdapter(new DashBoardViewPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), String.valueOf(MyApplication.locationInstance().getLocation().getLatitude()), String.valueOf(MyApplication.locationInstance().getLocation().getLongitude())));
-            //getVendorLocation();
-        }
+        dashBoardViewPager.setAdapter(new DashBoardViewPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount()));
 
         dashBoardViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         //dashBoardViewPager.setCurrentItem(0);
         tabLayout.setOnTabSelectedListener(this);
 
-        touchFrameLayout.setTouchInterface(new TouchInterface() {
+        /*touchFrameLayout.setTouchInterface(new TouchInterface() {
             @Override
             public void onPressed() {
                 Log.d(TAG, "onPressing");
@@ -160,8 +134,8 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
                 Log.d(TAG, "onMove");
                 //  isMove = true;
             }
-        });
-        mapView.getMapAsync(new OnMapReadyCallback() {
+        });*/
+       /* mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(final GoogleMap googleMap) {
                 setGoogleMap(googleMap);
@@ -220,22 +194,22 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
                     }
                 });
             }
-        });
+        });*/
 
-        mapChangeIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkMapView();
-            }
-        });
+//        mapChangeIcon.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //checkMapView();
+//            }
+//        });
 
         ChangeLocationSingleton.getInstance().setChangeLocationListener(new ChangeLocationListener() {
             @Override
             public void locationChanged(LatLng latLng, String distance, String address) {
                 if (latLng != null) {
-                    if (googleMap != null) {
+                   /* if (googleMap != null) {
                         googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-                    }
+                    }*/
                 }
 
                 if (distance != null && !distance.equalsIgnoreCase("")) {
@@ -249,7 +223,7 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
                         }
                     }
                     previousDistance = distance;
-                   // distanceTextView.setText(" " + distance + " km ");
+                    // distanceTextView.setText(" " + distance + " km ");
                 } else {
                     //distanceTextView.setText(" " + distance + " km ");
                 }
@@ -275,34 +249,34 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
     }
 
 
-    private void setGoogleMap(GoogleMap googleMap) {
+  /*  private void setGoogleMap(GoogleMap googleMap) {
         this.googleMap = googleMap;
-    }
+    }*/
 
-    private void checkMapView() {
-        if (!mapboolean) {
-            mapChangeIcon.setImageResource(R.drawable.map);
-            dashBoardViewPager.setVisibility(View.VISIBLE);
-            mapFrameLayout.setVisibility(View.GONE);
-            mapboolean = true;
-        } else {
-            mapChangeIcon.setImageResource(R.drawable.list);
-            mapFrameLayout.setVisibility(View.VISIBLE);
-            dashBoardViewPager.setVisibility(View.GONE);
-            getVendorLocation();
-            mapboolean = false;
-           /* if (googleMap != null) {
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
-            }*/
-        }
-    }
+//    private void checkMapView() {
+//        if (!mapboolean) {
+//            mapChangeIcon.setImageResource(R.drawable.map);
+//            dashBoardViewPager.setVisibility(View.VISIBLE);
+//            mapFrameLayout.setVisibility(View.GONE);
+//            mapboolean = true;
+//        } else {
+//            mapChangeIcon.setImageResource(R.drawable.list);
+//            mapFrameLayout.setVisibility(View.VISIBLE);
+//            dashBoardViewPager.setVisibility(View.GONE);
+//            getVendorLocation();
+//            mapboolean = false;
+//           /* if (googleMap != null) {
+//                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
+//            }*/
+//        }
+//    }
 
     private boolean enableMyLocation() {
         if (ActivityCompat.checkSelfPermission(DashBoardActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(DashBoardActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(DashBoardActivity.this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, ConstandValue.MY_PERMISSIONS_REQUEST_LOCATION);
         } else {
-            googleMap.setMyLocationEnabled(true);
+            //googleMap.setMyLocationEnabled(true);
             return true;
         }
         return false;
@@ -310,13 +284,12 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
 
     @Override
     protected void onResume() {
-        getVendorLocation();
+        //getVendorLocation();
         super.onResume();
-
     }
 
-    private void getVendorLocation() {
-        if (dashBoardViewPager.getVisibility() == View.GONE && mapFrameLayout.getVisibility() == View.VISIBLE) {
+  /*  private void getVendorLocation() {
+        if (dashBoardViewPager.getVisibility() == View.GONE ) {
             if (googleMap != null && googleMap.getCameraPosition() != null) {
                 LatLng location1 = googleMap.getCameraPosition().target;
                 if (location1 != null) {
@@ -331,7 +304,7 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
                 getMarkerMovedAddress(location);
             }
         }
-        /*if (getIntent().getExtras() != null) {
+        *//*if (getIntent().getExtras() != null) {
             //lat = getIntent().getExtras().getString("lat");
             //lang = getIntent().getExtras().getString("lang");
             LatLng latLng = new LatLng(Double.parseDouble(getIntent().getExtras().getString("lat")), Double.parseDouble(getIntent().getExtras().getString("lang")));
@@ -344,12 +317,12 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
                 getMarkerMovedAddress(location);
 
             }
-        }*/
+        }*//*
 
-    }
+    }*/
 
     private void getVendorLocationWebService(LatLng location) {
-        if (dashBoardViewPager.getVisibility() != View.VISIBLE && mapFrameLayout.getVisibility() != View.GONE) {
+        if (dashBoardViewPager.getVisibility() != View.VISIBLE) {
             GetResponseFromServer.getWebService(DashBoardActivity.this, TAG).getOnlineVendor(DashBoardActivity.this, String.valueOf(location.latitude), String.valueOf(location.longitude), "1", new VolleyResponseListerner() {
                 @Override
                 public void onResponse(JSONObject response) throws JSONException {
@@ -380,11 +353,11 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
         }
 
         //Map Integration Starts
-        if (googleMap != null) {
+        /*if (googleMap != null) {
             mapAddMarker.setGoogleMap(googleMap);
             mapAddMarker.addAllMarkLocationMap(listVendor);
 //                            mapAddMarker.moveCircle(location);
-        }
+        }*/
         //Map Integration Ends
 
         //List Integration Starts
@@ -422,11 +395,7 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
                     }
                 }
                 locationName = adres;
-                // By Raja
 
-                /*OfferLatLang setLatLang=new OfferLatLang();
-                setLatLang.setLat(String.valueOf(dragPosition.latitude));
-                setLatLang.setLang(String.valueOf(dragPosition.longitude));*/
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage());
             }
@@ -442,19 +411,19 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
         switch (tab.getPosition()) {
             case 0:
                 mapboolean = false;
-                checkMapView();
+//                checkMapView();
                 onLine();
                 onlineTab.setText(CommonMethods.getTabHeading(DashBoardActivity.this, FragmentType.ONLINE, true));
                 offlineTab.setText(CommonMethods.getTabHeading(DashBoardActivity.this, FragmentType.OFFLINE, false));
-                mapChangeIcon.setVisibility(View.VISIBLE);
+//                mapChangeIcon.setVisibility(View.VISIBLE);
                 break;
             case 1:
                 mapboolean = false;
-                checkMapView();
+//                checkMapView();
                 offLine();
                 onlineTab.setText(CommonMethods.getTabHeading(DashBoardActivity.this, FragmentType.ONLINE, false));
                 offlineTab.setText(CommonMethods.getTabHeading(DashBoardActivity.this, FragmentType.OFFLINE, true));
-                mapChangeIcon.setVisibility(View.GONE);
+//                mapChangeIcon.setVisibility(View.GONE);
                 break;
         }
     }

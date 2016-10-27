@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.sample.honeybuser.Activity.DashBoardActivity;
 import com.sample.honeybuser.Adapter.VendorSearchAdapter;
+import com.sample.honeybuser.Application.MyApplication;
 import com.sample.honeybuser.InterFaceClass.SaveCompletedInterface;
 import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
 import com.sample.honeybuser.Models.VendorSearchListModel;
@@ -39,6 +40,7 @@ public class VendorSearchFragment extends Fragment {
     boolean includeEdge = true;
     private TextView txtView;
     private Gson gson = new Gson();
+    private String lat = "", lang = "";
 
 
     @Override
@@ -57,6 +59,7 @@ public class VendorSearchFragment extends Fragment {
                 getVendorList();
             }
         });
+
         return view;
     }
 
@@ -67,7 +70,16 @@ public class VendorSearchFragment extends Fragment {
     }
 
     private void getVendorList() {
-        GetResponseFromServer.getWebService(getActivity(), TAG).getSearchVendorList(getActivity(), DashBoardActivity.distanceLatLng.latitude, DashBoardActivity.distanceLatLng.longitude, new VolleyResponseListerner() {
+        if (DashBoardActivity.distanceLatLng != null) {
+            lat = String.valueOf(DashBoardActivity.distanceLatLng.latitude);
+            lang = String.valueOf(DashBoardActivity.distanceLatLng.longitude);
+        } else {
+            if (MyApplication.locationInstance().getLocation() != null) {
+                lat = String.valueOf(MyApplication.locationInstance().getLocation().getLatitude());
+                lang = String.valueOf(MyApplication.locationInstance().getLocation().getLongitude());
+            }
+        }
+        GetResponseFromServer.getWebService(getActivity(), TAG).getSearchVendorList(getActivity(), lat, lang, new VolleyResponseListerner() {
             @Override
             public void onResponse(JSONObject response) throws JSONException {
                 vendorList.clear();

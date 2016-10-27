@@ -85,7 +85,7 @@ public class DistanceSelectRecyclerViewAdapter extends RecyclerView.Adapter<Dist
                                 ChangeLocationSingleton.getInstance().locationChanges(null, distance.get(selected), DashBoardActivity.locationName);
                                 PreferenceManager.getDefaultSharedPreferences(context).edit().putString("KmDistance", distance.get(selected)).commit();
 
-                                context.startActivity(new Intent(context, DashBoardActivity.class).putExtra("lat", String.valueOf(DashBoardActivity.distanceLatLng.latitude)).putExtra("lang", String.valueOf(DashBoardActivity.distanceLatLng.longitude)));
+                                //context.startActivity(new Intent(context, DashBoardActivity.class).putExtra("lat", String.valueOf(DashBoardActivity.distanceLatLng.latitude)).putExtra("lang", String.valueOf(DashBoardActivity.distanceLatLng.longitude)));
                             }
                         }
 

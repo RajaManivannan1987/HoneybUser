@@ -69,11 +69,11 @@ public class OffLineVendorListAdapter extends RecyclerView.Adapter<OffLineVendor
         } else {
             holder.notifyImage.setImageResource(R.drawable.nonotify);
         }
-     /*   if (list.get(position).getIs_available().equalsIgnoreCase("Y")) {
+        if (list.get(position).getIs_available().equalsIgnoreCase("Y")) {
             holder.vendorListOnlineImageView.setImageResource(R.drawable.on);
         } else {
             holder.vendorListOnlineImageView.setImageResource(R.drawable.off);
-        }*/
+        }
         holder.vendorName.setText(list.get(position).getName());
         holder.distance.setText(list.get(position).getDistance() + " Km away");
         holder.callImage.setOnClickListener(new View.OnClickListener() {

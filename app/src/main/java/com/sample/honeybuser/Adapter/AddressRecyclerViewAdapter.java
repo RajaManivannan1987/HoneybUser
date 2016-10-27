@@ -1,14 +1,11 @@
 package com.sample.honeybuser.Adapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.sample.honeybuser.Activity.DashBoardActivity;
@@ -91,6 +88,10 @@ public class AddressRecyclerViewAdapter extends RecyclerView.Adapter<AddressRecy
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*LocationSaveValue setLatLang = new LocationSaveValue();
+                setLatLang.setLat(String.valueOf(addressList.get(position).getLatitude()));
+                setLatLang.setLang(String.valueOf(addressList.get(position).getLongitude()));*/
+                DashBoardActivity.distanceLatLng = new LatLng(Double.parseDouble(addressList.get(position).getLatitude()), Double.parseDouble(addressList.get(position).getLongitude()));
                 ChangeLocationSingleton.getInstance().locationChanges(new LatLng(Double.parseDouble(addressList.get(position).getLatitude()), Double.parseDouble(addressList.get(position).getLongitude())), null, null);
 //                ChangeLocationSingleton.getInstance().locationChanges(new LatLng(Double.parseDouble(addressList.get(position).getLatitude()), Double.parseDouble(addressList.get(position).getLongitude())), DistanceSelectRecyclerViewAdapter.distanc, addressList.get(position).getTitle());
 //                activity.startActivity(new Intent(activity, DashBoardActivity.class).putExtra("lat", addressList.get(position).getLatitude()).putExtra("lang", addressList.get(position).getLongitude()));

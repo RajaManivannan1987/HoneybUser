@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.sample.honeybuser.Activity.VendorDetailActivity;
 import com.sample.honeybuser.InterFaceClass.DialogBoxInterface;
+import com.sample.honeybuser.Models.Ratings;
 import com.sample.honeybuser.Models.VendorSearchListModel;
 import com.sample.honeybuser.R;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.AlertDialogManager;
@@ -45,7 +46,7 @@ public class VendorSearchAdapter extends RecyclerView.Adapter<VendorSearchAdapte
     @Override
     public void onBindViewHolder(CustomHolder holder, final int position) {
         holder.vendorSearchNameTextView.setText(vendorList.get(position).getName());
-        holder.vendorSearchRatingTextView.setText(vendorList.get(position).getRating_count());
+        holder.vendorSearchRatingTextView.setText(vendorList.get(position).getStar_rating() + " (" + vendorList.get(position).getRating_count() + " Ratings " + ") ");
 
         if (!vendorList.get(position).getPhoto().equalsIgnoreCase("")) {
             Picasso.with(context).load(vendorList.get(position).getPhoto()).into(holder.vendorProfileImageView);

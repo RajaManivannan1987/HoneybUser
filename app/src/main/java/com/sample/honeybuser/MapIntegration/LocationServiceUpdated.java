@@ -90,7 +90,9 @@ public class LocationServiceUpdated extends Service {
                     public void run() {
                         Log.d(TAG, location + "");
                         if (location != null) {
-                            sendLocation();
+
+//                            By Raja
+                          sendLocation();
                         }
                     }
                 };

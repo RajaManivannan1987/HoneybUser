@@ -1,7 +1,5 @@
 package com.sample.honeybuser.Activity;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -122,7 +120,6 @@ public class ChangeLocationActivity extends CommonActionBar implements PlaceSele
             lang = String.valueOf(dragPosition.longitude);
             if (addresses != null) {
                 android.location.Address returnedAddress = addresses.get(0);
-                // StringBuilder stringBuilder = new StringBuilder("ChangeAddress:\n");
                 if (addresses.get(0).getSubLocality() != null) {
                     location = addresses.get(0).getSubLocality();
                 } else if (addresses.get(0).getLocality() != null) {
@@ -136,7 +133,6 @@ public class ChangeLocationActivity extends CommonActionBar implements PlaceSele
                 adres = stringBuilder.toString();
                 //By raja
                 locationPicker(location, adres, lat, lang, dragPosition);
-                //address = stringBuilder.toString();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -151,13 +147,10 @@ public class ChangeLocationActivity extends CommonActionBar implements PlaceSele
             @Override
             public void onResponse(JSONObject response) throws JSONException {
                 if (response.getString("status").equalsIgnoreCase("1")) {
-                    //String dis = distanceAdapter.getDistance();
-                    //LatLng addres = addressAdapter.selectedPosition();
-                    ChangeLocationSingleton.getInstance().locationChanges(addressAdapter.selectedPosition(), distanceAdapter.getDistance(), null);
-                    // Complete.getInstance().orderCompleted();
-                    //NavigationBarActivity.locationName = location;
-                    //startActivity(new Intent(ChangeLocationActivity.this, DashBoardActivity.class).putExtra("lat", lat).putExtra("lang", lang));
-                    finish();
+//                  ChangeLocationSingleton.getInstance().locationChanges(addressAdapter.selectedPosition(), distanceAdapter.getDistance(), null);
+                    DashBoardActivity.distanceLatLng = dragPosition;
+                    ChangeLocationSingleton.getInstance().locationChanges(dragPosition, distanceAdapter.getDistance(), null);
+                    ChangeLocationActivity.this.finish();
                 }
 
             }

@@ -311,7 +311,7 @@ public class GetResponseFromServer {
         setResponse1(context, ConstandValue.SERVER_URL + "user/logout", listerner, jsonObject);
     }
 
-    public void getProductList(Context context, double latitude, double longitude, String distance, VolleyResponseListerner listerner) {
+    public void getProductList(Context context, String latitude, String longitude, String distance, VolleyResponseListerner listerner) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("user_id", session.getUserId());
@@ -326,7 +326,7 @@ public class GetResponseFromServer {
         setResponse(context, ConstandValue.SERVER_URL + "vendor/product_search", listerner, jsonObject);
     }
 
-    public void getSearchVendorList(Context context, double latitude, double longitude, VolleyResponseListerner listerner) {
+    public void getSearchVendorList(Context context, String latitude, String longitude, VolleyResponseListerner listerner) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("user_id", session.getUserId());

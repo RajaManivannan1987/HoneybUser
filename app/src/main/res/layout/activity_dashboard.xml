@@ -40,37 +40,12 @@
 
     </RelativeLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <FrameLayout
-            android:id="@+id/mobileStoreFragmentLocationMapFrameLayout"
-            android:layout_width="match_parent"
-            android:visibility="gone"
-            android:layout_height="match_parent">
-
-            <com.sample.honeybuser.MapIntegration.TouchableWrapper
-                android:id="@+id/mobileStoreFragmentTouchableWrapper"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <fragment
-                    android:id="@+id/mobileStoreFragmentMapFragment"
-                    class="com.google.android.gms.maps.SupportMapFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-            </com.sample.honeybuser.MapIntegration.TouchableWrapper>
-
-        </FrameLayout>
-
         <com.sample.honeybuser.Utility.Fonts.CustomViewPager
             android:id="@+id/dashBoardViewPager"
             android:layout_width="match_parent"
             android:layout_height="fill_parent" />
 
-    </FrameLayout>
+
 
 
 </LinearLayout>
