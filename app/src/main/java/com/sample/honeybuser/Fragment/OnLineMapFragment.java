@@ -225,6 +225,7 @@ public class OnLineMapFragment extends Fragment {
             }
         }
         ChangeLocationSingleton.getInstance().locationChanges(null, null, adres);
+        Complete.offerDialogInstance().orderCompleted();
     }
 
     private void setVendorDetailsItem(Vendor vendorByMarkerId) {
