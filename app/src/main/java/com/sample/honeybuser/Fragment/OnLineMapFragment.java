@@ -35,6 +35,7 @@ import com.sample.honeybuser.Models.OnLineVendorListModel;
 import com.sample.honeybuser.Models.Vendor;
 import com.sample.honeybuser.R;
 import com.sample.honeybuser.Singleton.ChangeLocationSingleton;
+import com.sample.honeybuser.Singleton.Complete;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
 import com.sample.honeybuser.Utility.Fonts.WebServices.ConstandValue;
 import com.sample.honeybuser.Utility.Fonts.WebServices.GetResponseFromServer;
@@ -46,6 +47,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import static com.google.android.gms.maps.GoogleMap.*;
 
 /**
  * Created by IM0033 on 10/6/2016.
@@ -61,10 +64,10 @@ public class OnLineMapFragment extends Fragment {
     private boolean isMove = false;
     private String distance = "5.0", previousDistance = "5.0";
     private boolean flagIsOnTouched = true;
-    private LatLng location = new LatLng(0d, 0d);
+    private LatLng location;
     private String adres = "";
 
-    private List<OnLineVendorListModel> list = new ArrayList<OnLineVendorListModel>();
+//    private List<OnLineVendorListModel> list = new ArrayList<OnLineVendorListModel>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -80,14 +83,14 @@ public class OnLineMapFragment extends Fragment {
                 enableMyLocation();
                 mapAddMarker = new MapAddMarker(getActivity(), googleMap);
 
-                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                googleMap.setOnMarkerClickListener(new OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
                         setVendorDetailsItem(getVendorByMarkerId(marker.getId()));
                         return true;
                     }
                 });
-                googleMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
+                googleMap.setOnCameraMoveListener(new OnCameraMoveListener() {
                     @Override
                     public void onCameraMove() {
                         isMove = true;
@@ -96,7 +99,7 @@ public class OnLineMapFragment extends Fragment {
                 if (MyApplication.locationInstance() != null && MyApplication.locationInstance().getLocation() != null) {
                     location = new LatLng(MyApplication.locationInstance().getLocation().getLatitude(), MyApplication.locationInstance().getLocation().getLongitude());
                     CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(location, MapUtils.calculateZoomLevel(getActivity(), 15));
-//                    googleMap.animateCamera(yourLocation);
+                    googleMap.moveCamera(yourLocation);
                     flagIsOnTouched = false;
                     googleMap.animateCamera(yourLocation, new GoogleMap.CancelableCallback() {
                         @Override
@@ -145,7 +148,6 @@ public class OnLineMapFragment extends Fragment {
 
                 if (distance != null && !distance.equalsIgnoreCase("")) {
                     OnLineMapFragment.this.distance = distance;
-                    Log.d(TAG, distance);
                     if (mapAddMarker != null) {
                         mapAddMarker.radiCircle(Float.parseFloat(distance) * 1000);
                     }

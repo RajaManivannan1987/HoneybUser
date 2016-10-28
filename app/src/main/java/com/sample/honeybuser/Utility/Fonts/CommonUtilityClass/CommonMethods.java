@@ -157,7 +157,7 @@ public class CommonMethods extends AppCompatActivity {
                 break;
             case PRODUCT:
                 text = "Products";
-                image = (isSelected) ? ContextCompat.getDrawable(context, R.drawable.products) : ContextCompat.getDrawable(context, R.drawable.productsblk);
+                image = (isSelected) ? ContextCompat.getDrawable(context, R.drawable.products1) : ContextCompat.getDrawable(context, R.drawable.productsblk1);
                 break;
             case VENDOR:
                 text = "Vendors";

@@ -1,5 +1,6 @@
 package com.sample.honeybuser.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -27,7 +28,7 @@ import java.util.List;
  * Created by IM028 on 7/2/16.
  */
 public class DistanceSelectRecyclerViewAdapter extends RecyclerView.Adapter<DistanceSelectRecyclerViewAdapter.CustomViewHolder> {
-    private Context context;
+    private Activity context;
     private LayoutInflater inflater;
     private List<String> distance = new ArrayList<String>();
     private int selected = -1;
@@ -35,7 +36,7 @@ public class DistanceSelectRecyclerViewAdapter extends RecyclerView.Adapter<Dist
     public static String distanc;
 
 
-    public DistanceSelectRecyclerViewAdapter(Context context) {
+    public DistanceSelectRecyclerViewAdapter(Activity context) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         distance.add("0.1");
@@ -45,7 +46,7 @@ public class DistanceSelectRecyclerViewAdapter extends RecyclerView.Adapter<Dist
         distance.add("0.5");
     }
 
-    public DistanceSelectRecyclerViewAdapter(Context context, List<String> list) {
+    public DistanceSelectRecyclerViewAdapter(Activity context, List<String> list) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         distance = list;
@@ -84,7 +85,7 @@ public class DistanceSelectRecyclerViewAdapter extends RecyclerView.Adapter<Dist
                             if (response.getString("status").equalsIgnoreCase("1")) {
                                 ChangeLocationSingleton.getInstance().locationChanges(null, distance.get(selected), DashBoardActivity.locationName);
                                 PreferenceManager.getDefaultSharedPreferences(context).edit().putString("KmDistance", distance.get(selected)).commit();
-
+                                context.finish();
                                 //context.startActivity(new Intent(context, DashBoardActivity.class).putExtra("lat", String.valueOf(DashBoardActivity.distanceLatLng.latitude)).putExtra("lang", String.valueOf(DashBoardActivity.distanceLatLng.longitude)));
                             }
                         }
@@ -103,8 +104,6 @@ public class DistanceSelectRecyclerViewAdapter extends RecyclerView.Adapter<Dist
     private void callListener(int position) {
         if (selectedDistance != null) {
             selectedDistance.selected(distance.get(position));
-            //PreferenceManager.getDefaultSharedPreferences(context).edit().putString("KmDistance", distance.get(selected)).commit();
-
         }
     }
 

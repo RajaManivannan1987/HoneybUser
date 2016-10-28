@@ -1,6 +1,5 @@
 package com.sample.honeybuser.Adapter;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -29,18 +28,19 @@ public class DashBoardViewPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         Fragment fragment = null;
 
-      //  Bundle bundle = new Bundle();
-      //  bundle.putString("lat", lat);
-      //  bundle.putString("lang", lang);
+        //  Bundle bundle = new Bundle();
+        //  bundle.putString("lat", lat);
+        //  bundle.putString("lang", lang);
         switch (position) {
             case 0:
                 fragment = new VendorListFragment();
-               // fragment.setArguments(bundle);
+                // fragment.setArguments(bundle);
                 break;
 
             case 1:
                 fragment = new OnLineMapFragment();
-              //  fragment.setArguments(bundle);
+//                fragment = new MapViewFragment();
+                //  fragment.setArguments(bundle);
                 break;
             default:
                 fragment = null;

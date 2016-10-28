@@ -1,9 +1,12 @@
 package com.sample.honeybuser.Utility.Fonts.CommonUtilityClass;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 
 import com.sample.honeybuser.InterFaceClass.DialogBoxInterface;
@@ -132,6 +135,28 @@ public class AlertDialogManager {
             }
         });
         alertDialog.create().show();
+    }
+    public static void showGpsAlert(final Activity context, String message) {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        dialog.setTitle("Location!");
+        dialog.setMessage(message);
+        dialog.setPositiveButton("Enable", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+//                listerner.yes();
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                context.startActivity(intent);
+                dialogInterface.dismiss();
+            }
+        });
+        dialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+//                listerner.no();
+                dialogInterface.dismiss();
+            }
+        });
+        dialog.show();
     }
 
 

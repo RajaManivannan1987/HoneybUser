@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.sample.honeybuser.Activity.DashBoardActivity;
 import com.sample.honeybuser.Adapter.OffLineVendorListAdapter;
@@ -101,7 +102,6 @@ public class VendorListFragment extends Fragment {
                 offLineList.clear();
                 if (response.getString("status").equalsIgnoreCase("1")) {
                     JSONObject jsonObject = response.getJSONObject("data");
-
                     distance = jsonObject.getString("distance");
                     for (int i = 0; i < jsonObject.getJSONArray("online").length(); i++) {
                         onLineList.add(gson.fromJson(jsonObject.getJSONArray("online").getJSONObject(i).toString(), OnLineVendorListModel.class));
