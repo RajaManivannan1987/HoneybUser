@@ -1,26 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".Fragment.OnLineMapFragment">
 
-    <FrameLayout
-        android:id="@+id/mapFrameLayout"
+    <RelativeLayout
+        android:id="@+id/mobileStoreFragmentLocationMapRelativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.sample.honeybuser.MapIntegration.TouchableWrapper
-            android:id="@+id/onlineMapFragmentTouchableWrapper"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <fragment
-                android:id="@+id/mapFragment"
-                class="com.google.android.gms.maps.SupportMapFragment"
+            <FrameLayout
+                android:id="@+id/mapFrameLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent">
 
-        </com.sample.honeybuser.MapIntegration.TouchableWrapper>
+                <com.sample.honeybuser.MapIntegration.TouchableWrapper
+                    android:id="@+id/onlineMapFragmentTouchableWrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-    </FrameLayout>
-</LinearLayout>
+                    <fragment
+                        android:id="@+id/mapFragment"
+                        class="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </com.sample.honeybuser.MapIntegration.TouchableWrapper>
+            </FrameLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/mobileStoreFragmentVendorbackGroundLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background_color"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/mobileStoreFragmentVendorLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/list_bg"
+                android:gravity="center"
+                android:padding="1dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:padding="0dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/mobileStoreFragmentVendorCircleImageView"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:visibility="visible" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginStart="0dp"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/mobileStoreFragmentVendorNameShopTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Shop Name"
+                                android:textSize="18dp" />
+
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/mobileStoreFragmentVendorDistanceShopTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="3dp"
+                            android:text=""
+                            android:textSize="14dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <RatingBar
+                                android:id="@+id/mobileStoreFragmentVendorRatingBar"
+                                style="@style/RatingBar.Indicator"
+                                android:layout_width="wrap_content"
+                                android:layout_height="10dp"
+                                android:isIndicator="true"
+                                android:numStars="5"
+                                android:progressDrawable="@drawable/rating_bar"
+                                android:stepSize="1" />
+
+                            <TextView
+                                android:id="@+id/mobileStoreFragmentVendorRatingCountTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/mobileStoreFragmentVendorMessageImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:src="@drawable/on" />
+
+                <ImageView
+                    android:id="@+id/mobileStoreFragmentVendorCallImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:src="@drawable/call" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>

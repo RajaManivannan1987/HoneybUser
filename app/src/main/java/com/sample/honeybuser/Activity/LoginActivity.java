@@ -44,27 +44,32 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (!phoneNoEditText.getText().toString().equals("")) {
                     phoneNoEditText.setError(null);
-                    String phono = phoneNoEditText.getText().toString();
-                    GetResponseFromServer.getWebService(LoginActivity.this, TAG).login(LoginActivity.this, phono, new VolleyResponseListerner() {
-                        @Override
-                        public void onResponse(JSONObject response) throws JSONException {
-                            if (response.getString("status").equalsIgnoreCase("1")) {
-                                JSONObject object = response.getJSONObject("data");
-                                startActivity(new Intent(LoginActivity.this, OTPActivity.class).putExtra("otp_type", "login").putExtra("response", object.getString("user_id")));
-
-//                                CommonMethods.commonIntent(activity, IntentClasses.OTP);
+                    if (phoneNoEditText.getText().toString().length() == 10) {
+                        phoneNoEditText.setError(null);
+                        String phono = phoneNoEditText.getText().toString();
+                        GetResponseFromServer.getWebService(LoginActivity.this, TAG).login(LoginActivity.this, phono, new VolleyResponseListerner() {
+                            @Override
+                            public void onResponse(JSONObject response) throws JSONException {
+                                if (response.getString("status").equalsIgnoreCase("1")) {
+                                    phoneNoEditText.setText("");
+                                    JSONObject object = response.getJSONObject("data");
+                                    startActivity(new Intent(LoginActivity.this, OTPActivity.class).putExtra("otp_type", "login").putExtra("response", object.getString("user_id")));
+                                    finish();
+// CommonMethods.commonIntent(activity, IntentClasses.OTP);
+                                } else {
+                                    CommonMethods.toast(LoginActivity.this, response.getString("message"));
+                                }
                             }
-                            else {
-                                CommonMethods.toast(LoginActivity.this,response.getString("message"));
+
+                            @Override
+                            public void onError(String message, String title) {
+
                             }
-                        }
-
-                        @Override
-                        public void onError(String message, String title) {
-
-                        }
-                    });
-
+                        });
+                    } else {
+                        phoneNoEditText.setError("Enter 10 digits valid phone number");
+                        phoneNoEditText.requestFocus();
+                    }
                 } else {
                     phoneNoEditText.setError("Enter phone no");
                     phoneNoEditText.requestFocus();

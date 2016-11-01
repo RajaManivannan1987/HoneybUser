@@ -10,12 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.sample.honeybuser.Activity.DashBoardActivity;
 import com.sample.honeybuser.Adapter.OffLineVendorListAdapter;
 import com.sample.honeybuser.Adapter.OnLineVendorListAdapter;
 import com.sample.honeybuser.Application.MyApplication;
+import com.sample.honeybuser.CommonActionBar.NavigationBarActivity;
+import com.sample.honeybuser.EnumClass.FragmentType;
+import com.sample.honeybuser.InterFaceClass.ChangeLocationListener;
 import com.sample.honeybuser.InterFaceClass.SaveCompletedInterface;
 import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
 import com.sample.honeybuser.Models.OffLineVendorListModel;
@@ -43,9 +47,21 @@ public class VendorListFragment extends Fragment {
     private List<OnLineVendorListModel> onLineList = new ArrayList<OnLineVendorListModel>();
     private List<OffLineVendorListModel> offLineList = new ArrayList<OffLineVendorListModel>();
     private String lat, lang, distance;
+    public static LatLng latLngValue = null;
     private TextView offLineToastText, onLineToastText;
+    private FragmentType fragmentType;
 
     // private Bundle bundle;
+
+    public void setFragmentType(FragmentType fragmentType) {
+        this.fragmentType = fragmentType;
+    }
+
+    public static VendorListFragment listInstance() {
+        VendorListFragment fragment = new VendorListFragment();
+        fragment.setFragmentType(FragmentType.ONLINE);
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -76,23 +92,54 @@ public class VendorListFragment extends Fragment {
                 getData();
             }
         });
+        ChangeLocationSingleton.getInstance().setChangeLocationListener(new ChangeLocationListener() {
+            @Override
+            public void locationChanged(LatLng latLng, String distance, String address) {
+                if (latLng != null) {
+                }
+
+                if (distance != null && !distance.equalsIgnoreCase("")) {
+                    VendorListFragment.this.distance = distance;
+                    // NavigationBarActivity.distanceTextView.setText(" " + distance + " km ");
+                   /* if (mapAddMarker != null) {
+                        mapAddMarker.radiCircle(Float.parseFloat(distance) * 1000);
+                    }*/
+                    /*if (!previousDistance.equalsIgnoreCase(distance)) {
+                        if (mapAddMarker != null) {
+                            mapAddMarker.changeZoomLevel(Float.parseFloat(distance) * 1000);
+                        }
+                    }*/
+                    //previousDistance = distance;
+                }
+
+            }
+        });
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getData();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            getData();
+        }
     }
 
     private void getData() {
         if (DashBoardActivity.distanceLatLng != null) {
             lat = String.valueOf(DashBoardActivity.distanceLatLng.latitude);
             lang = String.valueOf(DashBoardActivity.distanceLatLng.longitude);
+            latLngValue = new LatLng(Double.parseDouble(lat), Double.parseDouble(lang));
         } else {
             if (MyApplication.locationInstance().getLocation() != null) {
                 lat = String.valueOf(MyApplication.locationInstance().getLocation().getLatitude());
                 lang = String.valueOf(MyApplication.locationInstance().getLocation().getLongitude());
+                latLngValue = new LatLng(Double.parseDouble(lat), Double.parseDouble(lang));
             }
         }
         GetResponseFromServer.getWebService(getActivity(), TAG).getOnlineVendor(getActivity(), lat, lang, "", new VolleyResponseListerner() {
@@ -131,7 +178,7 @@ public class VendorListFragment extends Fragment {
                 }
                 onLineAdapter.notifyDataSetChanged();
                 offLineAdapter.notifyDataSetChanged();
-                ChangeLocationSingleton.getInstance().locationChanges(null, distance, null);
+                ChangeLocationSingleton.getInstance().locationChanges(latLngValue, distance, null);
             }
 
             @Override

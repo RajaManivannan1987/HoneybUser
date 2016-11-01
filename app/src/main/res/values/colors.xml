@@ -11,4 +11,5 @@
     <color name="hintColor">#f9f9f9</color>
     <color name="windows_background">#7fffffff</color>
     <color name="map_circle">#3ce2393c</color>
+    <color name="background_color">#a0000000</color>
 </resources>

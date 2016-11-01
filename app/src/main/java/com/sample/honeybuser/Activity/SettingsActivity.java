@@ -62,6 +62,7 @@ public class SettingsActivity extends NavigationBarActivity {
                                     Session.getSession(SettingsActivity.this, TAG).clearSession();
                                     stopService(new Intent(SettingsActivity.this, LocationServiceUpdated.class));
                                     CommonMethods.commonIntent(SettingsActivity.this, IntentClasses.REGISTRATION);
+                                    finish();
                                 }
                             }
 

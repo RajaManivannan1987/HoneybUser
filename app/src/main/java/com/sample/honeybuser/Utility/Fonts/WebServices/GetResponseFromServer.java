@@ -101,7 +101,7 @@ public class GetResponseFromServer {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        setResponse(context, ConstandValue.SERVER_URL + "vendor/list_api", listerner, jsonObject);
+        setResponse1(context, ConstandValue.SERVER_URL + "vendor/list_api", listerner, jsonObject);
     }
 
     public void geOfflineVendor(Context context, String latitude, String longitude, String type, final VolleyResponseListerner listerner) {

@@ -51,24 +51,35 @@ public class RegistrationActivity extends AppCompatActivity {
                     nameEditText.setError(null);
                     if (!phoneNumEditText.getText().toString().equals("")) {
                         phoneNumEditText.setError(null);
-                        GetResponseFromServer.getWebService(RegistrationActivity.this, TAG).register(RegistrationActivity.this, nameEditText.getText().toString(), phoneNumEditText.getText().toString(), language, new VolleyResponseListerner() {
-                            @Override
-                            public void onResponse(JSONObject response) throws JSONException {
-                                if (response.getString("status").equalsIgnoreCase("1")) {
-                                    JSONObject object=response.getJSONObject("data");
+                        if (phoneNumEditText.getText().toString().length() == 10) {
+                            phoneNumEditText.setError(null);
+                            GetResponseFromServer.getWebService(RegistrationActivity.this, TAG).register(RegistrationActivity.this, nameEditText.getText().toString(), phoneNumEditText.getText().toString(), language, new VolleyResponseListerner() {
+                                @Override
+                                public void onResponse(JSONObject response) throws JSONException {
+                                    if (response.getString("status").equalsIgnoreCase("1")) {
+                                        nameEditText.setText("");
+                                        phoneNumEditText.setText("");
+                                        JSONObject object = response.getJSONObject("data");
 
 //                                    Session.getSession(RegistrationActivity.this, TAG).createSession(response.getJSONObject("data"));
-                                    startService(new Intent(RegistrationActivity.this, RegistrationIntentService.class));
-                                    startActivity(new Intent(RegistrationActivity.this, OTPActivity.class).putExtra("otp_type", "register").putExtra("response",object.getString("user_id")));
-//                                    CommonMethods.commonIntent(RegistrationActivity.this, IntentClasses.OTP);
+                                        startService(new Intent(RegistrationActivity.this, RegistrationIntentService.class));
+                                        startActivity(new Intent(RegistrationActivity.this, OTPActivity.class).putExtra("otp_type", "register").putExtra("response", object.getString("user_id")));
+                                        finish();
+// CommonMethods.commonIntent(RegistrationActivity.this, IntentClasses.OTP);
+                                    } else {
+                                        CommonMethods.toast(RegistrationActivity.this, response.getString("message"));
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void onError(String message, String title) {
+                                @Override
+                                public void onError(String message, String title) {
 
-                            }
-                        });
+                                }
+                            });
+                        } else {
+                            phoneNumEditText.setError("Enter 10 digits valid phone number");
+                            phoneNumEditText.requestFocus();
+                        }
                     } else {
                         phoneNumEditText.setError("Enter phone number");
                         phoneNumEditText.requestFocus();

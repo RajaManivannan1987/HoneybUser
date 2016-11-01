@@ -33,13 +33,14 @@ public class DashBoardViewPagerAdapter extends FragmentStatePagerAdapter {
         //  bundle.putString("lang", lang);
         switch (position) {
             case 0:
+//                fragment = VendorListFragment.listInstance();
                 fragment = new VendorListFragment();
                 // fragment.setArguments(bundle);
                 break;
 
             case 1:
+//                 fragment = OnLineMapFragment.mapInstance();
                 fragment = new OnLineMapFragment();
-//                fragment = new MapViewFragment();
                 //  fragment.setArguments(bundle);
                 break;
             default:

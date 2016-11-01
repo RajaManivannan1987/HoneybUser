@@ -48,7 +48,11 @@ public class NavigationBarActivity extends AppCompatActivity {
     private NavigationBarAdapter navigationBarAdapter;
     private Toolbar toolbar;
     private View headerSection, footerSection;
-    public TextView distanceTextView, locationTextView, titleTextView, UserNameTextView;
+    public static TextView distanceTextView;
+//    public static TextView distanceTextView1;
+    public TextView locationTextView;
+    public TextView titleTextView;
+    public TextView UserNameTextView;
 
     //public static String locationName;
     private Selected selected;
@@ -66,6 +70,7 @@ public class NavigationBarActivity extends AppCompatActivity {
         headerSection = getLayoutInflater().inflate(R.layout.menu_header, null, false);
         footerSection = getLayoutInflater().inflate(R.layout.menu_footer, null, false);
         UserNameTextView = (TextView) headerSection.findViewById(R.id.usernameEditext);
+        //distanceTextView = (TextView) findViewById(R.id.actionBarViewDistanceTextView);
         distanceTextView = (TextView) findViewById(R.id.actionBarViewDistanceTextView);
         locationTextView = (TextView) findViewById(R.id.actionBarViewPlaceTextView);
         titleTextView = (TextView) findViewById(R.id.actionBarViewTitleTextView);
