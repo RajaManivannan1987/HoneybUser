@@ -220,6 +220,7 @@ public class OnLineMapFragment extends Fragment {
     }
 
     private void getVendorLocation() {
+        Log.d("volleyPostData", "getVendorLocation");
         //if (fragmentType != FragmentType.ONLINE) {
         if (DashBoardActivity.distanceLatLng != null) {
             LatLng location1 = DashBoardActivity.distanceLatLng;
