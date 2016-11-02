@@ -149,7 +149,7 @@ public class ChangeLocationActivity extends CommonActionBar implements PlaceSele
                 if (response.getString("status").equalsIgnoreCase("1")) {
 //                  ChangeLocationSingleton.getInstance().locationChanges(addressAdapter.selectedPosition(), distanceAdapter.getDistance(), null);
                     DashBoardActivity.distanceLatLng = dragPosition;
-                    ChangeLocationSingleton.getInstance().locationChanges(dragPosition, distanceAdapter.getDistance(), null);
+                    ChangeLocationSingleton.getInstance().locationChanges(dragPosition, distanceAdapter.getDistance(), null,"ChangeLocation");
                     ChangeLocationActivity.this.finish();
                 }
 

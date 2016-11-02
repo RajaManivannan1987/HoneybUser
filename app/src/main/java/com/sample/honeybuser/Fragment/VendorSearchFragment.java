@@ -4,9 +4,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -25,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Im033 on 10/18/2016.
@@ -39,7 +44,10 @@ public class VendorSearchFragment extends Fragment {
     int spacing = 30;
     boolean includeEdge = true;
     private TextView txtView;
+    private EditText vendorSearch;
+    private ImageView closeButton;
     private Gson gson = new Gson();
+
     private String lat = "", lang = "";
 
 
@@ -47,6 +55,8 @@ public class VendorSearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_vendor_search, container, false);
         txtView = (TextView) view.findViewById(R.id.noRecordTextView);
+        vendorSearch = (EditText) view.findViewById(R.id.vendorSearch);
+        closeButton = (ImageView) view.findViewById(R.id.vendorCloseButton);
         vendorSearchRecyclerView = (RecyclerView) view.findViewById(R.id.vendorSearchRecyclerView);
         vendorSearchRecyclerView.setHasFixedSize(true);
         vendorSearchRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
@@ -57,6 +67,40 @@ public class VendorSearchFragment extends Fragment {
             @Override
             public void completed() {
                 getVendorList();
+            }
+        });
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                vendorSearch.setText("");
+            }
+        });
+        vendorSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                charSequence = charSequence.toString().toLowerCase();
+                ArrayList<VendorSearchListModel> filterList = new ArrayList<VendorSearchListModel>();
+                for (int j = 0; j < vendorList.size(); j++) {
+                    String text = vendorList.get(j).getName().toLowerCase();
+                    if (text.contains(charSequence)) {
+                        filterList.add(vendorList.get(j));
+                    }
+                }
+                vendorSearchRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+                //vendorSearchRecyclerView.addItemDecoration(new GridSpacingItemDecoration(spancount, spacing, includeEdge));
+                adapter = new VendorSearchAdapter(getActivity(), filterList);
+                vendorSearchRecyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
 

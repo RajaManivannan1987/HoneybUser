@@ -92,7 +92,7 @@ public class AddressRecyclerViewAdapter extends RecyclerView.Adapter<AddressRecy
                 setLatLang.setLat(String.valueOf(addressList.get(position).getLatitude()));
                 setLatLang.setLang(String.valueOf(addressList.get(position).getLongitude()));*/
                 DashBoardActivity.distanceLatLng = new LatLng(Double.parseDouble(addressList.get(position).getLatitude()), Double.parseDouble(addressList.get(position).getLongitude()));
-                ChangeLocationSingleton.getInstance().locationChanges(new LatLng(Double.parseDouble(addressList.get(position).getLatitude()), Double.parseDouble(addressList.get(position).getLongitude())), null, null);
+                ChangeLocationSingleton.getInstance().locationChanges(new LatLng(Double.parseDouble(addressList.get(position).getLatitude()), Double.parseDouble(addressList.get(position).getLongitude())), null, null, "AddressRecyclerView");
 //                ChangeLocationSingleton.getInstance().locationChanges(new LatLng(Double.parseDouble(addressList.get(position).getLatitude()), Double.parseDouble(addressList.get(position).getLongitude())), DistanceSelectRecyclerViewAdapter.distanc, addressList.get(position).getTitle());
 //                activity.startActivity(new Intent(activity, DashBoardActivity.class).putExtra("lat", addressList.get(position).getLatitude()).putExtra("lang", addressList.get(position).getLongitude()));
                 activity.finish();

@@ -83,7 +83,7 @@ public class DistanceSelectRecyclerViewAdapter extends RecyclerView.Adapter<Dist
                         @Override
                         public void onResponse(JSONObject response) throws JSONException {
                             if (response.getString("status").equalsIgnoreCase("1")) {
-                                ChangeLocationSingleton.getInstance().locationChanges(null, distance.get(selected), DashBoardActivity.locationName);
+                                ChangeLocationSingleton.getInstance().locationChanges(null, distance.get(selected), DashBoardActivity.locationName,"DistanceRecyclerView");
                                 PreferenceManager.getDefaultSharedPreferences(context).edit().putString("KmDistance", distance.get(selected)).commit();
                                 context.finish();
                                 //context.startActivity(new Intent(context, DashBoardActivity.class).putExtra("lat", String.valueOf(DashBoardActivity.distanceLatLng.latitude)).putExtra("lang", String.valueOf(DashBoardActivity.distanceLatLng.longitude)));

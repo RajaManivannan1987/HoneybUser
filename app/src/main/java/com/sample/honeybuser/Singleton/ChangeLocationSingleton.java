@@ -27,9 +27,9 @@ public class ChangeLocationSingleton {
         this.changeLocationListeners.add(changeLocationListener);
     }
 
-    public void locationChanges(LatLng latLng, String distance, String address) {
+    public void locationChanges(LatLng latLng, String distance, String address, String classType) {
         for (ChangeLocationListener c : changeLocationListeners) {
-            c.locationChanged(latLng, distance, address);
+            c.locationChanged(latLng, distance, address, classType);
         }
     }
 

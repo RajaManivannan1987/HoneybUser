@@ -38,6 +38,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by IM0033 on 10/5/2016.
@@ -50,10 +53,10 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
     private FragmentType fragmentType = FragmentType.ONLINE;
     private TabLayout.Tab onlineTab, offlineTab;
     private List<Vendor> listVendor = new ArrayList<Vendor>();
-    String adres = "";
     public static LatLng distanceLatLng = null;
     public static String locationName;
-    //private String distance = "5.0", previousDistance = "5.0";
+    private TimerTask timerTask;
+    private Timer timer = new Timer();
 
 
     public void setFragmentType(FragmentType fragmentType) {
@@ -63,11 +66,27 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
     private void onLine() {
         setFragmentType(FragmentType.ONLINE);
         listVendor.clear();
+        if (timer != null) {
+            Log.d("volleyPostData", "Timer started");
+            timer.cancel();
+            //timerTask.cancel();
+        }
     }
 
     private void offLine() {
         setFragmentType(FragmentType.OFFLINE);
         listVendor.clear();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Log.d("volleyPostData", "Timer started");
+                Complete.offerDialogInstance().orderCompleted();
+            }
+        };
+        if (timer != null) {
+            timer.schedule(timerTask, 01, 10000);
+        }
+
     }
 
     @Override
@@ -77,34 +96,20 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
         //setSelectTab("dashboard");
         setSelected(Selected.DASHBOARD);
         enableMyLocation();
+
         tabLayout = (TabLayout) findViewById(R.id.dashboardMapActivityTabLayout);
-
-
         dashBoardViewPager = (CustomViewPager) findViewById(R.id.dashBoardViewPager);
-        //mapChangeIcon = (ImageView) findViewById(R.id.mapChangeIcon);
         onlineTab = tabLayout.newTab().setText(CommonMethods.getTabHeading(DashBoardActivity.this, FragmentType.ONLINE, true));
         tabLayout.addTab(onlineTab);
         offlineTab = tabLayout.newTab().setText(CommonMethods.getTabHeading(DashBoardActivity.this, FragmentType.OFFLINE, false));
         tabLayout.addTab(offlineTab);
         dashBoardViewPager.setSwipeable(false);
         dashBoardViewPager.setAdapter(new DashBoardViewPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount()));
-
+//        dashBoardViewPager.setCurrentItem(0);
         dashBoardViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(this);
-//
-//        ChangeLocationSingleton.getInstance().setChangeLocationListener(new ChangeLocationListener() {
-//            @Override
-//            public void locationChanged(LatLng latLng, String distance, String address) {
-//                if (distance != null && !distance.equalsIgnoreCase("")) {
-//                    //DashBoardActivity.this.distance = distance;
-////                    previousDistance = distance;
-//                    // distanceTextView.setText(" " + distance + " km ");
-//                }
-//
-//            }
-//        });
-    }
 
+    }
 
     private boolean enableMyLocation() {
         if (ActivityCompat.checkSelfPermission(DashBoardActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(DashBoardActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -147,14 +152,42 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
                 onLine();
                 onlineTab.setText(CommonMethods.getTabHeading(DashBoardActivity.this, FragmentType.ONLINE, true));
                 offlineTab.setText(CommonMethods.getTabHeading(DashBoardActivity.this, FragmentType.OFFLINE, false));
+                /*timerTask = new TimerTask() {
+                    @Override
+                    public void run() {
+                        Complete.offerDialogInstance().orderCompleted();
+                        Log.e(TAG, "Timer start");
+                    }
+                };
+                try {
+                    timer.schedule(timerTask, 01, 10000);
+                } catch (Exception e) {
+                    Log.e(TAG, e.toString());
+                }*/
+
                 break;
             case 1:
                 offLine();
                 onlineTab.setText(CommonMethods.getTabHeading(DashBoardActivity.this, FragmentType.ONLINE, false));
                 offlineTab.setText(CommonMethods.getTabHeading(DashBoardActivity.this, FragmentType.OFFLINE, true));
-
+                /*if (timer != null)
+                    timer.cancel();
+                Log.e(TAG, "Timer cancel");
+                if (timerTask != null)
+                    timerTask.cancel();*/
                 break;
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     @Override

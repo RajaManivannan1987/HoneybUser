@@ -1,10 +1,13 @@
 package com.sample.honeybuser.Fragment;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +37,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by IM0033 on 10/6/2016.
@@ -46,32 +52,17 @@ public class VendorListFragment extends Fragment {
     private Gson gson = new Gson();
     private List<OnLineVendorListModel> onLineList = new ArrayList<OnLineVendorListModel>();
     private List<OffLineVendorListModel> offLineList = new ArrayList<OffLineVendorListModel>();
-    private String lat, lang, distance;
+    private String lat, lang, distance, assress;
     public static LatLng latLngValue = null;
     private TextView offLineToastText, onLineToastText;
     private FragmentType fragmentType;
-
-    // private Bundle bundle;
-
-    public void setFragmentType(FragmentType fragmentType) {
-        this.fragmentType = fragmentType;
-    }
-
-    public static VendorListFragment listInstance() {
-        VendorListFragment fragment = new VendorListFragment();
-        fragment.setFragmentType(FragmentType.ONLINE);
-        return fragment;
-    }
+    TimerTask timerTask;
+    Timer timer = new Timer();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_vendor_list, container, false);
-       /* bundle = this.getArguments();
-        if (bundle != null) {
-            lat = bundle.getString("lat");
-            lang = bundle.getString("lang");
-        }*/
         onLineToastText = (TextView) view.findViewById(R.id.onLineToastText);
         offLineToastText = (TextView) view.findViewById(R.id.offLineToastText);
 
@@ -86,48 +77,73 @@ public class VendorListFragment extends Fragment {
 
         onLineRecyclerView.setAdapter(onLineAdapter);
         offLineVendorRecyclerView.setAdapter(offLineAdapter);
+
         Complete.offerDialogInstance().setListener(new SaveCompletedInterface() {
             @Override
             public void completed() {
                 getData();
             }
         });
-        ChangeLocationSingleton.getInstance().setChangeLocationListener(new ChangeLocationListener() {
-            @Override
-            public void locationChanged(LatLng latLng, String distance, String address) {
-                if (latLng != null) {
-                }
 
-                if (distance != null && !distance.equalsIgnoreCase("")) {
-                    VendorListFragment.this.distance = distance;
-                    // NavigationBarActivity.distanceTextView.setText(" " + distance + " km ");
-                   /* if (mapAddMarker != null) {
-                        mapAddMarker.radiCircle(Float.parseFloat(distance) * 1000);
-                    }*/
-                    /*if (!previousDistance.equalsIgnoreCase(distance)) {
-                        if (mapAddMarker != null) {
-                            mapAddMarker.changeZoomLevel(Float.parseFloat(distance) * 1000);
-                        }
-                    }*/
-                    //previousDistance = distance;
-                }
-
-            }
-        });
         return view;
+    }
+
+    private void getMarkerMovedAddress(LatLng target) {
+        //String adres="";
+
+        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+        if (geocoder.isPresent()) {
+            try {
+                //DashBoardActivity.distanceLatLng = target;
+                List<Address> addresses = geocoder.getFromLocation(target.latitude, target.longitude, 1);
+                if (addresses != null && addresses.size() > 0) {
+                    if (addresses.get(0).getSubLocality() != null && !addresses.get(0).getSubLocality().equalsIgnoreCase(""))
+                        assress = addresses.get(0).getSubLocality();
+                    else if (addresses.get(0).getLocality() != null && !addresses.get(0).getLocality().equalsIgnoreCase("")) {
+                        assress = addresses.get(0).getLocality();
+                    }
+                }
+            } catch (Exception e) {
+                Log.e(TAG, e.getMessage());
+            }
+        }
+
+        Log.d(TAG, assress);
     }
 
     @Override
     public void onResume() {
+        getData();
         super.onResume();
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+       /* Log.e(TAG, "OnPause");
+        if (timer != null)
+            timer.cancel();
+        if (timerTask != null)
+            timerTask.cancel();*/
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            getData();
-        }
+//        if (isVisibleToUser) {
+//            TimerTask timerTask = new TimerTask() {
+//                @Override
+//                public void run() {
+//                    getData();
+//                    // Complete.offerDialogInstance().orderCompleted();
+//                    Log.e(TAG, "Timer start");
+//                }
+//            };
+//            timer = new Timer();
+//            timer.schedule(timerTask, 10, 10000);
+//
+//        }
     }
 
     private void getData() {
@@ -135,11 +151,13 @@ public class VendorListFragment extends Fragment {
             lat = String.valueOf(DashBoardActivity.distanceLatLng.latitude);
             lang = String.valueOf(DashBoardActivity.distanceLatLng.longitude);
             latLngValue = new LatLng(Double.parseDouble(lat), Double.parseDouble(lang));
+            getMarkerMovedAddress(latLngValue);
         } else {
             if (MyApplication.locationInstance().getLocation() != null) {
                 lat = String.valueOf(MyApplication.locationInstance().getLocation().getLatitude());
                 lang = String.valueOf(MyApplication.locationInstance().getLocation().getLongitude());
                 latLngValue = new LatLng(Double.parseDouble(lat), Double.parseDouble(lang));
+                getMarkerMovedAddress(latLngValue);
             }
         }
         GetResponseFromServer.getWebService(getActivity(), TAG).getOnlineVendor(getActivity(), lat, lang, "", new VolleyResponseListerner() {
@@ -150,6 +168,7 @@ public class VendorListFragment extends Fragment {
                 if (response.getString("status").equalsIgnoreCase("1")) {
                     JSONObject jsonObject = response.getJSONObject("data");
                     distance = jsonObject.getString("distance");
+                    NavigationBarActivity.distanceTextView.setText(" " + distance + " km ");
                     for (int i = 0; i < jsonObject.getJSONArray("online").length(); i++) {
                         onLineList.add(gson.fromJson(jsonObject.getJSONArray("online").getJSONObject(i).toString(), OnLineVendorListModel.class));
                     }
@@ -178,7 +197,7 @@ public class VendorListFragment extends Fragment {
                 }
                 onLineAdapter.notifyDataSetChanged();
                 offLineAdapter.notifyDataSetChanged();
-                ChangeLocationSingleton.getInstance().locationChanges(latLngValue, distance, null);
+                ChangeLocationSingleton.getInstance().locationChanges(null, null, assress, "VendorListFragment");
             }
 
             @Override

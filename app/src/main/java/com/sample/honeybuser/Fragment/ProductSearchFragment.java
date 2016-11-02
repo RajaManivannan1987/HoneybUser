@@ -5,9 +5,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.sample.honeybuser.Activity.DashBoardActivity;
@@ -37,6 +41,8 @@ public class ProductSearchFragment extends Fragment {
     private ArrayList<FiveKmProductSearchModel> fiveKmVendorList = new ArrayList<>();
     private Product3KmSearchAdapter adapter3Km;
     private Product05SearchAdapter adapter05km;
+    private EditText productSearch;
+    private ImageView closeButton;
     int spancount = 3;
     int spacing = 30;
     boolean includeEdge = true;
@@ -50,6 +56,8 @@ public class ProductSearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_product_search, container, false);
         threeKmVendorRecyclerView = (RecyclerView) view.findViewById(R.id.threeKmVendorRecyclerView);
         fiveKmVendorRecyclerView = (RecyclerView) view.findViewById(R.id.fiveKmVendorRecyclerView);
+        productSearch = (EditText) view.findViewById(R.id.productSearch);
+        closeButton = (ImageView) view.findViewById(R.id.productCloseButton);
         threeKmVendorRecyclerView.setHasFixedSize(true);
         fiveKmVendorRecyclerView.setHasFixedSize(true);
         fiveKmVendorRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
@@ -61,7 +69,51 @@ public class ProductSearchFragment extends Fragment {
         fiveKmVendorRecyclerView.setAdapter(adapter05km);
         threeKmVendorRecyclerView.setAdapter(adapter3Km);
 
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                productSearch.setText("");
+            }
+        });
+        productSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                charSequence = charSequence.toString().toLowerCase();
+                ArrayList<ThreeKmProductSearchModel> threeKmfilterList = new ArrayList<>();
+                ArrayList<FiveKmProductSearchModel> fiveKmfilterList = new ArrayList<>();
+                for (int j = 0; j < threeKmVendorList.size(); j++) {
+                    String threeKmText = threeKmVendorList.get(j).getBusiness_name().toLowerCase();
+                    if (threeKmText.contains(charSequence)) {
+                        threeKmfilterList.add(threeKmVendorList.get(j));
+                    }
+                }
+                for (int k = 0; k < fiveKmVendorList.size(); k++) {
+                    String fiveKmText = fiveKmVendorList.get(k).getBusiness_name().toLowerCase();
+                    if (fiveKmText.contains(charSequence)) {
+                        fiveKmfilterList.add(fiveKmVendorList.get(k));
+                    }
+                }
+                fiveKmVendorRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+                threeKmVendorRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+                adapter3Km = new Product3KmSearchAdapter(getActivity(), threeKmfilterList);
+                adapter05km = new Product05SearchAdapter(getActivity(), fiveKmfilterList);
+                fiveKmVendorRecyclerView.setAdapter(adapter05km);
+                threeKmVendorRecyclerView.setAdapter(adapter3Km);
+                adapter05km.notifyDataSetChanged();
+                adapter3Km.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         return view;
     }
 

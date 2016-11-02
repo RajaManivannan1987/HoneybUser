@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.sample.honeybuser.Adapter.FollowersAdapter;
+import com.sample.honeybuser.Application.MyApplication;
 import com.sample.honeybuser.CommonActionBar.NavigationBarActivity;
 import com.sample.honeybuser.EnumClass.Selected;
 import com.sample.honeybuser.InterFaceClass.ActionCompleted;
@@ -72,8 +73,16 @@ public class FollowerActivity extends NavigationBarActivity {
     }
 
     private void getData() {
-        String lat = String.valueOf(DashBoardActivity.distanceLatLng.latitude);
-        String lang = String.valueOf(DashBoardActivity.distanceLatLng.longitude);
+        String lat = null,lang=null;
+        if (DashBoardActivity.distanceLatLng != null) {
+            lat = String.valueOf(DashBoardActivity.distanceLatLng.latitude);
+            lang = String.valueOf(DashBoardActivity.distanceLatLng.longitude);
+        } else {
+            if (MyApplication.locationInstance().getLocation() != null) {
+                lat = String.valueOf(MyApplication.locationInstance().getLocation().getLatitude());
+                lang = String.valueOf(MyApplication.locationInstance().getLocation().getLongitude());
+            }
+        }
         String type = "sales";
         GetResponseFromServer.getWebService(FollowerActivity.this, TAG).getFollowerList(FollowerActivity.this, lat, lang, type, new VolleyResponseListerner() {
             @Override

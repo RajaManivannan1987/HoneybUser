@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -49,7 +50,7 @@ public class NavigationBarActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private View headerSection, footerSection;
     public static TextView distanceTextView;
-//    public static TextView distanceTextView1;
+    //    public static TextView distanceTextView1;
     public TextView locationTextView;
     public TextView titleTextView;
     public TextView UserNameTextView;
@@ -173,7 +174,8 @@ public class NavigationBarActivity extends AppCompatActivity {
         if (selected == Selected.DASHBOARD) {
             ChangeLocationSingleton.getInstance().setChangeLocationListener(new ChangeLocationListener() {
                 @Override
-                public void locationChanged(LatLng latLng, String distance, String address) {
+                public void locationChanged(LatLng latLng, String distance, String address, String classType) {
+                    Log.d("OnLineMapFragment", "NavigationBar " + classType);
                     if (distance != null && !distance.equalsIgnoreCase("")) {
                         distanceTextView.setText(" " + distance + " km ");
                     }
