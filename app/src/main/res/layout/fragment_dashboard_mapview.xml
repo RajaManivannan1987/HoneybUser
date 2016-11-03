@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -42,107 +43,148 @@
             android:background="@color/background_color"
             android:visibility="gone">
 
-            <LinearLayout
-                android:id="@+id/mobileStoreFragmentVendorLinearLayout"
+            <android.support.v7.widget.CardView
+                android:id="@+id/onlineMapCardView"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
+                android:layout_height="110dp"
                 android:layout_marginBottom="5dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/list_bg"
-                android:gravity="center"
-                android:padding="1dp"
-                android:visibility="gone">
+                android:layout_marginTop="7dp"
+                app:cardUseCompatPadding="true"
+                app:elevation="0dp">
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:padding="0dp">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/mobileStoreFragmentVendorCircleImageView"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginStart="10dp"
-                        android:visibility="visible" />
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="0dp"
-                        android:layout_marginStart="0dp"
-                        android:gravity="center_vertical"
+                        android:layout_weight=".75">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/onlineMap_profile_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            app:civ_border_color="#f3f3f3"
+                            app:civ_border_width=".5dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1.3"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/onlineMapOnlineImageView"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:paddingTop="6dp"
+                                android:src="@drawable/on" />
 
                             <TextView
-                                android:id="@+id/mobileStoreFragmentVendorNameShopTextView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Shop Name"
-                                android:textSize="18dp" />
-
-
+                                android:id="@+id/onlineMapNameTextView"
+                                style="@style/textview.style"
+                                android:layout_width="match_parent"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:paddingLeft="3dp"
+                                android:text="" />
                         </LinearLayout>
 
                         <TextView
-                            android:id="@+id/mobileStoreFragmentVendorDistanceShopTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="3dp"
+                            android:id="@+id/onlineMapKmTextView"
+                            style="@style/textview.style"
+                            android:layout_width="match_parent"
+                            android:layout_marginTop="7dp"
+                            android:maxLines="1"
+                            android:paddingLeft="5dp"
                             android:text=""
-                            android:textSize="14dp" />
+                            android:textColor="@color/textcolorLight"
+                            android:textSize="@dimen/text_sixe_small" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:orientation="horizontal">
 
-                            <RatingBar
-                                android:id="@+id/mobileStoreFragmentVendorRatingBar"
-                                style="@style/RatingBar.Indicator"
-                                android:layout_width="wrap_content"
-                                android:layout_height="10dp"
-                                android:isIndicator="true"
-                                android:numStars="5"
-                                android:progressDrawable="@drawable/rating_bar"
-                                android:stepSize="1" />
-
-                            <TextView
-                                android:id="@+id/mobileStoreFragmentVendorRatingCountTextView"
-                                android:layout_width="wrap_content"
+                            <ImageView
+                                android:id="@+id/onlineMapnotifyImage"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:textSize="10sp" />
+                                android:layout_weight=".5" />
+
+                            <ImageView
+                                android:id="@+id/onlineMapcallImage"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5"
+                                android:src="@drawable/call" />
+
+                            <ImageView
+                                android:id="@+id/onlineMaplocateImage"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5"
+                                android:src="@drawable/locate" />
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5" />
+
                         </LinearLayout>
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/textcolorGray"></View>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".6"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/onlineMapratingImageView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/onlineMapRatingTextView"
+                            style="@style/textview.style"
+                            android:layout_marginTop="3dp"
+                            android:text=""
+                            android:textSize="@dimen/text_sixe_small" />
+
+                        <TextView
+                            android:id="@+id/onlineMapRatingCountTextView"
+                            style="@style/textview.style"
+                            android:layout_marginTop="3dp"
+                            android:text=""
+                            android:textColor="@color/textcolorLight"
+                            android:textSize="@dimen/text_sixe_small" />
+                    </LinearLayout>
                 </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/mobileStoreFragmentVendorMessageImageView"
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:paddingEnd="10dp"
-                    android:paddingStart="10dp"
-                    android:src="@drawable/on" />
-
-                <ImageView
-                    android:id="@+id/mobileStoreFragmentVendorCallImageView"
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:paddingEnd="10dp"
-                    android:paddingStart="10dp"
-                    android:src="@drawable/call" />
-            </LinearLayout>
+            </android.support.v7.widget.CardView>
         </LinearLayout>
     </RelativeLayout>
 </FrameLayout>

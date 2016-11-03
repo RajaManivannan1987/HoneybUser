@@ -108,7 +108,7 @@ public class VendorListFragment extends Fragment {
             }
         }
 
-        Log.d(TAG, assress);
+//        Log.d(TAG, assress);
     }
 
     @Override

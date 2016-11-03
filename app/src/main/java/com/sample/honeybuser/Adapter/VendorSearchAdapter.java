@@ -53,7 +53,6 @@ public class VendorSearchAdapter extends RecyclerView.Adapter<VendorSearchAdapte
         } else {
             holder.vendorProfileImageView.setImageResource(R.drawable.no_image);
         }
-
         if (vendorList.get(position).getIs_online().equalsIgnoreCase("Y")) {
             holder.vendorSearchOnlineImageView.setImageResource(R.drawable.on);
             holder.vendorSearchLocateImageView.setVisibility(View.VISIBLE);

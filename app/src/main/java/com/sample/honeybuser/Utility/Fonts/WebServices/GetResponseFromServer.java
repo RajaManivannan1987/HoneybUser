@@ -104,7 +104,7 @@ public class GetResponseFromServer {
         setResponse1(context, ConstandValue.SERVER_URL + "vendor/list_api", listerner, jsonObject);
     }
 
-    public void geOfflineVendor(Context context, String latitude, String longitude, String type, final VolleyResponseListerner listerner) {
+    public void getOnlineVendor1(Context context, String latitude, String longitude, String type, final VolleyResponseListerner listerner) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("user_id", session.getUserId());
@@ -112,7 +112,7 @@ public class GetResponseFromServer {
             jsonObject.put("latitude", latitude);
             jsonObject.put("longitude", longitude);
             jsonObject.put("os_type", "android");
-            jsonObject.put("type", type);
+            jsonObject.put("status", type);
             jsonObject.put("language", session.getLanguage());
         } catch (JSONException e) {
             e.printStackTrace();

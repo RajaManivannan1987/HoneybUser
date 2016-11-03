@@ -6,15 +6,18 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,6 +35,8 @@ import com.sample.honeybuser.Activity.DashBoardActivity;
 import com.sample.honeybuser.Activity.VendorDetailActivity;
 import com.sample.honeybuser.Application.MyApplication;
 import com.sample.honeybuser.InterFaceClass.ChangeLocationListener;
+import com.sample.honeybuser.InterFaceClass.DialogBoxInterface;
+import com.sample.honeybuser.InterFaceClass.SaveCompletedInterface;
 import com.sample.honeybuser.InterFaceClass.TouchInterface;
 import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
 import com.sample.honeybuser.MapIntegration.MapAddMarker;
@@ -41,7 +46,9 @@ import com.sample.honeybuser.Models.Vendor;
 import com.sample.honeybuser.R;
 import com.sample.honeybuser.Singleton.ChangeLocationSingleton;
 import com.sample.honeybuser.Singleton.Complete;
+import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.AlertDialogManager;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
+import com.sample.honeybuser.Utility.Fonts.WebServices.CommonWebserviceMethods;
 import com.sample.honeybuser.Utility.Fonts.WebServices.ConstandValue;
 import com.sample.honeybuser.Utility.Fonts.WebServices.GetResponseFromServer;
 import com.squareup.picasso.Picasso;
@@ -53,6 +60,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -75,10 +84,14 @@ public class OnLineMapFragment extends Fragment {
     private boolean flagIsOnTouched = true;
     private LatLng location;
     private String adres = "";
-    private LinearLayout vendorItemLinearLayout, vendorItemBackgroundLinearLayout;
+    private LinearLayout vendorItemLinearLayout;
+    private CardView vendorItemBackgroundCardView;
     private RelativeLayout mapRelativeLayout;
-    private TextView vendorNameTextView;
+    private TextView vendorNameTextView, onlineMapRatingTextView, onlineMapRatingCountTextView, onlineMapKmTextView;
     private CircleImageView vendorLogoCircleImageView;
+    private ImageView onlineMapnotifyImage, onlineMapcallImage, onlineMaplocateImage, onlineMapratingImageView;
+    private Timer timer;
+    private TimerTask timerTask;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -87,17 +100,33 @@ public class OnLineMapFragment extends Fragment {
         touchFrameLayout = (TouchableWrapper) view.findViewById(R.id.onlineMapFragmentTouchableWrapper);
         mapView = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapFragment);
         vendorItemLinearLayout = (LinearLayout) view.findViewById(R.id.mobileStoreFragmentVendorbackGroundLinearLayout);
-        vendorItemBackgroundLinearLayout = (LinearLayout) view.findViewById(R.id.mobileStoreFragmentVendorLinearLayout);
+        vendorItemBackgroundCardView = (CardView) view.findViewById(R.id.onlineMapCardView);
         mapRelativeLayout = (RelativeLayout) view.findViewById(R.id.mobileStoreFragmentLocationMapRelativeLayout);
-        vendorNameTextView = (TextView) view.findViewById(R.id.mobileStoreFragmentVendorNameShopTextView);
-        vendorLogoCircleImageView = (CircleImageView) view.findViewById(R.id.mobileStoreFragmentVendorCircleImageView);
-
+        vendorNameTextView = (TextView) view.findViewById(R.id.onlineMapNameTextView);
+        vendorLogoCircleImageView = (CircleImageView) view.findViewById(R.id.onlineMap_profile_image);
+        onlineMapnotifyImage = (ImageView) view.findViewById(R.id.onlineMapnotifyImage);
+        onlineMapcallImage = (ImageView) view.findViewById(R.id.onlineMapcallImage);
+        onlineMaplocateImage = (ImageView) view.findViewById(R.id.onlineMaplocateImage);
+        onlineMapratingImageView = (ImageView) view.findViewById(R.id.onlineMapratingImageView);
+        onlineMapRatingTextView = (TextView) view.findViewById(R.id.onlineMapRatingTextView);
+        onlineMapRatingCountTextView = (TextView) view.findViewById(R.id.onlineMapRatingCountTextView);
+        onlineMapKmTextView = (TextView) view.findViewById(R.id.onlineMapKmTextView);
+        Complete.getGetMapList().setListener(new SaveCompletedInterface() {
+            @Override
+            public void completed() {
+                getVendorLocation();
+            }
+        });
 
         touchFrameLayout.setTouchInterface(new TouchInterface() {
             @Override
             public void onPressed() {
+                if (timer != null) {
+                    timer.cancel();
+                }
                 flagIsOnTouched = false;
                 isMove = false;
+                mapAddMarker.removeAll();
                 hideVendorItem();
             }
 
@@ -106,11 +135,39 @@ public class OnLineMapFragment extends Fragment {
                 flagIsOnTouched = true;
                 if (isMove) {
                     DashBoardActivity.distanceLatLng = googleMap.getCameraPosition().target;
-                    getVendorLocation();
-                    getMarkerMovedAddress(googleMap.getCameraPosition().target);
-                    Complete.offerDialogInstance().orderCompleted();
+                    timerTask = new TimerTask() {
+                        @Override
+                        public void run() {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    getVendorLocation();
+                                    getMarkerMovedAddress(googleMap.getCameraPosition().target);
+                                    Complete.offerDialogInstance().orderCompleted();
+                                }
+                            });
+
+                        }
+                    };
+                    timer = new Timer();
+                    timer.schedule(timerTask, 01, 8000);
+
+                    //   By Raja on today 3.11.2016
+
+//
+//                    Handler handler = new Handler();
+//                    handler.postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            getVendorLocation();
+//                        }
+//                    }, 5);
+//
+
+//                    Complete.offerDialogInstance().orderCompleted();
                 }
                 isMove = false;
+
             }
 
             @Override
@@ -138,7 +195,6 @@ public class OnLineMapFragment extends Fragment {
                     @Override
                     public void onCameraMove() {
                         isMove = true;
-                        //Log.d("volleyPostData", "onCameraMove");
                     }
                 });
                 if (MyApplication.locationInstance() != null && MyApplication.locationInstance().getLocation() != null) {
@@ -190,7 +246,6 @@ public class OnLineMapFragment extends Fragment {
         ChangeLocationSingleton.getInstance().setChangeLocationListener(new ChangeLocationListener() {
             @Override
             public void locationChanged(LatLng latLng, String distance, String address, String classType) {
-
                 Log.d("OnLineMapFragment", classType);
                 if (latLng != null) {
                     if (googleMap != null) {
@@ -214,14 +269,13 @@ public class OnLineMapFragment extends Fragment {
 
             }
         });
-
         return view;
     }
 
     private void hideVendorItem() {
         //mapAddMarker.removeAll();
         vendorItemLinearLayout.setVisibility(View.GONE);
-        vendorItemBackgroundLinearLayout.setVisibility(View.GONE);
+        //vendorItemBackgroundCardView.setVisibility(View.GONE);
     }
 
     private void getVendorLocation() {
@@ -240,32 +294,12 @@ public class OnLineMapFragment extends Fragment {
                 location = new LatLng(MyApplication.locationInstance().getLocation().getLatitude(), MyApplication.locationInstance().getLocation().getLongitude());
                 getVendorLocationWebService(location);
                 ChangeLocationSingleton.getInstance().locationChanges(location, null, null, "OnLineMapFragment");
-
                 Log.d("OnLineMapFragment", "getVendorLocation +location ");
             }
         }
-       /* if (googleMap.getCameraPosition() != null) {
-            LatLng location1 = googleMap.getCameraPosition().target;
-            if (location1 != null) {
-                getVendorLocationWebService(location1);
-            }
-        } else {
-            // } else {
-            if (MyApplication.locationInstance().getLocation() != null) {
-                location = new LatLng(MyApplication.locationInstance().getLocation().getLatitude(), MyApplication.locationInstance().getLocation().getLongitude());
-                getVendorLocationWebService(location);
-            }
-        }*/
     }
 
     private void getVendorLocationWebService(final LatLng loc) {
-
-       /* if (isMove) {
-            Log.d("volleyPostData", "getVendorLocationWebService + isMove");
-            DashBoardActivity.distanceLatLng = new LatLng(loc.latitude, loc.longitude);
-            Complete.offerDialogInstance().orderCompleted();
-        }*/
-
         GetResponseFromServer.getWebService(getActivity(), TAG).getOnlineVendor(getActivity(), String.valueOf(loc.latitude), String.valueOf(loc.longitude), "online", new VolleyResponseListerner() {
             @Override
             public void onResponse(JSONObject response) throws JSONException {
@@ -281,6 +315,7 @@ public class OnLineMapFragment extends Fragment {
 
 
     private void urlResponse(JSONObject response) throws JSONException {
+        Log.d(TAG, response.toString());
         JSONArray jsonArrayVendor = response.getJSONObject("data").getJSONArray("online");
         listVendor.clear();
         for (int i = 0; i < jsonArrayVendor.length(); i++) {
@@ -320,24 +355,77 @@ public class OnLineMapFragment extends Fragment {
         Log.d(TAG, adres);
     }
 
-    private void setVendorDetailsItem(Vendor vendor) {
+    private void setVendorDetailsItem(final Vendor vendor) {
         if (vendor != null) {
             vendorItemLinearLayout.setVisibility(View.VISIBLE);
-            vendorItemBackgroundLinearLayout.setVisibility(View.VISIBLE);
-            if (vendor.getLogo() != null)
-                Picasso.with(getActivity()).load(vendor.getLogo()).into(vendorLogoCircleImageView);
-            vendorNameTextView.setText(vendor.getName());
-            /*if (vendor.getStar_rating() != null)
-                vendorRatingBar.setRating(Float.parseFloat(vendor.getStar_rating()));
-            else
-                vendorRatingBar.setRating(0);
-*/
+            //vendorItemBackgroundCardView.setVisibility(View.VISIBLE);
             callPhone = vendor.getPhone_no();
             vendorId = vendor.getVendor_id();
-            vendorItemBackgroundLinearLayout.setOnClickListener(new View.OnClickListener() {
+            vendorNameTextView.setText(vendor.getName());
+            onlineMapKmTextView.setText(vendor.getDistance() + " Km away");
+
+            if (vendor.getNew_vendor().startsWith("Y")) {
+                onlineMapratingImageView.setImageResource(R.drawable.new_icon);
+                onlineMapRatingTextView.setVisibility(View.GONE);
+                onlineMapRatingCountTextView.setVisibility(View.GONE);
+            } else {
+                onlineMapratingImageView.setImageResource(R.drawable.star);
+                onlineMapRatingTextView.setText(vendor.getStar_rating());
+                onlineMapRatingCountTextView.setText(vendor.getRating_count() + " Ratings)");
+            }
+            if (vendor.getFollow().equalsIgnoreCase("Y")) {
+                onlineMapnotifyImage.setImageResource(R.drawable.notify);
+            } else {
+                onlineMapnotifyImage.setImageResource(R.drawable.nonotify);
+            }
+            if (vendor.getLogo() != null) {
+                Picasso.with(getActivity()).load(vendor.getLogo()).into(vendorLogoCircleImageView);
+            } else {
+                vendorLogoCircleImageView.setImageResource(R.drawable.no_image);
+            }
+
+            onlineMaplocateImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CommonWebserviceMethods.getVendorLocation(getActivity(), TAG, vendorId);
+                }
+            });
+            onlineMapcallImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CommonMethods.callFunction(getActivity(), callPhone);
+                }
+            });
+            vendorItemBackgroundCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(getActivity(), VendorDetailActivity.class).putExtra("vendor_id", vendorId));
+                    vendorItemLinearLayout.setVisibility(View.GONE);
+                }
+            });
+            onlineMapnotifyImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (vendor.getFollow().equalsIgnoreCase("N")) {
+                        CommonWebserviceMethods.setFollows(getActivity(), TAG, vendor.getVendor_id(), "6");
+                        vendorItemLinearLayout.setVisibility(View.GONE);
+                    } else {
+                        AlertDialogManager.listenerDialogBox(getActivity(), "Remove!", "Remove alert?", new DialogBoxInterface() {
+                            @Override
+                            public void yes() {
+                                CommonWebserviceMethods.removeFollows(getActivity(), TAG, vendor.getVendor_id(), "6");
+                                vendorItemLinearLayout.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void no() {
+
+                            }
+                        });
+
+                    }
+
                 }
             });
         }
@@ -384,7 +472,6 @@ public class OnLineMapFragment extends Fragment {
 
     @Override
     public void onResume() {
-        //getVendorLocation();
         super.onResume();
 
     }

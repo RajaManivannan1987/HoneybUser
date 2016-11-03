@@ -56,7 +56,7 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
     public static LatLng distanceLatLng = null;
     public static String locationName;
     private TimerTask timerTask;
-    private Timer timer = new Timer();
+    private Timer timer;
 
 
     public void setFragmentType(FragmentType fragmentType) {
@@ -66,25 +66,31 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
     private void onLine() {
         setFragmentType(FragmentType.ONLINE);
         listVendor.clear();
-        if (timer != null) {
-            Log.d("volleyPostData", "Timer started");
-            timer.cancel();
-            //timerTask.cancel();
-        }
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Log.d("volleyPostData", "Timer started");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Complete.offerDialogInstance().orderCompleted();
+                    }
+                });
+
+            }
+        };
+        timer = new Timer();
+        timer.schedule(timerTask, 01, 500000);
+
     }
 
     private void offLine() {
         setFragmentType(FragmentType.OFFLINE);
         listVendor.clear();
-        timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                Log.d("volleyPostData", "Timer started");
-                Complete.offerDialogInstance().orderCompleted();
-            }
-        };
         if (timer != null) {
-            timer.schedule(timerTask, 01, 10000);
+            Log.d("volleyPostData", "Timer cancel");
+            timer.cancel();
+            //timerTask.cancel();
         }
 
     }
@@ -96,7 +102,6 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
         //setSelectTab("dashboard");
         setSelected(Selected.DASHBOARD);
         enableMyLocation();
-
         tabLayout = (TabLayout) findViewById(R.id.dashboardMapActivityTabLayout);
         dashBoardViewPager = (CustomViewPager) findViewById(R.id.dashBoardViewPager);
         onlineTab = tabLayout.newTab().setText(CommonMethods.getTabHeading(DashBoardActivity.this, FragmentType.ONLINE, true));
@@ -105,9 +110,10 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
         tabLayout.addTab(offlineTab);
         dashBoardViewPager.setSwipeable(false);
         dashBoardViewPager.setAdapter(new DashBoardViewPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount()));
-//        dashBoardViewPager.setCurrentItem(0);
+        dashBoardViewPager.setCurrentItem(0);
         dashBoardViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(this);
+        onLine();
 
     }
 
@@ -152,29 +158,12 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
                 onLine();
                 onlineTab.setText(CommonMethods.getTabHeading(DashBoardActivity.this, FragmentType.ONLINE, true));
                 offlineTab.setText(CommonMethods.getTabHeading(DashBoardActivity.this, FragmentType.OFFLINE, false));
-                /*timerTask = new TimerTask() {
-                    @Override
-                    public void run() {
-                        Complete.offerDialogInstance().orderCompleted();
-                        Log.e(TAG, "Timer start");
-                    }
-                };
-                try {
-                    timer.schedule(timerTask, 01, 10000);
-                } catch (Exception e) {
-                    Log.e(TAG, e.toString());
-                }*/
 
                 break;
             case 1:
                 offLine();
                 onlineTab.setText(CommonMethods.getTabHeading(DashBoardActivity.this, FragmentType.ONLINE, false));
                 offlineTab.setText(CommonMethods.getTabHeading(DashBoardActivity.this, FragmentType.OFFLINE, true));
-                /*if (timer != null)
-                    timer.cancel();
-                Log.e(TAG, "Timer cancel");
-                if (timerTask != null)
-                    timerTask.cancel();*/
                 break;
         }
     }
@@ -182,6 +171,9 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
     @Override
     protected void onPause() {
         super.onPause();
+        if (timer != null) {
+            timer.cancel();
+        }
 
     }
 

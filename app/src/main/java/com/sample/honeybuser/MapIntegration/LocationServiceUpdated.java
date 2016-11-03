@@ -92,7 +92,7 @@ public class LocationServiceUpdated extends Service {
                         if (location != null) {
 
 //                            By Raja
-//                          sendLocation();
+//                            sendLocation();
                         }
                     }
                 };

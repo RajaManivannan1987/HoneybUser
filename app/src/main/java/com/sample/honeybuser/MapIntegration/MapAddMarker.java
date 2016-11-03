@@ -27,7 +27,7 @@ public class MapAddMarker {
     private GoogleMap googleMap;
     private List<Marker> markerList = new ArrayList<Marker>();
     private Circle circle;
-    private VolleyClass volleyClass;
+//    private VolleyClass volleyClass;
     private MapUtils mapUtils;
     private Bitmap locateBitMap;
     private int size;
@@ -36,7 +36,7 @@ public class MapAddMarker {
         this.activity = activity;
         this.googleMap = googleMap;
         mapUtils = new MapUtils();
-        volleyClass = new VolleyClass(activity, TAG);
+//        volleyClass = new VolleyClass(activity, TAG);
         circle = createCircle(googleMap.getCameraPosition().target);
         size = (int) activity.getResources().getDimension(R.dimen.vendor_map_icon);
 //        locateBitMap = getResizedBitmap(BitmapFactory.decodeResource(activity.getResources(), R.drawable.map_locatepointer), size, size);

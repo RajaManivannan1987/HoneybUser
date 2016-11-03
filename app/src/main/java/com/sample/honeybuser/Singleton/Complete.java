@@ -13,6 +13,7 @@ public class Complete {
     private static Complete offerDialogInstance = new Complete();
     private static Complete getVendorSearch = new Complete();
     private static Complete getBusinessList = new Complete();
+    private static Complete getMapList = new Complete();
 
 
     private SaveCompletedInterface completedInterface;
@@ -41,6 +42,9 @@ public class Complete {
         return ratingReloadDialogInstance;
     }
 
+    public static Complete getGetMapList() {
+        return getMapList;
+    }
 
     private Complete() {
     }

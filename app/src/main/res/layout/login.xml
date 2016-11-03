@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/landingbg"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin">
 
@@ -46,9 +48,9 @@
                     <EditText
                         android:id="@+id/phoneNoEditText"
                         style="@style/editText.stype"
+                        android:hint="Phone Number"
                         android:inputType="number"
-                        android:maxLength="10"
-                        android:hint="Phone Number" />
+                        android:maxLength="10" />
                 </android.support.design.widget.TextInputLayout>
 
                 <TextView

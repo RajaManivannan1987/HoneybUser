@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.sample.honeybuser.Adapter.BusinessVendorAdapter;
 import com.sample.honeybuser.Adapter.OnLineVendorListAdapter;
+import com.sample.honeybuser.Application.MyApplication;
 import com.sample.honeybuser.CommonActionBar.CommonActionBar;
 import com.sample.honeybuser.InterFaceClass.SaveCompletedInterface;
 import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
@@ -38,6 +39,8 @@ public class BusinessVendorActivity extends CommonActionBar {
     private String business_id = "", distance = "", businessName = "";
     private Gson gson = new Gson();
     private TextView businessListTextView;
+    private String lat = "", lang = "";
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,8 +73,15 @@ public class BusinessVendorActivity extends CommonActionBar {
     }
 
     private void getBusinessList(String business_id) {
-        String lat = String.valueOf(DashBoardActivity.distanceLatLng.latitude);
-        String lang = String.valueOf(DashBoardActivity.distanceLatLng.longitude);
+        if (DashBoardActivity.distanceLatLng != null) {
+            lat = String.valueOf(DashBoardActivity.distanceLatLng.latitude);
+            lang = String.valueOf(DashBoardActivity.distanceLatLng.longitude);
+        } else {
+            if (MyApplication.locationInstance().getLocation() != null) {
+                lat = String.valueOf(MyApplication.locationInstance().getLocation().getLatitude());
+                lang = String.valueOf(MyApplication.locationInstance().getLocation().getLongitude());
+            }
+        }
         GetResponseFromServer.getWebService(BusinessVendorActivity.this, TAG).getBusinessVendorList(BusinessVendorActivity.this, lat, lang, distance, business_id, new VolleyResponseListerner() {
             @Override
             public void onResponse(JSONObject response) throws JSONException {

@@ -20,6 +20,7 @@ public class OnLineVendorListModel {
     private String time;
     private String new_vendor;
     private String follow;
+    private String markerId;
     /*
     private String delivery;
     private String minimum_order;

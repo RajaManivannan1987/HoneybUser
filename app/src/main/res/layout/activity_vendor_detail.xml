@@ -5,122 +5,134 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/bannerImageView"
-                android:layout_width="match_parent"
-                android:layout_height="180dp" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/vendorProfileImageView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="130dp"
-                app:civ_border_color="#f1f1f1"
-                app:civ_border_width=".10dp" />
-
-            <TextView
-                android:id="@+id/vendorRatingtextView"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/bannerImageView"
-                android:layout_marginEnd="0dp"
-                android:layout_marginTop="14dp"
-                android:layout_toStartOf="@+id/vendorProfileImageView"
-                android:paddingLeft="5dp"
-                android:paddingTop="10dp"
-                android:text="4.5(45 Rating)"
-                android:textSize="@dimen/text_sixe_small" />
-
-            <TextView
-                android:id="@+id/addReviewTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/vendorRatingtextView"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="25dp"
-                android:text="Add Reviews"
-                android:textColor="@color/colorPrimary" />
-
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/vendorRatingtextView"
-                android:layout_toStartOf="@+id/vendorRatingtextView"
-                android:src="@drawable/star" />
-        </RelativeLayout>
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/vendorDetailsNotifyImagiview"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="5dp"
-                android:src="@drawable/nonotify" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/vendorDetailscallImagiview"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="5dp"
-                android:src="@drawable/call" />
+                <ImageView
+                    android:id="@+id/bannerImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp"
+                    android:scaleType="fitXY" />
 
-            <ImageView
-                android:id="@+id/vendorDetilslocateImagiview"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="5dp"
-                android:src="@drawable/locate" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/vendorProfileImageView"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="230dp"
+                    app:civ_border_color="#f1f1f1"
+                    app:civ_border_width="2dp" />
+
+                <TextView
+                    android:id="@+id/vendorRatingtextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/bannerImageView"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_toStartOf="@+id/vendorProfileImageView"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="10dp"
+                    android:text="4.5(45 Rating)"
+                    android:textSize="@dimen/text_sixe_small" />
+
+                <TextView
+                    android:id="@+id/addReviewTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/vendorRatingtextView"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="25dp"
+                    android:text="Add Reviews"
+                    android:textColor="@color/colorPrimary" />
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/vendorRatingtextView"
+                    android:layout_toStartOf="@+id/vendorRatingtextView"
+                    android:src="@drawable/star" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <ImageView
+                    android:id="@+id/vendorDetailsNotifyImagiview"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:src="@drawable/nonotify" />
+
+                <ImageView
+                    android:id="@+id/vendorDetailscallImagiview"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:src="@drawable/call" />
+
+                <ImageView
+                    android:id="@+id/vendorDetilslocateImagiview"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:src="@drawable/locate" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/textcolorGray" />
+
+            <TextView
+                android:id="@+id/vendorDescriptionTextView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="All Reviews"
+                android:textColor="@color/colorPrimary" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/textcolorGray" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/vendorReviewRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"></android.support.v7.widget.RecyclerView>
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/textcolorGray" />
-
-        <TextView
-            android:id="@+id/vendorDescriptionTextView1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="All Reviews"
-            android:textColor="@color/colorPrimary" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/textcolorGray" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/vendorReviewRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
-    </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 </ScrollView>
