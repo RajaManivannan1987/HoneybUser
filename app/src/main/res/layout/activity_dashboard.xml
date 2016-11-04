@@ -29,14 +29,14 @@
             app:tabTextColor="@color/textcolorGray" />
 
         <ImageView
-            android:id="@+id/mapChangeIcon"
+            android:id="@+id/refreshImageView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginEnd="14dp"
-            android:src="@drawable/map" />
+            android:src="@drawable/refresh" />
 
     </RelativeLayout>
 

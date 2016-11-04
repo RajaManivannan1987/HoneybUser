@@ -20,6 +20,7 @@ import com.sample.honeybuser.Singleton.Complete;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.AlertDialogManager;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.ReviewDialog;
+import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.VendorPhotoDialog;
 import com.sample.honeybuser.Utility.Fonts.WebServices.CommonWebserviceMethods;
 import com.sample.honeybuser.Utility.Fonts.WebServices.ConstandValue;
 import com.sample.honeybuser.Utility.Fonts.WebServices.GetResponseFromServer;
@@ -46,7 +47,7 @@ public class VendorDetailActivity extends CommonActionBar {
     private ArrayList<Ratings> arrayList = new ArrayList<>();
     private RatingsAdapter adapter;
     private Gson gson = new Gson();
-    private String phoneNo, follow, vendor_Id = "";
+    private String phoneNo, follow, vendor_Id = "", largeImageUrl = "", isOnLine = "";
     private String isReview = "";
 
 
@@ -91,6 +92,16 @@ public class VendorDetailActivity extends CommonActionBar {
             @Override
             public void onClick(View v) {
                 CommonMethods.callFunction(VendorDetailActivity.this, phoneNo);
+            }
+        });
+        vendorProfileImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VendorPhotoDialog activity = new VendorPhotoDialog();
+                Bundle bundle = new Bundle();
+                bundle.putString("image", largeImageUrl);
+                activity.setArguments(bundle);
+                activity.show(getSupportFragmentManager(), TAG);
             }
         });
         addReviewTextView.setOnClickListener(new View.OnClickListener() {
@@ -172,6 +183,14 @@ public class VendorDetailActivity extends CommonActionBar {
                     follow = jsonObject.getString("follow");
                     vendor_Id = jsonObject.getString("vendor_id");
                     isReview = jsonObject.getString("already_rated");
+                    largeImageUrl = jsonObject.getString("large_photo");
+                    isOnLine = jsonObject.getString("is_online");
+
+                    if (isOnLine.equalsIgnoreCase("Y")) {
+                        vendorlocateImagiview.setVisibility(View.VISIBLE);
+                    } else {
+                        vendorlocateImagiview.setVisibility(View.INVISIBLE);
+                    }
                     if (follow.equalsIgnoreCase("Y")) {
                         vendorNotifyImagiview.setImageResource(R.drawable.notify);
                     } else {

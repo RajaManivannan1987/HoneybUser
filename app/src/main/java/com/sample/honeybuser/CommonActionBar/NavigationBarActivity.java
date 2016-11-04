@@ -176,9 +176,13 @@ public class NavigationBarActivity extends AppCompatActivity {
                 @Override
                 public void locationChanged(LatLng latLng, String distance, String address, String classType) {
                     Log.d("OnLineMapFragment", "NavigationBar " + classType);
-                    if (distance != null && !distance.equalsIgnoreCase("")) {
-                        distanceTextView.setText(" " + distance + " km ");
-                    }
+
+//                     By Raja 4.11.16
+//                    set distance in dashboard page
+
+//                    if (distance != null && !distance.equalsIgnoreCase("")) {
+//                        distanceTextView.setText(" " + distance + " km ");
+//                    }
                     if (address != null && !address.equalsIgnoreCase("")) {
                         locationTextView.setText(address);
                     }

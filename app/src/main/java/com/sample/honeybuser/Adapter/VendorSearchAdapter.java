@@ -47,11 +47,10 @@ public class VendorSearchAdapter extends RecyclerView.Adapter<VendorSearchAdapte
     public void onBindViewHolder(CustomHolder holder, final int position) {
         holder.vendorSearchNameTextView.setText(vendorList.get(position).getName());
         holder.vendorSearchRatingTextView.setText(vendorList.get(position).getStar_rating() + " (" + vendorList.get(position).getRating_count() + " Ratings " + ") ");
-
         if (!vendorList.get(position).getPhoto().equalsIgnoreCase("")) {
             Picasso.with(context).load(vendorList.get(position).getPhoto()).into(holder.vendorProfileImageView);
         } else {
-            holder.vendorProfileImageView.setImageResource(R.drawable.no_image);
+            holder.vendorProfileImageView.setImageResource(R.drawable.nouser);
         }
         if (vendorList.get(position).getIs_online().equalsIgnoreCase("Y")) {
             holder.vendorSearchOnlineImageView.setImageResource(R.drawable.on);

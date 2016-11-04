@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import com.sample.honeybuser.Adapter.DistanceSelectRecyclerViewAdapter;
 import com.sample.honeybuser.CommonActionBar.NavigationBarActivity;
 import com.sample.honeybuser.EnumClass.IntentClasses;
 import com.sample.honeybuser.InterFaceClass.DialogBoxInterface;
@@ -22,6 +25,9 @@ import com.sample.honeybuser.Utility.Fonts.WebServices.GetResponseFromServer;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Im033 on 10/7/2016.
  */
@@ -30,6 +36,9 @@ public class SettingsActivity extends NavigationBarActivity {
     private String TAG = "SettingsActivity";
     private Switch languageSwitch;
     Session session;
+    private RecyclerView distanceRecyclerView;
+    private DistanceSelectRecyclerViewAdapter distanceAdapter;
+    private List<String> distanceList = new ArrayList<String>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,6 +47,15 @@ public class SettingsActivity extends NavigationBarActivity {
         setTitle("Settings");
         session = new Session(SettingsActivity.this, TAG);
         languageSwitch = (Switch) findViewById(R.id.languageSwitch);
+
+        distanceRecyclerView = (RecyclerView) findViewById(R.id.settingsChangeDistanceRecyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        distanceRecyclerView.setLayoutManager(layoutManager);
+
+        distanceAdapter = new DistanceSelectRecyclerViewAdapter(this, distanceList, "Settings");
+        distanceRecyclerView.setAdapter(distanceAdapter);
+
         if (Session.getSession(SettingsActivity.this, TAG).getDefaultLanguage().equalsIgnoreCase("ta")) {
             languageSwitch.setChecked(true);
         } else {
@@ -61,8 +79,9 @@ public class SettingsActivity extends NavigationBarActivity {
                                 if (response.getString("status").equalsIgnoreCase("1")) {
                                     Session.getSession(SettingsActivity.this, TAG).clearSession();
                                     stopService(new Intent(SettingsActivity.this, LocationServiceUpdated.class));
-                                    CommonMethods.commonIntent(SettingsActivity.this, IntentClasses.REGISTRATION);
-                                    finish();
+                                    startActivity(new Intent(SettingsActivity.this, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+//                                    CommonMethods.commonIntent(SettingsActivity.this, IntentClasses.LOGIN);
+//                                    finish();
                                 }
                             }
 
@@ -109,5 +128,37 @@ public class SettingsActivity extends NavigationBarActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getSettings();
+    }
+
+    private void getSettings() {
+        GetResponseFromServer.getWebService(SettingsActivity.this, TAG).getSettings(SettingsActivity.this, new VolleyResponseListerner() {
+            @Override
+            public void onResponse(JSONObject response) throws JSONException {
+                distanceList.clear();
+                if (response.getString("status").equalsIgnoreCase("1")) {
+
+                    for (int i = 0; i < response.getJSONObject("data").getJSONArray("notification_range").length(); i++) {
+                        distanceList.add(response.getJSONObject("data").getJSONArray("notification_range").getJSONObject(i).getString("range"));
+                        if (response.getJSONObject("data").getJSONArray("notification_range").getJSONObject(i).getString("selected").equalsIgnoreCase("Y")) {
+                            distanceAdapter.selectPosition(i);
+                        }
+                    }
+                    distanceAdapter.notifyDataSetChanged();
+
+                }
+            }
+
+            @Override
+            public void onError(String message, String title) {
+
+            }
+        });
+
     }
 }

@@ -20,6 +20,7 @@ import com.sample.honeybuser.MapIntegration.LocationServiceUpdated;
 import com.sample.honeybuser.R;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
 import com.sample.honeybuser.Utility.Fonts.ScheduleThread;
+import com.sample.honeybuser.Utility.Fonts.Sharedpreferences.Session;
 import com.sample.honeybuser.Utility.Fonts.WebServices.ConstandValue;
 
 
@@ -219,8 +220,13 @@ public class LocationCheckActivity extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     enableLocation();
                 } else {
+                    thread.stop();
                     CommonMethods.toast(LocationCheckActivity.this, "My Location permission denied");
-                    finish();
+                    Session.getSession(LocationCheckActivity.this, TAG).clearSession();
+                    stopService(new Intent(LocationCheckActivity.this, LocationServiceUpdated.class));
+                    startActivity(new Intent(LocationCheckActivity.this, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+//
+//                    finish();
                 }
                 break;
         }

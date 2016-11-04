@@ -12,10 +12,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.sample.honeybuser.Activity.DashBoardActivity;
+import com.sample.honeybuser.Application.MyApplication;
 import com.sample.honeybuser.InterFaceClass.SelectedDistance;
 import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
 import com.sample.honeybuser.R;
 import com.sample.honeybuser.Singleton.ChangeLocationSingleton;
+import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
 import com.sample.honeybuser.Utility.Fonts.WebServices.GetResponseFromServer;
 
 import org.json.JSONException;
@@ -34,6 +36,8 @@ public class DistanceSelectRecyclerViewAdapter extends RecyclerView.Adapter<Dist
     private int selected = -1;
     private SelectedDistance selectedDistance;
     public static String distanc;
+    private String type = "";
+    private String lat = "", lang = "";
 
 
     public DistanceSelectRecyclerViewAdapter(Activity context) {
@@ -46,10 +50,11 @@ public class DistanceSelectRecyclerViewAdapter extends RecyclerView.Adapter<Dist
         distance.add("0.5");
     }
 
-    public DistanceSelectRecyclerViewAdapter(Activity context, List<String> list) {
+    public DistanceSelectRecyclerViewAdapter(Activity context, List<String> list, String type) {
         this.context = context;
         inflater = LayoutInflater.from(context);
         distance = list;
+        this.type = type;
     }
 
     public void selectPosition(int position) {
@@ -79,24 +84,65 @@ public class DistanceSelectRecyclerViewAdapter extends RecyclerView.Adapter<Dist
                 if (selected != position) {
                     selected = position;
                     callListener(position);
-                    GetResponseFromServer.getWebService(context, "DistanceSelectRecyclerViewAdapter").addressSave(context, "", "", String.valueOf(DashBoardActivity.distanceLatLng.latitude), String.valueOf(DashBoardActivity.distanceLatLng.longitude), distance.get(selected), "N", new VolleyResponseListerner() {
-                        @Override
-                        public void onResponse(JSONObject response) throws JSONException {
-                            if (response.getString("status").equalsIgnoreCase("1")) {
-                                ChangeLocationSingleton.getInstance().locationChanges(null, distance.get(selected), DashBoardActivity.locationName,"DistanceRecyclerView");
-                                PreferenceManager.getDefaultSharedPreferences(context).edit().putString("KmDistance", distance.get(selected)).commit();
-                                context.finish();
-                                //context.startActivity(new Intent(context, DashBoardActivity.class).putExtra("lat", String.valueOf(DashBoardActivity.distanceLatLng.latitude)).putExtra("lang", String.valueOf(DashBoardActivity.distanceLatLng.longitude)));
-                            }
-                        }
-
-                        @Override
-                        public void onError(String message, String title) {
-
-                        }
-                    });
+                    if (type.equalsIgnoreCase("ChangeLocation")) {
+                        saveAddress();
+                    } else if (type.equalsIgnoreCase("Settings")) {
+                        updateNotification();
+                    }
                     notifyDataSetChanged();
                 }
+            }
+        });
+    }
+
+    private void updateNotification() {
+
+        GetResponseFromServer.getWebService(context, "DistanceSelectRecyclerViewAdapter").updateNotificationRange(context, distance.get(selected), new VolleyResponseListerner() {
+            @Override
+            public void onResponse(JSONObject response) throws JSONException {
+                if (response.getString("status").equalsIgnoreCase("1")) {
+                    CommonMethods.toast(context, response.getString("message"));
+                    //ChangeLocationSingleton.getInstance().locationChanges(null, distance.get(selected), DashBoardActivity.locationName, "DistanceRecyclerView");
+                    //PreferenceManager.getDefaultSharedPreferences(context).edit().putString("KmDistance", distance.get(selected)).commit();
+                    //context.finish();
+                    //context.startActivity(new Intent(context, DashBoardActivity.class).putExtra("lat", String.valueOf(DashBoardActivity.distanceLatLng.latitude)).putExtra("lang", String.valueOf(DashBoardActivity.distanceLatLng.longitude)));
+                }
+            }
+
+            @Override
+            public void onError(String message, String title) {
+
+            }
+        });
+
+    }
+
+    private void saveAddress() {
+        if (DashBoardActivity.distanceLatLng != null) {
+            lat = String.valueOf(DashBoardActivity.distanceLatLng.latitude);
+            lang = String.valueOf(DashBoardActivity.distanceLatLng.longitude);
+        } else {
+            if (MyApplication.locationInstance().getLocation() != null) {
+                lat = String.valueOf(MyApplication.locationInstance().getLocation().getLatitude());
+                lang = String.valueOf(MyApplication.locationInstance().getLocation().getLongitude());
+            }
+        }
+        GetResponseFromServer.getWebService(context, "DistanceSelectRecyclerViewAdapter").addressSave(context, "", "", lat, lang, distance.get(selected), "N", new VolleyResponseListerner() {
+            @Override
+            public void onResponse(JSONObject response) throws JSONException {
+                if (response.getString("status").equalsIgnoreCase("1")) {
+                    //                     By Raja 4.11.16
+//                    set distance in dashboard page
+                    // ChangeLocationSingleton.getInstance().locationChanges(null, distance.get(selected), DashBoardActivity.locationName, "DistanceRecyclerView");
+//                    PreferenceManager.getDefaultSharedPreferences(context).edit().putString("KmDistance", distance.get(selected)).commit();
+                    context.finish();
+                    //context.startActivity(new Intent(context, DashBoardActivity.class).putExtra("lat", String.valueOf(DashBoardActivity.distanceLatLng.latitude)).putExtra("lang", String.valueOf(DashBoardActivity.distanceLatLng.longitude)));
+                }
+            }
+
+            @Override
+            public void onError(String message, String title) {
+
             }
         });
     }

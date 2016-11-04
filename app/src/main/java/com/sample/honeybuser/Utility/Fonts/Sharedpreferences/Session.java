@@ -16,10 +16,10 @@ public class Session {
     private static final String PREF_NAME = "VVNear";
     private static final String IS_LOGIN = "IsLoggedIn";
 
-    private static final String USER_ID = "user_id";
-    private static final String NAME = "name";
-    private static final String EMAIL = "email";
-    private static final String PHONE = "phone";
+    private final String USER_ID = "user_id";
+    private final String NAME = "name";
+    private final String EMAIL = "email";
+    private final String PHONE = "phone";
     private static final String STATUS = "status";
     private static final String MOBILE_VERIFIED = "mobile_no_verified";
 
@@ -28,8 +28,8 @@ public class Session {
     //private static final String UUID = "uuid";
     // private static final String SEND_BIRD_USER_ID = "sendbird_user_id";
     // private static final String SEND_BIRD_PROFILE_PICTURE = "sendbird_profile_picture";
-    private static final String API_KEY = "api_key";
-    public static String DEFAULT_LANGUAGE = "default_language";
+    private final String API_KEY = "api_key";
+    public String DEFAULT_LANGUAGE = "default_language";
     // private static final String SEND_BIRD_API = "sendbird_api";
     //private static final String OTP_TYPE = "otp_type";
     //private static final String REFERRAL_CODE = "referral_code";

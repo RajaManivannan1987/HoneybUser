@@ -81,7 +81,7 @@ public class ChangeLocationActivity extends CommonActionBar implements PlaceSele
         layoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
         previousRecyclerView.setLayoutManager(layoutManager1);
 
-        distanceAdapter = new DistanceSelectRecyclerViewAdapter(this, distanceList);
+        distanceAdapter = new DistanceSelectRecyclerViewAdapter(this, distanceList, "ChangeLocation");
         changeDistanceRecyclerView.setAdapter(distanceAdapter);
         addressAdapter = new AddressRecyclerViewAdapter(this, addressList);
         previousRecyclerView.setAdapter(addressAdapter);
@@ -143,13 +143,16 @@ public class ChangeLocationActivity extends CommonActionBar implements PlaceSele
     private void locationPicker(final String location, String adres, final String lat, final String lang, final LatLng dragPosition) {
         Log.d(TAG, location + " " + adres + " " + lat + " " + lang + " " + dragPosition);
 
-        GetResponseFromServer.getWebService(ChangeLocationActivity.this, TAG).addressSave(ChangeLocationActivity.this, location, adres, lat, lang, distanceAdapter.getDistance(), "Y", new VolleyResponseListerner() {
+        GetResponseFromServer.getWebService(ChangeLocationActivity.this, TAG).addressSave(ChangeLocationActivity.this, location, adres, lat, lang, "0.50", "Y", new VolleyResponseListerner() {
             @Override
             public void onResponse(JSONObject response) throws JSONException {
                 if (response.getString("status").equalsIgnoreCase("1")) {
-//                  ChangeLocationSingleton.getInstance().locationChanges(addressAdapter.selectedPosition(), distanceAdapter.getDistance(), null);
                     DashBoardActivity.distanceLatLng = dragPosition;
-                    ChangeLocationSingleton.getInstance().locationChanges(dragPosition, distanceAdapter.getDistance(), null,"ChangeLocation");
+                    ChangeLocationSingleton.getInstance().locationChanges(dragPosition, "0.05", null, "ChangeLocation");
+
+                    //                     By Raja 4.11.16
+//                    set distance in dashboard page
+//                    ChangeLocationSingleton.getInstance().locationChanges(dragPosition, distanceAdapter.getDistance(), null, "ChangeLocation");
                     ChangeLocationActivity.this.finish();
                 }
 

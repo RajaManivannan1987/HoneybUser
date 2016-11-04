@@ -37,10 +37,13 @@ import java.util.ArrayList;
 public class ProductSearchFragment extends Fragment {
     private String TAG = "ProductSearchFragment";
     private RecyclerView threeKmVendorRecyclerView, fiveKmVendorRecyclerView;
-    private ArrayList<ThreeKmProductSearchModel> threeKmVendorList = new ArrayList<>();
+
     private ArrayList<FiveKmProductSearchModel> fiveKmVendorList = new ArrayList<>();
-    private Product3KmSearchAdapter adapter3Km;
+    private ArrayList<ThreeKmProductSearchModel> threeKmVendorList = new ArrayList<>();
+
     private Product05SearchAdapter adapter05km;
+    private Product3KmSearchAdapter adapter3Km;
+
     private EditText productSearch;
     private ImageView closeButton;
     int spancount = 3;
@@ -133,6 +136,10 @@ public class ProductSearchFragment extends Fragment {
                 lang = String.valueOf(MyApplication.locationInstance().getLocation().getLongitude());
             }
         }
+        getFiveKmProductList();
+    }
+
+    private void getThreeKmProducts() {
         GetResponseFromServer.getWebService(getActivity(), TAG).getProductList(getActivity(), lat, lang, "0.50", new VolleyResponseListerner() {
             @Override
             public void onResponse(JSONObject response) throws JSONException {
@@ -143,7 +150,7 @@ public class ProductSearchFragment extends Fragment {
                     }
                 }
                 adapter3Km.notifyDataSetChanged();
-                getFiveKmProductList();
+//                getFiveKmProductList();
             }
 
             @Override
@@ -151,7 +158,6 @@ public class ProductSearchFragment extends Fragment {
 
             }
         });
-
     }
 
     private void getFiveKmProductList() {
@@ -166,6 +172,7 @@ public class ProductSearchFragment extends Fragment {
                 }
                 // adapter.notifyDataSetChanged();
                 adapter05km.notifyDataSetChanged();
+                getThreeKmProducts();
             }
 
             @Override

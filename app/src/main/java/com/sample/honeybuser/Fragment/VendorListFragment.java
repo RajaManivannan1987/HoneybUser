@@ -81,7 +81,13 @@ public class VendorListFragment extends Fragment {
         Complete.offerDialogInstance().setListener(new SaveCompletedInterface() {
             @Override
             public void completed() {
-                getData();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getData();
+                    }
+                });
+
             }
         });
 
@@ -167,8 +173,12 @@ public class VendorListFragment extends Fragment {
                 offLineList.clear();
                 if (response.getString("status").equalsIgnoreCase("1")) {
                     JSONObject jsonObject = response.getJSONObject("data");
-                    distance = jsonObject.getString("distance");
-                    NavigationBarActivity.distanceTextView.setText(" " + distance + " km ");
+
+                    //                     By Raja 4.11.16
+//                    set distance in dashboard page
+//                    distance = jsonObject.getString("distance");
+//                    NavigationBarActivity.distanceTextView.setText(" " + distance + " km ");
+
                     for (int i = 0; i < jsonObject.getJSONArray("online").length(); i++) {
                         onLineList.add(gson.fromJson(jsonObject.getJSONArray("online").getJSONObject(i).toString(), OnLineVendorListModel.class));
                     }

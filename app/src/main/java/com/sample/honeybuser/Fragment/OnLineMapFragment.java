@@ -92,6 +92,8 @@ public class OnLineMapFragment extends Fragment {
     private ImageView onlineMapnotifyImage, onlineMapcallImage, onlineMaplocateImage, onlineMapratingImageView;
     private Timer timer;
     private TimerTask timerTask;
+    Handler handler = new Handler();
+    Runnable runnable;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -121,53 +123,69 @@ public class OnLineMapFragment extends Fragment {
         touchFrameLayout.setTouchInterface(new TouchInterface() {
             @Override
             public void onPressed() {
-                if (timer != null) {
-                    timer.cancel();
-                }
                 flagIsOnTouched = false;
                 isMove = false;
-                mapAddMarker.removeAll();
+                //mapAddMarker.removeAll();
                 hideVendorItem();
+                handler.removeCallbacks(runnable);
+                CommonMethods.toast(getActivity(), "Loading vendors");
             }
 
             @Override
             public void onReleased() {
                 flagIsOnTouched = true;
                 if (isMove) {
+//                    DashBoardActivity.distanceLatLng = googleMap.getCameraPosition().target;
+////                    getMarkerMovedAddress(googleMap.getCameraPosition().target);
+//                    timerTask = new TimerTask() {
+//                        @Override
+//                        public void run() {
+//                            getActivity().runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    getVendorLocation();
+//                                    Complete.offerDialogInstance().orderCompleted();
+//                                }
+//                            });
+//
+//                        }
+//                    };
+//                    timer = new Timer();
+//                    timer.schedule(timerTask, 01, 10000);
+
+
+                    //   By Raja on today 4.11.2016
+
                     DashBoardActivity.distanceLatLng = googleMap.getCameraPosition().target;
-                    timerTask = new TimerTask() {
+                    getMarkerMovedAddress(googleMap.getCameraPosition().target);
+                    runnable = new Runnable() {
                         @Override
                         public void run() {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     getVendorLocation();
-                                    getMarkerMovedAddress(googleMap.getCameraPosition().target);
                                     Complete.offerDialogInstance().orderCompleted();
                                 }
                             });
-
                         }
                     };
-                    timer = new Timer();
-                    timer.schedule(timerTask, 01, 8000);
+                    handler.postDelayed(runnable, 3000);
+                   /* handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    getVendorLocation();
+                                    Complete.offerDialogInstance().orderCompleted();
+                                }
+                            });
+                        }
+                    }, 5000);*/
 
-                    //   By Raja on today 3.11.2016
-
-//
-//                    Handler handler = new Handler();
-//                    handler.postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            getVendorLocation();
-//                        }
-//                    }, 5);
-//
-
-//                    Complete.offerDialogInstance().orderCompleted();
                 }
                 isMove = false;
-
             }
 
             @Override
@@ -195,6 +213,8 @@ public class OnLineMapFragment extends Fragment {
                     @Override
                     public void onCameraMove() {
                         isMove = true;
+                        if (mapAddMarker != null)
+                            mapAddMarker.moveCircle(googleMap.getCameraPosition().target);
                     }
                 });
                 if (MyApplication.locationInstance() != null && MyApplication.locationInstance().getLocation() != null) {
@@ -219,13 +239,16 @@ public class OnLineMapFragment extends Fragment {
                     googleMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
                         @Override
                         public void onCameraChange(CameraPosition cameraPosition) {
-                            if (mapAddMarker != null)
+
+                            // By Raja 4.11.16
+
+                            /*if (mapAddMarker != null)
                                 mapAddMarker.moveCircle(cameraPosition.target);
                             if (flagIsOnTouched) {
                                 // getVendorLocation();
                                 // getMarkerMovedAddress(cameraPosition.target);
                                 Log.d("OnLineMapFragment", "onCameraChange");
-                            }
+                            }*/
                         }
                     });
                     googleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
@@ -234,6 +257,8 @@ public class OnLineMapFragment extends Fragment {
                             location = new LatLng(MyApplication.locationInstance().getLocation().getLatitude(), MyApplication.locationInstance().getLocation().getLongitude());
                             CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(location, MapUtils.calculateZoomLevel(getActivity(), 15));
                             googleMap.animateCamera(yourLocation);
+                            DashBoardActivity.distanceLatLng = googleMap.getCameraPosition().target;
+                            Complete.getGetMapList().orderCompleted();
                             //getVendorLocation();
                             Log.d("OnLineMapFragment", "onMyLocationButtonClick");
                             return false;
@@ -250,7 +275,8 @@ public class OnLineMapFragment extends Fragment {
                 if (latLng != null) {
                     if (googleMap != null) {
                         googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-                        DashBoardActivity.distanceLatLng = latLng;
+                        //Raja today
+                        //DashBoardActivity.distanceLatLng = latLng;
                     }
                 }
 
@@ -282,7 +308,8 @@ public class OnLineMapFragment extends Fragment {
         Log.d("OnLineMapFragment", "getVendorLocation");
 
         if (DashBoardActivity.distanceLatLng != null) {
-            LatLng location1 = DashBoardActivity.distanceLatLng;
+//            LatLng location1 = DashBoardActivity.distanceLatLng;
+            LatLng location1 = googleMap.getCameraPosition().target;
             if (location1 != null) {
                 Log.d("OnLineMapFragment", "getVendorLocation +location1 ");
                 getVendorLocationWebService(location1);
@@ -317,10 +344,14 @@ public class OnLineMapFragment extends Fragment {
     private void urlResponse(JSONObject response) throws JSONException {
         Log.d(TAG, response.toString());
         JSONArray jsonArrayVendor = response.getJSONObject("data").getJSONArray("online");
+
         listVendor.clear();
         for (int i = 0; i < jsonArrayVendor.length(); i++) {
             Vendor vendor = new Gson().fromJson(jsonArrayVendor.getJSONObject(i).toString(), Vendor.class);
             listVendor.add(vendor);
+        }
+        if (jsonArrayVendor.length() == 0) {
+            CommonMethods.toast(getActivity(), response.getJSONObject("data").getString("online_message"));
         }
         OnLineMapFragment.this.distance = response.getJSONObject("data").getString("distance");
         //By Raja
@@ -337,7 +368,8 @@ public class OnLineMapFragment extends Fragment {
         Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
         if (geocoder.isPresent()) {
             try {
-                DashBoardActivity.distanceLatLng = target;
+                //Raja today
+                //DashBoardActivity.distanceLatLng = target;
                 List<Address> addresses = geocoder.getFromLocation(target.latitude, target.longitude, 1);
                 if (addresses != null && addresses.size() > 0) {
                     if (addresses.get(0).getSubLocality() != null && !addresses.get(0).getSubLocality().equalsIgnoreCase(""))
@@ -352,7 +384,7 @@ public class OnLineMapFragment extends Fragment {
         }
         Log.d("OnLineMapFragment", "getMarkerMovedAddress +ChangeLocationSingleton");
         ChangeLocationSingleton.getInstance().locationChanges(null, null, adres, "OnLineMapFragment");
-        Log.d(TAG, adres);
+        Log.d("volleyPostData", adres);
     }
 
     private void setVendorDetailsItem(final Vendor vendor) {
