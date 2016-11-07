@@ -1,5 +1,7 @@
 package com.sample.honeybuser.Utility.Fonts.WebServices;
 
+import android.app.Activity;
+
 import com.sample.honeybuser.R;
 
 /**
@@ -13,4 +15,11 @@ public class ConstandValue {
     public static final String vendorId = "vendorId";
     public static final String channelUrl = "channelUrl";
     public static final String transitionName = "honeyb";
+    public static java.lang.String vendorName = "vendorName";
+    public static final String IS_ONLINE = "is_available";
+    public static final String latitude = "latitude";
+    public static final String longitude = "longitude";
+
+
+//    public static final int transitionName = R.string.transitionName;
 }

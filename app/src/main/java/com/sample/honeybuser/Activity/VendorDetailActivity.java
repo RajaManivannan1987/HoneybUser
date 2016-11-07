@@ -1,5 +1,6 @@
 package com.sample.honeybuser.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,7 +48,7 @@ public class VendorDetailActivity extends CommonActionBar {
     private ArrayList<Ratings> arrayList = new ArrayList<>();
     private RatingsAdapter adapter;
     private Gson gson = new Gson();
-    private String phoneNo, follow, vendor_Id = "", largeImageUrl = "", isOnLine = "";
+    private String phoneNo, follow, vendor_Id = "", largeImageUrl = "", isOnLine = "", name = "";
     private String isReview = "";
 
 
@@ -85,7 +86,7 @@ public class VendorDetailActivity extends CommonActionBar {
         vendorlocateImagiview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonWebserviceMethods.getVendorLocation(VendorDetailActivity.this, TAG, vendor_Id);
+                CommonWebserviceMethods.getVendorLocation(VendorDetailActivity.this, TAG, vendor_Id, name);
             }
         });
         vendorcallImagiview.setOnClickListener(new View.OnClickListener() {
@@ -179,6 +180,7 @@ public class VendorDetailActivity extends CommonActionBar {
             public void onResponse(JSONObject response) throws JSONException {
                 if (response.getString("status").equalsIgnoreCase("1")) {
                     JSONObject jsonObject = response.getJSONObject("data");
+                    name = jsonObject.getString("name");
                     phoneNo = jsonObject.getString("phone_no");
                     follow = jsonObject.getString("follow");
                     vendor_Id = jsonObject.getString("vendor_id");
@@ -220,5 +222,15 @@ public class VendorDetailActivity extends CommonActionBar {
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getIntent().getExtras() != null && getIntent().getExtras().getString("notificationType").equalsIgnoreCase("vendor_alert")) {
+            startActivity(new Intent(VendorDetailActivity.this, DashBoardActivity.class));
+        } else {
+            supportFinishAfterTransition();
+        }
+        super.onBackPressed();
     }
 }

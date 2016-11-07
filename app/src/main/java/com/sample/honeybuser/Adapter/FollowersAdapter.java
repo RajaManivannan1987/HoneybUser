@@ -86,7 +86,7 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.Cust
         holder.followerLocateImageview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonWebserviceMethods.getVendorLocation(context, TAG, list.get(position).getVendor_id());
+                CommonWebserviceMethods.getVendorLocation(context, TAG, list.get(position).getVendor_id(),list.get(position).getName());
                 //CommonMethods.locationDirection(context, list.get(position).getLatitude(), list.get(position).getLongitude());
             }
         });
@@ -95,6 +95,7 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.Cust
             public void onClick(View v) {
                 Intent intent = new Intent(context, VendorDetailActivity.class);
                 intent.putExtra("vendor_id", list.get(position).getVendor_id());
+                intent.putExtra("notificationType", "");
 //                intent.putExtra("distance", "3.00");
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, holder.followerCv, ConstandValue.transitionName);
                 context.startActivity(intent, options.toBundle());

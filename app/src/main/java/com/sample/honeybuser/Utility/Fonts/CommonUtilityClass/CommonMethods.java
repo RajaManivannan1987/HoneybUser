@@ -13,6 +13,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
@@ -30,6 +31,8 @@ import com.sample.honeybuser.Activity.OTPActivity;
 import com.sample.honeybuser.Activity.RegistrationActivity;
 import com.sample.honeybuser.Activity.SearchActivity;
 import com.sample.honeybuser.Activity.SettingsActivity;
+import com.sample.honeybuser.Activity.VendorDetailActivity;
+import com.sample.honeybuser.Adapter.BusinessVendorAdapter;
 import com.sample.honeybuser.EnumClass.FragmentType;
 import com.sample.honeybuser.EnumClass.IntentClasses;
 import com.sample.honeybuser.R;
@@ -91,8 +94,8 @@ public class CommonMethods extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:" + number));
         context.startActivity(intent);
-
     }
+
 
     public static boolean checkProvider(Activity context) {
         boolean isGps = false, isNetwork = false;

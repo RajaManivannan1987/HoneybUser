@@ -94,7 +94,7 @@ public class OnLineVendorListAdapter extends RecyclerView.Adapter<OnLineVendorLi
         holder.locateImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonWebserviceMethods.getVendorLocation(activity, TAG, list.get(position).getVendor_id());
+                CommonWebserviceMethods.getVendorLocation(activity, TAG, list.get(position).getVendor_id(),list.get(position).getName());
             }
         });
         holder.cv.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +102,7 @@ public class OnLineVendorListAdapter extends RecyclerView.Adapter<OnLineVendorLi
             public void onClick(View v) {
                 Intent intent = new Intent(activity, VendorDetailActivity.class);
                 intent.putExtra("vendor_id", list.get(position).getVendor_id());
+                intent.putExtra("notificationType", "");
                 ActivityOptionsCompat options1 = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, holder.cv, ConstandValue.transitionName);
                 activity.startActivity(intent, options1.toBundle());
 //                activity.startActivity(new Intent(activity, VendorDetailActivity.class).putExtra("vendor_id", list.get(position).getVendor_id()));

@@ -67,6 +67,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/MyAppTheme" />
         <activity
+            android:name=".Activity.MapsActivity"
+            android:label="@string/title_activity_maps"
+            android:theme="@style/MyAppTheme" />
+        <activity
             android:name=".Activity.VendorDetailActivity"
             android:label=""
             android:screenOrientation="portrait"
@@ -129,9 +133,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".Activity.MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+
     </application>
 
 </manifest>

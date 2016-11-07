@@ -402,7 +402,7 @@ public class OnLineMapFragment extends Fragment {
             onlineMaplocateImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CommonWebserviceMethods.getVendorLocation(getActivity(), TAG, vendorId);
+                    CommonWebserviceMethods.getVendorLocation(getActivity(), TAG, vendorId, vendor.getName());
                 }
             });
             onlineMapcallImage.setOnClickListener(new View.OnClickListener() {
@@ -414,7 +414,7 @@ public class OnLineMapFragment extends Fragment {
             vendorItemBackgroundCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(getActivity(), VendorDetailActivity.class).putExtra("vendor_id", vendorId));
+                    startActivity(new Intent(getActivity(), VendorDetailActivity.class).putExtra("vendor_id", vendorId).putExtra("notificationType", ""));
                     vendorItemLinearLayout.setVisibility(View.GONE);
                 }
             });

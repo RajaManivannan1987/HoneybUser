@@ -11,6 +11,7 @@
         android:layout_height="110dp"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
+        android:transitionName="@string/transitionName"
         app:cardUseCompatPadding="true"
         app:elevation="0dp">
 

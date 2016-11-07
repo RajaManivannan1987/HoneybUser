@@ -2,8 +2,10 @@ package com.sample.honeybuser.Utility.Fonts.WebServices;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
+import com.sample.honeybuser.Activity.MapsActivity;
 import com.sample.honeybuser.Activity.VendorDetailActivity;
 import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
 import com.sample.honeybuser.Singleton.ActionCompletedSingleton;
@@ -27,14 +29,15 @@ public class CommonWebserviceMethods extends AppCompatActivity {
         this.TAG = tag;
     }*/
 
-    public static void getVendorLocation(final Activity context, String tag, String vendor_Id) {
+    public static void getVendorLocation(final Activity context, String tag, final String vendor_Id, final String name) {
         GetResponseFromServer.getWebService(context, tag).getVendorLocation(context, vendor_Id, new VolleyResponseListerner() {
             @Override
             public void onResponse(JSONObject response) throws JSONException {
                 if (response.getString("status").equalsIgnoreCase("1")) {
                     JSONArray jsonArray = response.getJSONArray("data");
                     JSONObject jsonObject = jsonArray.getJSONObject(0);
-                    CommonMethods.locationDirection(context, jsonObject.getString("latitude"), jsonObject.getString("longitude"));
+                    context.startActivity(new Intent(context, MapsActivity.class).putExtra(ConstandValue.latitude, jsonObject.getString("latitude")).putExtra(ConstandValue.longitude, jsonObject.getString("longitude")).putExtra(ConstandValue.vendorName, name).putExtra(ConstandValue.IS_ONLINE, jsonObject.getString("is_available")).putExtra("vendor_id", vendor_Id));
+//                    CommonMethods.locationDirection(context, jsonObject.getString("latitude"), jsonObject.getString("longitude"));
                 }
             }
 

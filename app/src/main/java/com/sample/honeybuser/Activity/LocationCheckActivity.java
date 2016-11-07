@@ -92,7 +92,7 @@ public class LocationCheckActivity extends AppCompatActivity {
 //                                startActivity(new Intent(LocationCheckActivity.this, VendorActivity.class).putExtra(ConstantValues.vendorId, id).putExtra(ConstantValues.isFromNotification, true));
                                 break;
                             case vendorAlert:
-//                                startActivity(new Intent(LocationCheckActivity.this, VendorActivity.class).putExtra(ConstantValues.vendorId, id).putExtra(ConstantValues.isFromNotification, true));
+                                startActivity(new Intent(LocationCheckActivity.this, VendorDetailActivity.class).putExtra("vendor_id", id).putExtra("notificationType", vendorAlert));
                                 break;
                             case message:
 //                                startActivity(new Intent(LocationCheckActivity.this, SendBirdMessagingActivity.class).putExtras(SendBirdMessagingActivity.makeMessagingJoinArgsDefault(LocationCheckActivity.this, channelUrl)));

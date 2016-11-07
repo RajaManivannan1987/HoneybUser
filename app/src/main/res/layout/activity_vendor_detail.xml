@@ -96,9 +96,9 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:visibility="invisible"
                     android:padding="5dp"
-                    android:src="@drawable/locate" />
+                    android:src="@drawable/locate"
+                    android:visibility="invisible" />
             </LinearLayout>
 
             <View

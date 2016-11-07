@@ -36,7 +36,7 @@ public class AlertDialogManager {
 
         if (status != null)
             // Setting alert dialog icon
-            alertDialog.setIcon((status) ? R.drawable.success : R.drawable.wrong);
+            alertDialog.setIcon((status) ? R.drawable.success : R.drawable.close);
 
         // Setting OK Button
 
