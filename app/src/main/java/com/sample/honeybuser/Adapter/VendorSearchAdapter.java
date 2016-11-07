@@ -3,6 +3,8 @@ package com.sample.honeybuser.Adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,6 +21,7 @@ import com.sample.honeybuser.R;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.AlertDialogManager;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
 import com.sample.honeybuser.Utility.Fonts.WebServices.CommonWebserviceMethods;
+import com.sample.honeybuser.Utility.Fonts.WebServices.ConstandValue;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -44,7 +47,7 @@ public class VendorSearchAdapter extends RecyclerView.Adapter<VendorSearchAdapte
     }
 
     @Override
-    public void onBindViewHolder(CustomHolder holder, final int position) {
+    public void onBindViewHolder(final CustomHolder holder, final int position) {
         holder.vendorSearchNameTextView.setText(vendorList.get(position).getName());
         holder.vendorSearchRatingTextView.setText(vendorList.get(position).getStar_rating() + " (" + vendorList.get(position).getRating_count() + " Ratings " + ") ");
         if (!vendorList.get(position).getPhoto().equalsIgnoreCase("")) {
@@ -80,7 +83,11 @@ public class VendorSearchAdapter extends RecyclerView.Adapter<VendorSearchAdapte
         holder.vendorCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, VendorDetailActivity.class).putExtra("vendor_id", vendorList.get(position).getVendor_id()));
+                Intent intent = new Intent(context, VendorDetailActivity.class);
+                intent.putExtra("vendor_id", vendorList.get(position).getVendor_id());
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context, holder.vendorCardView, ConstandValue.transitionName);
+                context.startActivity(intent,options.toBundle());
+//                context.startActivity(new Intent(context, VendorDetailActivity.class).putExtra("vendor_id", vendorList.get(position).getVendor_id()));
             }
         });
         holder.vendorSearchNotifyImageView.setOnClickListener(new View.OnClickListener() {

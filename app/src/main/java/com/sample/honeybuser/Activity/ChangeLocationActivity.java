@@ -148,7 +148,7 @@ public class ChangeLocationActivity extends CommonActionBar implements PlaceSele
             public void onResponse(JSONObject response) throws JSONException {
                 if (response.getString("status").equalsIgnoreCase("1")) {
                     DashBoardActivity.distanceLatLng = dragPosition;
-                    ChangeLocationSingleton.getInstance().locationChanges(dragPosition, "0.05", null, "ChangeLocation");
+                    ChangeLocationSingleton.getInstance().locationChanges(dragPosition, "0.50", null, "ChangeLocation");
 
                     //                     By Raja 4.11.16
 //                    set distance in dashboard page

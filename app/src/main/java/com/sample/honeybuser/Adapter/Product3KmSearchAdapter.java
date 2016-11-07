@@ -1,7 +1,9 @@
 package com.sample.honeybuser.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import com.sample.honeybuser.Activity.BusinessVendorActivity;
 import com.sample.honeybuser.Activity.VendorDetailActivity;
 import com.sample.honeybuser.Models.ThreeKmProductSearchModel;
 import com.sample.honeybuser.R;
+import com.sample.honeybuser.Utility.Fonts.WebServices.ConstandValue;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -46,7 +49,7 @@ public class Product3KmSearchAdapter extends RecyclerView.Adapter<Product3KmSear
     }
 
     @Override
-    public void onBindViewHolder(CustomHolder holder, final int position) {
+    public void onBindViewHolder(final CustomHolder holder, final int position) {
         if (!threeKmList.get(position).getIcon().equalsIgnoreCase("")) {
             Picasso.with(context).load(threeKmList.get(position).getIcon()).into(holder.vendorSearchImageView);
         } else {
@@ -55,7 +58,13 @@ public class Product3KmSearchAdapter extends RecyclerView.Adapter<Product3KmSear
         holder.productCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, BusinessVendorActivity.class).putExtra("business_id", threeKmList.get(position).getBusiness_id()).putExtra("distance", "3.00"));
+                Intent intent = new Intent(context, BusinessVendorActivity.class);
+                intent.putExtra("business_id", threeKmList.get(position).getBusiness_id());
+                intent.putExtra("distance", "3.00");
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, holder.productCardView, ConstandValue.transitionName);
+                context.startActivity(intent, options.toBundle());
+
+//                context.startActivity(new Intent(context, BusinessVendorActivity.class).putExtra("business_id", threeKmList.get(position).getBusiness_id()).putExtra("distance", "3.00"));
             }
         });
     }

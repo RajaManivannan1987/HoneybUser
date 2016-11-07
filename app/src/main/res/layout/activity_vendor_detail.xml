@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:transitionName="@string/transitionName">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -95,6 +96,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:visibility="invisible"
                     android:padding="5dp"
                     android:src="@drawable/locate" />
             </LinearLayout>

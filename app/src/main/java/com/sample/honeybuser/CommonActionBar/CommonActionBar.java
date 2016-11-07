@@ -80,7 +80,7 @@ public class CommonActionBar extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();
+        supportFinishAfterTransition();
         super.onBackPressed();
 
     }

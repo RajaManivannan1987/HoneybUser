@@ -66,6 +66,7 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
 
     private void onLine() {
         setFragmentType(FragmentType.ONLINE);
+        refreshImageView.setVisibility(View.VISIBLE);
         listVendor.clear();
         timerTask = new TimerTask() {
             @Override
@@ -93,6 +94,7 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
 
     private void offLine() {
         setFragmentType(FragmentType.OFFLINE);
+        refreshImageView.setVisibility(View.GONE);
         listVendor.clear();
         if (timer != null) {
             Log.d("volleyPostData", "Timer cancel");
@@ -174,7 +176,6 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
                 onLine();
                 onlineTab.setText(CommonMethods.getTabHeading(DashBoardActivity.this, FragmentType.ONLINE, true));
                 offlineTab.setText(CommonMethods.getTabHeading(DashBoardActivity.this, FragmentType.OFFLINE, false));
-
                 break;
             case 1:
                 offLine();

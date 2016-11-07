@@ -1,5 +1,7 @@
 package com.sample.honeybuser.Utility.Fonts.WebServices;
 
+import com.sample.honeybuser.R;
+
 /**
  * Created by IM0033 on 10/4/2016.
  */
@@ -10,4 +12,5 @@ public class ConstandValue {
     public static final String notificationType = "notificationType";
     public static final String vendorId = "vendorId";
     public static final String channelUrl = "channelUrl";
+    public static final String transitionName = "honeyb";
 }

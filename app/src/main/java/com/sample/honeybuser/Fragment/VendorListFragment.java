@@ -119,7 +119,7 @@ public class VendorListFragment extends Fragment {
 
     @Override
     public void onResume() {
-        getData();
+//        getData();
         super.onResume();
 
     }

@@ -27,7 +27,8 @@ public class VendorPhotoDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Dialog dialog = new Dialog(getActivity(), R.style.DialogActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+//        dialog.getWindow().getAttributes().windowAnimations=R.style.Di
         view = LayoutInflater.from(getActivity()).inflate(R.layout.vendor_photo_dialog, null, false);
         vendorImage = (ImageView) view.findViewById(R.id.vendorDialogImageView);
 

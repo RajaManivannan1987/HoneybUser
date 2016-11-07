@@ -135,24 +135,6 @@ public class OnLineMapFragment extends Fragment {
             public void onReleased() {
                 flagIsOnTouched = true;
                 if (isMove) {
-//                    DashBoardActivity.distanceLatLng = googleMap.getCameraPosition().target;
-////                    getMarkerMovedAddress(googleMap.getCameraPosition().target);
-//                    timerTask = new TimerTask() {
-//                        @Override
-//                        public void run() {
-//                            getActivity().runOnUiThread(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    getVendorLocation();
-//                                    Complete.offerDialogInstance().orderCompleted();
-//                                }
-//                            });
-//
-//                        }
-//                    };
-//                    timer = new Timer();
-//                    timer.schedule(timerTask, 01, 10000);
-
 
                     //   By Raja on today 4.11.2016
 
@@ -170,7 +152,7 @@ public class OnLineMapFragment extends Fragment {
                             });
                         }
                     };
-                    handler.postDelayed(runnable, 3000);
+                    handler.postDelayed(runnable, 1500);
                    /* handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -258,6 +240,7 @@ public class OnLineMapFragment extends Fragment {
                             CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(location, MapUtils.calculateZoomLevel(getActivity(), 15));
                             googleMap.animateCamera(yourLocation);
                             DashBoardActivity.distanceLatLng = googleMap.getCameraPosition().target;
+//                            DashBoardActivity.distanceLatLng = yourLocation;
                             Complete.getGetMapList().orderCompleted();
                             //getVendorLocation();
                             Log.d("OnLineMapFragment", "onMyLocationButtonClick");

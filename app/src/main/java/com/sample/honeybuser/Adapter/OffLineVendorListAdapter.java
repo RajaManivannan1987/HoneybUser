@@ -2,6 +2,7 @@ package com.sample.honeybuser.Adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import com.sample.honeybuser.R;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.AlertDialogManager;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
 import com.sample.honeybuser.Utility.Fonts.WebServices.CommonWebserviceMethods;
+import com.sample.honeybuser.Utility.Fonts.WebServices.ConstandValue;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -46,7 +48,7 @@ public class OffLineVendorListAdapter extends RecyclerView.Adapter<OffLineVendor
     }
 
     @Override
-    public void onBindViewHolder(CustomHolder holder, final int position) {
+    public void onBindViewHolder(final CustomHolder holder, final int position) {
         if (!list.get(position).getLogo().equalsIgnoreCase("")) {
             Picasso.with(activity).load(list.get(position).getLogo()).into(holder.imageView);
         } else {
@@ -91,7 +93,11 @@ public class OffLineVendorListAdapter extends RecyclerView.Adapter<OffLineVendor
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.startActivity(new Intent(activity, VendorDetailActivity.class).putExtra("vendor_id", list.get(position).getVendor_id()));
+                Intent intent = new Intent(activity, VendorDetailActivity.class);
+                intent.putExtra("vendor_id", list.get(position).getVendor_id());
+                ActivityOptionsCompat options1 = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, holder.cv, ConstandValue.transitionName);
+                activity.startActivity(intent,options1.toBundle());
+//                activity.startActivity(new Intent(activity, VendorDetailActivity.class).putExtra("vendor_id", list.get(position).getVendor_id()));
             }
         });
         holder.notifyImage.setOnClickListener(new View.OnClickListener() {

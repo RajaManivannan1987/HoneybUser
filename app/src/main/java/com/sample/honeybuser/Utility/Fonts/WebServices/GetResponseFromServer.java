@@ -260,7 +260,7 @@ public class GetResponseFromServer {
         } catch (JSONException e) {
             Log.e(TAG + " " + TAG, e.getMessage());
         }
-        setResponse(context, ConstandValue.SERVER_URL + "vendor/details_api", listerner, jsonObject);
+        setResponse1(context, ConstandValue.SERVER_URL + "vendor/details_api", listerner, jsonObject);
 
     }
 
@@ -335,7 +335,7 @@ public class GetResponseFromServer {
         } catch (JSONException e) {
             Log.e(TAG + " " + TAG, e.getMessage());
         }
-        setResponse(context, ConstandValue.SERVER_URL + "vendor/product_search", listerner, jsonObject);
+        setResponse1(context, ConstandValue.SERVER_URL + "vendor/product_search", listerner, jsonObject);
     }
 
     public void getSearchVendorList(Context context, String latitude, String longitude, VolleyResponseListerner listerner) {
@@ -379,7 +379,7 @@ public class GetResponseFromServer {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        setResponse(context, ConstandValue.SERVER_URL + "vendor/business_vendors", listerner, jsonObject);
+        setResponse1(context, ConstandValue.SERVER_URL + "vendor/business_vendors", listerner, jsonObject);
     }
 
     public void updateNotificationRange(Context context, String distance, final VolleyResponseListerner listerner) {

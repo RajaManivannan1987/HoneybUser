@@ -3,6 +3,7 @@ package com.sample.honeybuser.Adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sample.honeybuser.Activity.BusinessVendorActivity;
 import com.sample.honeybuser.Activity.VendorDetailActivity;
 import com.sample.honeybuser.InterFaceClass.DialogBoxInterface;
 import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
@@ -21,6 +23,7 @@ import com.sample.honeybuser.Singleton.Complete;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.AlertDialogManager;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
 import com.sample.honeybuser.Utility.Fonts.WebServices.CommonWebserviceMethods;
+import com.sample.honeybuser.Utility.Fonts.WebServices.ConstandValue;
 import com.sample.honeybuser.Utility.Fonts.WebServices.GetResponseFromServer;
 import com.squareup.picasso.Picasso;
 
@@ -51,7 +54,7 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.Cust
     }
 
     @Override
-    public void onBindViewHolder(CustomHolder holder, final int position) {
+    public void onBindViewHolder( final CustomHolder holder, final int position) {
         if (!list.get(position).getLogo().equalsIgnoreCase("")) {
             Picasso.with(context).load(list.get(position).getLogo()).into(holder.follower_profile_image);
         } else {
@@ -90,7 +93,12 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.Cust
         holder.followerCv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, VendorDetailActivity.class).putExtra("vendor_id", list.get(position).getVendor_id()));
+                Intent intent = new Intent(context, VendorDetailActivity.class);
+                intent.putExtra("vendor_id", list.get(position).getVendor_id());
+//                intent.putExtra("distance", "3.00");
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, holder.followerCv, ConstandValue.transitionName);
+                context.startActivity(intent, options.toBundle());
+//                context.startActivity(new Intent(context, VendorDetailActivity.class).putExtra("vendor_id", list.get(position).getVendor_id()));
             }
         });
         holder.onOffFollowerStatusImageView.setOnClickListener(new View.OnClickListener() {
