@@ -57,12 +57,18 @@ public class VendorSearchFragment extends Fragment {
         txtView = (TextView) view.findViewById(R.id.noRecordTextView);
         vendorSearch = (EditText) view.findViewById(R.id.vendorSearch);
         closeButton = (ImageView) view.findViewById(R.id.vendorCloseButton);
+
         vendorSearchRecyclerView = (RecyclerView) view.findViewById(R.id.vendorSearchRecyclerView);
+
         vendorSearchRecyclerView.setHasFixedSize(true);
+
         vendorSearchRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+
         vendorSearchRecyclerView.addItemDecoration(new GridSpacingItemDecoration(spancount, spacing, includeEdge));
+
         adapter = new VendorSearchAdapter(getActivity(), vendorList);
         vendorSearchRecyclerView.setAdapter(adapter);
+
         Complete.getVendorSearch().setListener(new SaveCompletedInterface() {
             @Override
             public void completed() {

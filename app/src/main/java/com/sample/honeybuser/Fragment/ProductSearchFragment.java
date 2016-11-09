@@ -62,18 +62,24 @@ public class ProductSearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_search, container, false);
-        threeKmVendorRecyclerView = (RecyclerView) view.findViewById(R.id.threeKmVendorRecyclerView);
-        fiveKmVendorRecyclerView = (RecyclerView) view.findViewById(R.id.fiveKmVendorRecyclerView);
         productSearch = (EditText) view.findViewById(R.id.productSearch);
         closeButton = (ImageView) view.findViewById(R.id.productCloseButton);
+
+        threeKmVendorRecyclerView = (RecyclerView) view.findViewById(R.id.threeKmVendorRecyclerView);
+        fiveKmVendorRecyclerView = (RecyclerView) view.findViewById(R.id.fiveKmVendorRecyclerView);
+
         threeKmVendorRecyclerView.setHasFixedSize(true);
         fiveKmVendorRecyclerView.setHasFixedSize(true);
+
         fiveKmVendorRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         threeKmVendorRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+
         threeKmVendorRecyclerView.addItemDecoration(new GridSpacingItemDecoration(spancount, spacing, includeEdge));
         fiveKmVendorRecyclerView.addItemDecoration(new GridSpacingItemDecoration(spancount, spacing, includeEdge));
+
         adapter3Km = new Product3KmSearchAdapter(getActivity(), threeKmVendorList);
         adapter05km = new Product05SearchAdapter(getActivity(), fiveKmVendorList);
+
         fiveKmVendorRecyclerView.setAdapter(adapter05km);
         threeKmVendorRecyclerView.setAdapter(adapter3Km);
 

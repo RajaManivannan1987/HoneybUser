@@ -92,8 +92,9 @@ public class AddressRecyclerViewAdapter extends RecyclerView.Adapter<AddressRecy
             public void onClick(View v) {
                 DashBoardActivity.distanceLatLng = new LatLng(Double.parseDouble(addressList.get(position).getLatitude()), Double.parseDouble(addressList.get(position).getLongitude()));
                 ChangeLocationSingleton.getInstance().locationChanges(new LatLng(Double.parseDouble(addressList.get(position).getLatitude()), Double.parseDouble(addressList.get(position).getLongitude())), null, null, "AddressRecyclerView");
-                Complete.offerDialogInstance().orderCompleted();
 //                Complete.getGetMapList().orderCompleted();
+                Complete.offerDialogInstance().orderCompleted();
+
                 activity.finish();
 
                 if (position == selectedPosition) {

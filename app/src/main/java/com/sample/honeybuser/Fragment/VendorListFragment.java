@@ -98,7 +98,6 @@ public class VendorListFragment extends Fragment {
 
     private void getMarkerMovedAddress(LatLng target) {
         address = CommonMethods.getAddressName(getActivity(), target, TAG);
-        Log.d(TAG, address);
         /*Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
         if (geocoder.isPresent()) {
             try {

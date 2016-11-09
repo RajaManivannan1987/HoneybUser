@@ -64,6 +64,7 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.Cust
             holder.followerOnlineImageView.setImageResource(R.drawable.on);
             holder.followerLocateImageview.setVisibility(View.VISIBLE);
             holder.followerKmTextView.setText(list.get(position).getDistance());
+            holder.followerKmTextView.setVisibility(View.VISIBLE);
         } else {
             holder.followerOnlineImageView.setImageResource(R.drawable.off);
             holder.followerLocateImageview.setVisibility(View.INVISIBLE);
@@ -108,7 +109,7 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.Cust
             @Override
             public void onClick(View v) {
                 if (list.get(position).getFollow().equalsIgnoreCase("Y")) {
-                    AlertDialogManager.listenerDialogBox(context, "Remove!", "Remove Follow?", new DialogBoxInterface() {
+                    AlertDialogManager.listenerDialogBox(context, "", "Delete this alert?", new DialogBoxInterface() {
                         @Override
                         public void yes() {
                             CommonWebserviceMethods.removeFollows(context, TAG, list.get(position).getVendor_id(), "3");

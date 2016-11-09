@@ -151,6 +151,8 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
     @Override
     protected void onResume() {
         super.onResume();
+//        offLine();
+        Log.d(TAG,TAG);
     }
 
 
