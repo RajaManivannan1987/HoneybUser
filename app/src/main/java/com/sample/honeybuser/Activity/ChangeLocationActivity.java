@@ -58,7 +58,7 @@ public class ChangeLocationActivity extends CommonActionBar implements PlaceSele
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setView(R.layout.activity_change_location);
-        setTitle("Change Loction");
+        setTitle("Change Location");
         hideNotification();
         autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.autocomplete_fragment);
@@ -149,8 +149,8 @@ public class ChangeLocationActivity extends CommonActionBar implements PlaceSele
             @Override
             public void onResponse(JSONObject response) throws JSONException {
                 if (response.getString("status").equalsIgnoreCase("1")) {
-                   DashBoardActivity.distanceLatLng = dragPosition;
-                    ChangeLocationSingleton.getInstance().locationChanges(dragPosition, "0.50", null, "ChangeLocation");
+                    DashBoardActivity.distanceLatLng = dragPosition;
+                    ChangeLocationSingleton.getInstance().locationChanges(dragPosition, "0.50", null, "ChangeLocationActivity");
 //                    Complete.offerDialogInstance().orderCompleted();
 
                     //                     By Raja 4.11.16

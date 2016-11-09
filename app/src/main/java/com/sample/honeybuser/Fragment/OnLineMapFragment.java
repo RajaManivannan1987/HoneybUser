@@ -252,13 +252,10 @@ public class OnLineMapFragment extends Fragment {
         ChangeLocationSingleton.getInstance().setChangeLocationListener(new ChangeLocationListener() {
             @Override
             public void locationChanged(LatLng latLng, String distance, String address, String classType) {
-                Log.d("OnLineMapFragment", classType);
+                Log.d("OnLineMapFragment", "OnLineMapFragment "+classType);
                 if (latLng != null) {
                     if (googleMap != null) {
                         googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-//                        Complete.getGetMapList().orderCompleted();
-                        //Raja today
-                        //DashBoardActivity.distanceLatLng = latLng;
                     }
                 }
 
@@ -348,24 +345,6 @@ public class OnLineMapFragment extends Fragment {
 
     private void getMarkerMovedAddress(LatLng target) {
         adres = CommonMethods.getAddressName(getActivity(), target, TAG);
-        /*Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-        if (geocoder.isPresent()) {
-            try {
-                //Raja today
-                //DashBoardActivity.distanceLatLng = target;
-                List<Address> addresses = geocoder.getFromLocation(target.latitude, target.longitude, 1);
-                if (addresses != null && addresses.size() > 0) {
-                    if (addresses.get(0).getSubLocality() != null && !addresses.get(0).getSubLocality().equalsIgnoreCase(""))
-                        adres = addresses.get(0).getSubLocality();
-                    else if (addresses.get(0).getLocality() != null && !addresses.get(0).getLocality().equalsIgnoreCase("")) {
-                        adres = addresses.get(0).getLocality();
-                    }
-                }
-            } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
-            }
-        }
-        Log.d("OnLineMapFragment", "getMarkerMovedAddress +ChangeLocationSingleton");*/
         ChangeLocationSingleton.getInstance().locationChanges(null, null, adres, "OnLineMapFragment");
     }
 
