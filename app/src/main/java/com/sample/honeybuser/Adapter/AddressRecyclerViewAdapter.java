@@ -14,7 +14,9 @@ import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
 import com.sample.honeybuser.Models.ChangeAddress;
 import com.sample.honeybuser.R;
 import com.sample.honeybuser.Singleton.ChangeLocationSingleton;
+import com.sample.honeybuser.Singleton.Complete;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.AlertDialogManager;
+import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
 import com.sample.honeybuser.Utility.Fonts.WebServices.GetResponseFromServer;
 
 import org.json.JSONException;
@@ -88,14 +90,12 @@ public class AddressRecyclerViewAdapter extends RecyclerView.Adapter<AddressRecy
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*LocationSaveValue setLatLang = new LocationSaveValue();
-                setLatLang.setLat(String.valueOf(addressList.get(position).getLatitude()));
-                setLatLang.setLang(String.valueOf(addressList.get(position).getLongitude()));*/
                 DashBoardActivity.distanceLatLng = new LatLng(Double.parseDouble(addressList.get(position).getLatitude()), Double.parseDouble(addressList.get(position).getLongitude()));
                 ChangeLocationSingleton.getInstance().locationChanges(new LatLng(Double.parseDouble(addressList.get(position).getLatitude()), Double.parseDouble(addressList.get(position).getLongitude())), null, null, "AddressRecyclerView");
-//                ChangeLocationSingleton.getInstance().locationChanges(new LatLng(Double.parseDouble(addressList.get(position).getLatitude()), Double.parseDouble(addressList.get(position).getLongitude())), DistanceSelectRecyclerViewAdapter.distanc, addressList.get(position).getTitle());
-//                activity.startActivity(new Intent(activity, DashBoardActivity.class).putExtra("lat", addressList.get(position).getLatitude()).putExtra("lang", addressList.get(position).getLongitude()));
+                Complete.offerDialogInstance().orderCompleted();
+//                Complete.getGetMapList().orderCompleted();
                 activity.finish();
+
                 if (position == selectedPosition) {
                     selectedPosition = -1;
                 } else {

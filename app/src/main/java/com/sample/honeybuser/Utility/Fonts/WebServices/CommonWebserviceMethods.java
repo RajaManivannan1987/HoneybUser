@@ -36,7 +36,7 @@ public class CommonWebserviceMethods extends AppCompatActivity {
                 if (response.getString("status").equalsIgnoreCase("1")) {
                     JSONArray jsonArray = response.getJSONArray("data");
                     JSONObject jsonObject = jsonArray.getJSONObject(0);
-                    context.startActivity(new Intent(context, MapsActivity.class).putExtra(ConstandValue.latitude, jsonObject.getString("latitude")).putExtra(ConstandValue.longitude, jsonObject.getString("longitude")).putExtra(ConstandValue.vendorName, name).putExtra(ConstandValue.IS_ONLINE, jsonObject.getString("is_available")).putExtra("vendor_id", vendor_Id));
+                    context.startActivity(new Intent(context, MapsActivity.class).putExtra(ConstandValue.latitude, jsonObject.getString("latitude")).putExtra(ConstandValue.longitude, jsonObject.getString("longitude")).putExtra(ConstandValue.vendorName, name).putExtra(ConstandValue.IS_ONLINE, jsonObject.getString("is_available")).putExtra(ConstandValue.vendorId, vendor_Id));
 //                    CommonMethods.locationDirection(context, jsonObject.getString("latitude"), jsonObject.getString("longitude"));
                 }
             }

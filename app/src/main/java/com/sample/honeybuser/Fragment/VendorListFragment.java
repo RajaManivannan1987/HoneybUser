@@ -30,6 +30,7 @@ import com.sample.honeybuser.Models.OnLineVendorListModel;
 import com.sample.honeybuser.R;
 import com.sample.honeybuser.Singleton.ChangeLocationSingleton;
 import com.sample.honeybuser.Singleton.Complete;
+import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
 import com.sample.honeybuser.Utility.Fonts.WebServices.GetResponseFromServer;
 
 import org.json.JSONException;
@@ -52,7 +53,7 @@ public class VendorListFragment extends Fragment {
     private Gson gson = new Gson();
     private List<OnLineVendorListModel> onLineList = new ArrayList<OnLineVendorListModel>();
     private List<OffLineVendorListModel> offLineList = new ArrayList<OffLineVendorListModel>();
-    private String lat, lang, distance, assress;
+    private String lat, lang, distance, address, subAddress;
     public static LatLng latLngValue = null;
     private TextView offLineToastText, onLineToastText;
     private FragmentType fragmentType;
@@ -85,6 +86,7 @@ public class VendorListFragment extends Fragment {
                     @Override
                     public void run() {
                         getData();
+//                        Complete.getGetMapList().orderCompleted();
                     }
                 });
 
@@ -95,26 +97,30 @@ public class VendorListFragment extends Fragment {
     }
 
     private void getMarkerMovedAddress(LatLng target) {
-        //String adres="";
-
-        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+        address = CommonMethods.getAddressName(getActivity(), target, TAG);
+        Log.d(TAG, address);
+        /*Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
         if (geocoder.isPresent()) {
             try {
                 //DashBoardActivity.distanceLatLng = target;
                 List<Address> addresses = geocoder.getFromLocation(target.latitude, target.longitude, 1);
                 if (addresses != null && addresses.size() > 0) {
-                    if (addresses.get(0).getSubLocality() != null && !addresses.get(0).getSubLocality().equalsIgnoreCase(""))
-                        assress = addresses.get(0).getSubLocality();
-                    else if (addresses.get(0).getLocality() != null && !addresses.get(0).getLocality().equalsIgnoreCase("")) {
-                        assress = addresses.get(0).getLocality();
+                    if (addresses.get(0).getSubLocality() != null && !addresses.get(0).getSubLocality().equalsIgnoreCase("")) {
+                        address = addresses.get(0).getSubLocality();
+                        subAddress = addresses.get(0).getThoroughfare();
+
+                    } else {
+                        if (addresses.get(0).getLocality() != null && !addresses.get(0).getLocality().equalsIgnoreCase("")) {
+                            address = addresses.get(0).getLocality();
+                            subAddress = addresses.get(0).getThoroughfare();
+                        }
                     }
                 }
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage());
             }
-        }
+        }*/
 
-//        Log.d(TAG, assress);
     }
 
     @Override
@@ -207,7 +213,7 @@ public class VendorListFragment extends Fragment {
                 }
                 onLineAdapter.notifyDataSetChanged();
                 offLineAdapter.notifyDataSetChanged();
-                ChangeLocationSingleton.getInstance().locationChanges(null, null, assress, "VendorListFragment");
+                ChangeLocationSingleton.getInstance().locationChanges(null, null, address, TAG);
             }
 
             @Override

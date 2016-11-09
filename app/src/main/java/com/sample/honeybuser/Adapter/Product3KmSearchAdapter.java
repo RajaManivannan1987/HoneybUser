@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.sample.honeybuser.Activity.BusinessVendorActivity;
 import com.sample.honeybuser.Activity.VendorDetailActivity;
@@ -50,6 +51,13 @@ public class Product3KmSearchAdapter extends RecyclerView.Adapter<Product3KmSear
 
     @Override
     public void onBindViewHolder(final CustomHolder holder, final int position) {
+        holder.productNameText.setText(threeKmList.get(position).getBusiness_name());
+        if (threeKmList.get(position).getCount().equalsIgnoreCase("1")) {
+            holder.productSearchCountTextView.setText(threeKmList.get(position).getCount() + " vendor");
+        } else {
+            holder.productSearchCountTextView.setText(threeKmList.get(position).getCount() + " vendors");
+        }
+
         if (!threeKmList.get(position).getIcon().equalsIgnoreCase("")) {
             Picasso.with(context).load(threeKmList.get(position).getIcon()).into(holder.vendorSearchImageView);
         } else {
@@ -78,11 +86,14 @@ public class Product3KmSearchAdapter extends RecyclerView.Adapter<Product3KmSear
     public class CustomHolder extends RecyclerView.ViewHolder {
         ImageView vendorSearchImageView;
         CardView productCardView;
+        TextView productNameText, productSearchCountTextView;
 
         public CustomHolder(View itemView) {
             super(itemView);
             vendorSearchImageView = (ImageView) itemView.findViewById(R.id.vendorSearchImageView);
             productCardView = (CardView) itemView.findViewById(R.id.productCardView);
+            productNameText = (TextView) itemView.findViewById(R.id.productSearchNameTextView);
+            productSearchCountTextView = (TextView) itemView.findViewById(R.id.productSearchCountTextView);
         }
     }
 }

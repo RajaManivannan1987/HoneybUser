@@ -49,6 +49,7 @@ public class OffLineVendorListAdapter extends RecyclerView.Adapter<OffLineVendor
 
     @Override
     public void onBindViewHolder(final CustomHolder holder, final int position) {
+        holder.distance.setVisibility(View.INVISIBLE);
         if (!list.get(position).getLogo().equalsIgnoreCase("")) {
             Picasso.with(activity).load(list.get(position).getLogo()).into(holder.imageView);
         } else {
@@ -77,7 +78,8 @@ public class OffLineVendorListAdapter extends RecyclerView.Adapter<OffLineVendor
             holder.vendorListOnlineImageView.setImageResource(R.drawable.off);
         }
         holder.vendorName.setText(list.get(position).getName());
-        holder.distance.setText(list.get(position).getDistance() + " Km away");
+
+//        holder.distance.setText(list.get(position).getDistance() + " Km away");
         holder.callImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +89,7 @@ public class OffLineVendorListAdapter extends RecyclerView.Adapter<OffLineVendor
         holder.locateImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonWebserviceMethods.getVendorLocation(activity, TAG, list.get(position).getVendor_id(),list.get(position).getName());
+                CommonWebserviceMethods.getVendorLocation(activity, TAG, list.get(position).getVendor_id(), list.get(position).getName());
             }
         });
         holder.cv.setOnClickListener(new View.OnClickListener() {

@@ -79,9 +79,10 @@
                                 android:gravity="center">
 
                                 <ImageView
+                                    android:id="@+id/actionBarlocateImage"
                                     android:layout_width="18sp"
                                     android:layout_height="18sp"
-                                    android:src="@drawable/location" />
+                                     />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -94,7 +95,8 @@
                                     android:paddingStart="5dp"
                                     android:text="Viewing"
                                     android:textColor="@android:color/white"
-                                    android:textSize="16sp" />
+                                    android:textSize="16sp"
+                                    android:visibility="gone" />
 
                                 <TextView
                                     android:id="@+id/actionBarViewDistanceTextView"
@@ -118,7 +120,8 @@
                                     android:maxLines="1"
                                     android:text="in "
                                     android:textColor="@android:color/white"
-                                    android:textSize="16sp" />
+                                    android:textSize="16sp"
+                                    android:visibility="gone" />
 
                                 <TextView
                                     android:id="@+id/actionBarViewPlaceTextView"

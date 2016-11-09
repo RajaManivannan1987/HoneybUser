@@ -76,6 +76,7 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
                     @Override
                     public void run() {
                         Complete.offerDialogInstance().orderCompleted();
+//                        Complete.getGetMapList().orderCompleted();
                     }
                 });
 
@@ -94,8 +95,9 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
 
     private void offLine() {
         setFragmentType(FragmentType.OFFLINE);
-        refreshImageView.setVisibility(View.GONE);
+//        refreshImageView.setVisibility(View.GONE);
         listVendor.clear();
+        Complete.getGetMapList().orderCompleted();
         if (timer != null) {
             Log.d("volleyPostData", "Timer cancel");
             timer.cancel();
@@ -128,9 +130,9 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
             @Override
             public void onClick(View v) {
                 Complete.offerDialogInstance().orderCompleted();
+                Complete.getGetMapList().orderCompleted();
             }
         });
-
         onLine();
 
     }

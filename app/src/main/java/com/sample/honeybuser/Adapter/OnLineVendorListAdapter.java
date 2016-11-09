@@ -84,7 +84,7 @@ public class OnLineVendorListAdapter extends RecyclerView.Adapter<OnLineVendorLi
             holder.vendorListOnlineImageView.setImageResource(R.drawable.off);
         }
         holder.vendorName.setText(list.get(position).getName());
-        holder.distance.setText(list.get(position).getDistance() + " Km away");
+        holder.distance.setText(list.get(position).getDistance());
         holder.callImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

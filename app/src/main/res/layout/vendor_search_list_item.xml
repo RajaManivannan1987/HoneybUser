@@ -8,8 +8,8 @@
     <android.support.v7.widget.CardView
         android:id="@+id/vendorCardView"
         android:layout_width="match_parent"
-        android:transitionName="@string/transitionName"
         android:layout_height="wrap_content"
+        android:transitionName="@string/transitionName"
         app:cardUseCompatPadding="true"
         app:elevation="0dp">
 
@@ -22,10 +22,10 @@
 
             <ImageView
                 android:id="@+id/vendorProfileImageView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="110dp"
                 android:layout_gravity="center"
-                android:scaleType="fitXY" />
+                android:scaleType="centerCrop" />
 
 
             <LinearLayout

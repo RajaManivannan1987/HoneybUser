@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.provider.Settings;
@@ -21,8 +23,10 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.sample.honeybuser.Activity.DashBoardActivity;
 import com.sample.honeybuser.Activity.FollowerActivity;
 import com.sample.honeybuser.Activity.LocationCheckActivity;
@@ -36,10 +40,13 @@ import com.sample.honeybuser.Adapter.BusinessVendorAdapter;
 import com.sample.honeybuser.EnumClass.FragmentType;
 import com.sample.honeybuser.EnumClass.IntentClasses;
 import com.sample.honeybuser.R;
+import com.sample.honeybuser.Singleton.ChangeLocationSingleton;
 import com.sample.honeybuser.Utility.Fonts.CustomTypefaceSpan;
 import com.sample.honeybuser.Utility.Fonts.WebServices.ConstandValue;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by IM0033 on 8/2/2016.
@@ -176,6 +183,33 @@ public class CommonMethods extends AppCompatActivity {
         sb.setSpan(new CustomTypefaceSpan("", Typeface.MONOSPACE), 3, text.length() + 3, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         sb.setSpan(new AbsoluteSizeSpan((int) context.getResources().getDimension(R.dimen.text_sixe_large)), 3, text.length() + 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//resize size
         return sb;
+    }
+
+    public static String getAddressName(Context context, LatLng target, String Tag) {
+        String address = "", subAddress = "";
+        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+        if (geocoder.isPresent()) {
+            try {
+                //DashBoardActivity.distanceLatLng = target;
+                List<Address> addresses = geocoder.getFromLocation(target.latitude, target.longitude, 1);
+                if (addresses != null && addresses.size() > 0) {
+                    if (addresses.get(0).getSubLocality() != null && !addresses.get(0).getSubLocality().equalsIgnoreCase("")) {
+                        address = addresses.get(0).getSubLocality();
+                        subAddress = addresses.get(0).getThoroughfare();
+
+                    } else {
+                        if (addresses.get(0).getLocality() != null && !addresses.get(0).getLocality().equalsIgnoreCase("")) {
+                            address = addresses.get(0).getLocality();
+                            subAddress = addresses.get(0).getThoroughfare();
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                Log.e(Tag, e.getMessage());
+            }
+        }
+//        ChangeLocationSingleton.getInstance().locationChanges(null, null, address + ", " + subAddress, "VendorListFragment");
+        return subAddress + ", " + address + ".";
     }
 }
 

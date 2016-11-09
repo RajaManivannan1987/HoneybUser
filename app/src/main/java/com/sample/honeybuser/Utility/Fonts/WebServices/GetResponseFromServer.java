@@ -153,7 +153,7 @@ public class GetResponseFromServer {
         } catch (JSONException e) {
             Log.e(TAG + " " + TAG, e.getMessage());
         }
-        setResponse(context, ConstandValue.SERVER_URL + "user/save_address", listerner, jsonObject);
+        setResponse1(context, ConstandValue.SERVER_URL + "user/save_address", listerner, jsonObject);
     }
 
     public void addressDistanceList(Context context, final VolleyResponseListerner listerner) {

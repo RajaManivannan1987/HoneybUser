@@ -54,7 +54,7 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.Cust
     }
 
     @Override
-    public void onBindViewHolder( final CustomHolder holder, final int position) {
+    public void onBindViewHolder(final CustomHolder holder, final int position) {
         if (!list.get(position).getLogo().equalsIgnoreCase("")) {
             Picasso.with(context).load(list.get(position).getLogo()).into(holder.follower_profile_image);
         } else {
@@ -63,9 +63,11 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.Cust
         if (list.get(position).getIs_online().equalsIgnoreCase("Y")) {
             holder.followerOnlineImageView.setImageResource(R.drawable.on);
             holder.followerLocateImageview.setVisibility(View.VISIBLE);
+            holder.followerKmTextView.setText(list.get(position).getDistance());
         } else {
             holder.followerOnlineImageView.setImageResource(R.drawable.off);
             holder.followerLocateImageview.setVisibility(View.INVISIBLE);
+            holder.followerKmTextView.setVisibility(View.INVISIBLE);
         }
         if (list.get(position).getNotification_status().startsWith("Y")) {
             holder.followerNotificationStatusImageview.setImageResource(R.drawable.bellon);
@@ -76,7 +78,7 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.Cust
         holder.followerRatingTextView.setText(list.get(position).getStar_rating());
         holder.followerRatingCountTextView.setText("(" + list.get(position).getRating_count() + " Ratings)");
         holder.followerNameTextView.setText(list.get(position).getName());
-        holder.followerKmTextView.setText(list.get(position).getDistance() + " km away");
+
         holder.followerCallImageview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +88,7 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.Cust
         holder.followerLocateImageview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonWebserviceMethods.getVendorLocation(context, TAG, list.get(position).getVendor_id(),list.get(position).getName());
+                CommonWebserviceMethods.getVendorLocation(context, TAG, list.get(position).getVendor_id(), list.get(position).getName());
                 //CommonMethods.locationDirection(context, list.get(position).getLatitude(), list.get(position).getLongitude());
             }
         });

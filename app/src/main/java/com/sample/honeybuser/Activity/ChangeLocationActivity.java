@@ -26,7 +26,9 @@ import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
 import com.sample.honeybuser.Models.ChangeAddress;
 import com.sample.honeybuser.R;
 import com.sample.honeybuser.Singleton.ChangeLocationSingleton;
+import com.sample.honeybuser.Singleton.Complete;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.AlertDialogManager;
+import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
 import com.sample.honeybuser.Utility.Fonts.WebServices.GetResponseFromServer;
 
 import org.json.JSONException;
@@ -112,7 +114,7 @@ public class ChangeLocationActivity extends CommonActionBar implements PlaceSele
     private String getMarkerMovedAddress(LatLng dragPosition) {
         String adres = "";
         String location = "";
-
+//        DashBoardActivity.distanceLatLng = dragPosition;
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         try {
             List<Address> addresses = geocoder.getFromLocation(dragPosition.latitude, dragPosition.longitude, 1);
@@ -129,7 +131,7 @@ public class ChangeLocationActivity extends CommonActionBar implements PlaceSele
                 for (int i = 0; i < returnedAddress.getMaxAddressLineIndex(); i++) {
                     stringBuilder.append(returnedAddress.getAddressLine(i));
                 }
-                Log.d("MyAddress", returnedAddress.toString());
+                Log.d(TAG, returnedAddress.toString());
                 adres = stringBuilder.toString();
                 //By raja
                 locationPicker(location, adres, lat, lang, dragPosition);
@@ -147,8 +149,9 @@ public class ChangeLocationActivity extends CommonActionBar implements PlaceSele
             @Override
             public void onResponse(JSONObject response) throws JSONException {
                 if (response.getString("status").equalsIgnoreCase("1")) {
-                    DashBoardActivity.distanceLatLng = dragPosition;
+                   DashBoardActivity.distanceLatLng = dragPosition;
                     ChangeLocationSingleton.getInstance().locationChanges(dragPosition, "0.50", null, "ChangeLocation");
+//                    Complete.offerDialogInstance().orderCompleted();
 
                     //                     By Raja 4.11.16
 //                    set distance in dashboard page

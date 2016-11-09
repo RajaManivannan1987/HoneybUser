@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.sample.honeybuser.Activity.DashBoardActivity;
 import com.sample.honeybuser.Adapter.Product05SearchAdapter;
@@ -22,6 +23,8 @@ import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
 import com.sample.honeybuser.Models.FiveKmProductSearchModel;
 import com.sample.honeybuser.Models.ThreeKmProductSearchModel;
 import com.sample.honeybuser.R;
+import com.sample.honeybuser.Singleton.ChangeLocationSingleton;
+import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
 import com.sample.honeybuser.Utility.Fonts.GridSpacingItemDecoration;
 import com.sample.honeybuser.Utility.Fonts.WebServices.GetResponseFromServer;
 
@@ -36,6 +39,7 @@ import java.util.ArrayList;
 
 public class ProductSearchFragment extends Fragment {
     private String TAG = "ProductSearchFragment";
+    private String address = "";
     private RecyclerView threeKmVendorRecyclerView, fiveKmVendorRecyclerView;
 
     private ArrayList<FiveKmProductSearchModel> fiveKmVendorList = new ArrayList<>();
@@ -48,6 +52,7 @@ public class ProductSearchFragment extends Fragment {
     private ImageView closeButton;
     int spancount = 3;
     int spacing = 30;
+    private LatLng latLng = null;
     boolean includeEdge = true;
     private Gson gson = new Gson();
 
@@ -63,8 +68,8 @@ public class ProductSearchFragment extends Fragment {
         closeButton = (ImageView) view.findViewById(R.id.productCloseButton);
         threeKmVendorRecyclerView.setHasFixedSize(true);
         fiveKmVendorRecyclerView.setHasFixedSize(true);
-        fiveKmVendorRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        threeKmVendorRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        fiveKmVendorRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        threeKmVendorRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         threeKmVendorRecyclerView.addItemDecoration(new GridSpacingItemDecoration(spancount, spacing, includeEdge));
         fiveKmVendorRecyclerView.addItemDecoration(new GridSpacingItemDecoration(spancount, spacing, includeEdge));
         adapter3Km = new Product3KmSearchAdapter(getActivity(), threeKmVendorList);
@@ -101,8 +106,10 @@ public class ProductSearchFragment extends Fragment {
                         fiveKmfilterList.add(fiveKmVendorList.get(k));
                     }
                 }
-                fiveKmVendorRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-                threeKmVendorRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+                fiveKmVendorRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+                threeKmVendorRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+//                threeKmVendorRecyclerView.addItemDecoration(new GridSpacingItemDecoration(spancount, spacing, includeEdge));
+//                fiveKmVendorRecyclerView.addItemDecoration(new GridSpacingItemDecoration(spancount, spacing, includeEdge));
                 adapter3Km = new Product3KmSearchAdapter(getActivity(), threeKmfilterList);
                 adapter05km = new Product05SearchAdapter(getActivity(), fiveKmfilterList);
                 fiveKmVendorRecyclerView.setAdapter(adapter05km);
@@ -130,10 +137,14 @@ public class ProductSearchFragment extends Fragment {
         if (DashBoardActivity.distanceLatLng != null) {
             lat = String.valueOf(DashBoardActivity.distanceLatLng.latitude);
             lang = String.valueOf(DashBoardActivity.distanceLatLng.longitude);
+            latLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lang));
+            address = CommonMethods.getAddressName(getActivity(), latLng, TAG);
         } else {
             if (MyApplication.locationInstance().getLocation() != null) {
                 lat = String.valueOf(MyApplication.locationInstance().getLocation().getLatitude());
                 lang = String.valueOf(MyApplication.locationInstance().getLocation().getLongitude());
+                latLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lang));
+                address = CommonMethods.getAddressName(getActivity(), latLng, TAG);
             }
         }
         getFiveKmProductList();
@@ -172,7 +183,9 @@ public class ProductSearchFragment extends Fragment {
                 }
                 // adapter.notifyDataSetChanged();
                 adapter05km.notifyDataSetChanged();
+                ChangeLocationSingleton.getInstance().locationChanges(null, null, address, TAG);
                 getThreeKmProducts();
+
             }
 
             @Override

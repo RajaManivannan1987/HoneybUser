@@ -45,7 +45,7 @@ public class NavigationBarActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ListView drawerList;
     private LinearLayout actionBarViewLocationLinearLayout;
-    private ImageView menuImageView, searchImageView;
+    private ImageView menuImageView, searchImageView, actionBarlocateImage;
     private NavigationBarAdapter navigationBarAdapter;
     private Toolbar toolbar;
     private View headerSection, footerSection;
@@ -75,6 +75,7 @@ public class NavigationBarActivity extends AppCompatActivity {
         distanceTextView = (TextView) findViewById(R.id.actionBarViewDistanceTextView);
         locationTextView = (TextView) findViewById(R.id.actionBarViewPlaceTextView);
         titleTextView = (TextView) findViewById(R.id.actionBarViewTitleTextView);
+        actionBarlocateImage = (ImageView) findViewById(R.id.actionBarlocateImage);
         searchImageView = (ImageView) findViewById(R.id.actionBarViewSearchImageView);
         actionBarViewLocationLinearLayout = (LinearLayout) findViewById(R.id.actionBarViewLocationLinearLayout);
         tab1 = (ImageView) findViewById(R.id.tab1_icon);
@@ -163,7 +164,7 @@ public class NavigationBarActivity extends AppCompatActivity {
 
     }
 
-    public void setSelected(Selected selected) {
+    public void setSelected(final Selected selected) {
         this.selected = selected;
         int textcolor;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -171,7 +172,7 @@ public class NavigationBarActivity extends AppCompatActivity {
         } else {
             textcolor = getResources().getColor(R.color.colorPrimary);
         }
-        if (selected == Selected.DASHBOARD) {
+        if (selected == Selected.DASHBOARD || selected == Selected.SEARCH) {
             ChangeLocationSingleton.getInstance().setChangeLocationListener(new ChangeLocationListener() {
                 @Override
                 public void locationChanged(LatLng latLng, String distance, String address, String classType) {
@@ -184,7 +185,15 @@ public class NavigationBarActivity extends AppCompatActivity {
 //                        distanceTextView.setText(" " + distance + " km ");
 //                    }
                     if (address != null && !address.equalsIgnoreCase("")) {
-                        locationTextView.setText(address);
+//                        locationTextView.setText(address);
+                        if (selected == Selected.SEARCH) {
+                            actionBarlocateImage.setImageResource(R.drawable.topsearch);
+                            locationTextView.setText(address);
+                        } else {
+                            actionBarlocateImage.setImageResource(R.drawable.location);
+                            locationTextView.setText(address);
+                        }
+
                     }
                 }
             });

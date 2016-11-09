@@ -82,6 +82,7 @@ public class OnLineMapFragment extends Fragment {
     private boolean isMove = false;
     private String distance = "5.0", previousDistance = "5.0", vendorId, callPhone;
     private boolean flagIsOnTouched = true;
+    private boolean onresume = false;
     private LatLng location;
     private String adres = "";
     private LinearLayout vendorItemLinearLayout;
@@ -135,9 +136,7 @@ public class OnLineMapFragment extends Fragment {
             public void onReleased() {
                 flagIsOnTouched = true;
                 if (isMove) {
-
                     //   By Raja on today 4.11.2016
-
                     DashBoardActivity.distanceLatLng = googleMap.getCameraPosition().target;
                     getMarkerMovedAddress(googleMap.getCameraPosition().target);
                     runnable = new Runnable() {
@@ -180,14 +179,14 @@ public class OnLineMapFragment extends Fragment {
             public void onMapReady(final GoogleMap googleMap) {
                 setMapView(googleMap);
                 enableMyLocation();
-                Log.d("OnLineMapFragment", "onMapReady");
+
                 mapAddMarker = new MapAddMarker(getActivity(), googleMap);
 
                 googleMap.setOnMarkerClickListener(new OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
                         setVendorDetailsItem(getVendorByMarkerId(marker.getId()));
-                        Log.d("OnLineMapFragment", "setOnMarkerClickListener");
+
                         return true;
                     }
                 });
@@ -200,7 +199,6 @@ public class OnLineMapFragment extends Fragment {
                     }
                 });
                 if (MyApplication.locationInstance() != null && MyApplication.locationInstance().getLocation() != null) {
-                    Log.d("OnLineMapFragment", "MylocationInstance");
                     location = new LatLng(MyApplication.locationInstance().getLocation().getLatitude(), MyApplication.locationInstance().getLocation().getLongitude());
                     CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(location, 14);
                     googleMap.animateCamera(yourLocation);
@@ -209,7 +207,6 @@ public class OnLineMapFragment extends Fragment {
                         @Override
                         public void onFinish() {
                             flagIsOnTouched = true;
-                            Log.d("OnLineMapFragment", "onFinish");
                         }
 
                         @Override
@@ -221,7 +218,8 @@ public class OnLineMapFragment extends Fragment {
                     googleMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
                         @Override
                         public void onCameraChange(CameraPosition cameraPosition) {
-
+                            DashBoardActivity.distanceLatLng = googleMap.getCameraPosition().target;
+                            getMarkerMovedAddress(googleMap.getCameraPosition().target);
                             // By Raja 4.11.16
 
                             /*if (mapAddMarker != null)
@@ -258,6 +256,7 @@ public class OnLineMapFragment extends Fragment {
                 if (latLng != null) {
                     if (googleMap != null) {
                         googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+//                        Complete.getGetMapList().orderCompleted();
                         //Raja today
                         //DashBoardActivity.distanceLatLng = latLng;
                     }
@@ -348,7 +347,8 @@ public class OnLineMapFragment extends Fragment {
     }
 
     private void getMarkerMovedAddress(LatLng target) {
-        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+        adres = CommonMethods.getAddressName(getActivity(), target, TAG);
+        /*Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
         if (geocoder.isPresent()) {
             try {
                 //Raja today
@@ -365,9 +365,8 @@ public class OnLineMapFragment extends Fragment {
                 Log.e(TAG, e.getMessage());
             }
         }
-        Log.d("OnLineMapFragment", "getMarkerMovedAddress +ChangeLocationSingleton");
+        Log.d("OnLineMapFragment", "getMarkerMovedAddress +ChangeLocationSingleton");*/
         ChangeLocationSingleton.getInstance().locationChanges(null, null, adres, "OnLineMapFragment");
-        Log.d("volleyPostData", adres);
     }
 
     private void setVendorDetailsItem(final Vendor vendor) {
@@ -488,14 +487,19 @@ public class OnLineMapFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
+//        if (onresume) {
+//            Complete.getGetMapList().orderCompleted();
+//            Log.d(TAG, "onResume");
+//        }
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
+            Log.d(TAG, "isVisibleToUser call");
             getVendorLocation();
+            onresume = true;
         }
 //        if (isVisibleToUser && DashBoardActivity.distanceLatLng == null) {
 //            getMarkerMovedAddress(googleMap.getCameraPosition().target);

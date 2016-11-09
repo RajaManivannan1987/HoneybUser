@@ -21,7 +21,7 @@ import com.sample.honeybuser.Utility.Fonts.WebServices.CommonWebserviceMethods;
 import com.sample.honeybuser.Utility.Fonts.WebServices.ConstandValue;
 
 public class MapsActivity extends CommonActionBar implements OnMapReadyCallback {
-
+    private String TAG = "MapsActivity";
     private GoogleMap mMap;
     private String vendorId;
     private ImageView vendorLocationActivityDirectionImageView;
@@ -31,10 +31,10 @@ public class MapsActivity extends CommonActionBar implements OnMapReadyCallback 
         super.onCreate(savedInstanceState);
         setView(R.layout.activity_maps);
         setTitle(getIntent().getExtras().getString(ConstandValue.vendorName, ""));
+        hideNotification();
         vendorLocationActivityDirectionImageView = (ImageView) findViewById(R.id.vendorLocationActivityDirectionImageView);
 
         vendorId = getIntent().getExtras().getString(ConstandValue.vendorId, "");
-
         if (getIntent().getExtras().getString(ConstandValue.IS_ONLINE, "").equalsIgnoreCase("Y")) {
             setNotification("Y");
         } else {

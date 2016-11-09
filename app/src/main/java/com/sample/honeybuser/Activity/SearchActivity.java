@@ -39,7 +39,7 @@ public class SearchActivity extends NavigationBarActivity implements TabLayout.O
         super.onCreate(savedInstanceState);
         setView(R.layout.activity_search);
         setSelected(Selected.SEARCH);
-        setTitle("Search");
+        //setTitle("Search");
         searchTabLayout = (TabLayout) findViewById(R.id.searchTabLayout);
         searchViewPager = (ViewPager) findViewById(R.id.searchViewPager);
         productTab = searchTabLayout.newTab().setText(CommonMethods.getTabHeading(SearchActivity.this, FragmentType.PRODUCT, true));
