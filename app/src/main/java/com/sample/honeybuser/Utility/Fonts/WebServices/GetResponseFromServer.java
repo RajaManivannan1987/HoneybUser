@@ -353,7 +353,7 @@ public class GetResponseFromServer {
             jsonObject.put("language", session.getDefaultLanguage());
 //            jsonObject.put("language", session.getLanguage());
         } catch (JSONException e) {
-//            Log.e(TAG + " " + TAG, e.getMessage());
+            Log.e(TAG + " " + TAG, e.getMessage());
         }
         setResponse1(context, ConstandValue.SERVER_URL + "vendor/search_api", listerner, jsonObject);
     }
