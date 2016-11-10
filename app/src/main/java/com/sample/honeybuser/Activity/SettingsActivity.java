@@ -1,6 +1,8 @@
 package com.sample.honeybuser.Activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -34,7 +36,11 @@ import java.util.List;
 
 public class SettingsActivity extends NavigationBarActivity {
     private String TAG = "SettingsActivity";
+    private static final String PREF_NAME = "VVNear";
+    public String DEFAULT_LANGUAGE = "default_language";
     private Switch languageSwitch;
+    private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
     Session session;
     private RecyclerView distanceRecyclerView;
     private DistanceSelectRecyclerViewAdapter distanceAdapter;
@@ -45,6 +51,8 @@ public class SettingsActivity extends NavigationBarActivity {
         super.onCreate(savedInstanceState);
         setView(R.layout.activity_settings);
         setTitle("Settings");
+        pref = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        editor = pref.edit();
         session = new Session(SettingsActivity.this, TAG);
         languageSwitch = (Switch) findViewById(R.id.languageSwitch);
 
@@ -115,7 +123,10 @@ public class SettingsActivity extends NavigationBarActivity {
             public void onResponse(JSONObject response) throws JSONException {
                 if (response.getString("token_status").equalsIgnoreCase("1")) {
                     if (response.getString("status").equalsIgnoreCase("1")) {
-                        session.setLanguage(finalLanguage);
+                        editor.putString(DEFAULT_LANGUAGE, finalLanguage);
+                        editor.commit();
+                        CommonMethods.toast(SettingsActivity.this, response.getString("message"));
+//                        session.setLanguage(finalLanguage);
                         //PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString(Session.DEFAULT_LANGUAGE, finalLanguage).commit();
                     } else {
                         CommonMethods.toast(SettingsActivity.this, response.getString("message"));
@@ -150,7 +161,6 @@ public class SettingsActivity extends NavigationBarActivity {
                         }
                     }
                     distanceAdapter.notifyDataSetChanged();
-
                 }
             }
 

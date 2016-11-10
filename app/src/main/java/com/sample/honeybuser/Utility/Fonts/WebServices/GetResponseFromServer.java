@@ -97,7 +97,8 @@ public class GetResponseFromServer {
             jsonObject.put("longitude", longitude);
             jsonObject.put("os_type", "android");
             jsonObject.put("status", type);
-            jsonObject.put("language", session.getLanguage());
+            jsonObject.put("language", session.getDefaultLanguage());
+//            jsonObject.put("language", session.getLanguage());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -113,7 +114,8 @@ public class GetResponseFromServer {
             jsonObject.put("longitude", longitude);
             jsonObject.put("os_type", "android");
             jsonObject.put("status", type);
-            jsonObject.put("language", session.getLanguage());
+            jsonObject.put("language", session.getDefaultLanguage());
+//            jsonObject.put("language", session.getLanguage());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -128,7 +130,8 @@ public class GetResponseFromServer {
             jsonObject.put("latitude", latitude);
             jsonObject.put("longitude", longitude);
             jsonObject.put("type", type);
-            jsonObject.put("language", session.getLanguage());
+            jsonObject.put("language", session.getDefaultLanguage());
+//            jsonObject.put("language", session.getLanguage());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -256,7 +259,8 @@ public class GetResponseFromServer {
             jsonObject.put("user_id", session.getUserId());
             jsonObject.put("api_key", session.getApiKey());
             jsonObject.put("vendor_id", vendorId);
-            jsonObject.put("language", session.getLanguage());
+            jsonObject.put("language", session.getDefaultLanguage());
+//            jsonObject.put("language", session.getLanguage());
         } catch (JSONException e) {
             Log.e(TAG + " " + TAG, e.getMessage());
         }
@@ -331,7 +335,8 @@ public class GetResponseFromServer {
             jsonObject.put("latitude", latitude + "");
             jsonObject.put("longitude", longitude + "");
             jsonObject.put("distance", distance);
-            jsonObject.put("language", session.getLanguage());
+            jsonObject.put("language", session.getDefaultLanguage());
+//            jsonObject.put("language", session.getLanguage());
         } catch (JSONException e) {
             Log.e(TAG + " " + TAG, e.getMessage());
         }
@@ -345,7 +350,8 @@ public class GetResponseFromServer {
             jsonObject.put("api_key", session.getApiKey());
             jsonObject.put("latitude", latitude + "");
             jsonObject.put("longitude", longitude + "");
-            jsonObject.put("language", session.getLanguage());
+            jsonObject.put("language", session.getDefaultLanguage());
+//            jsonObject.put("language", session.getLanguage());
         } catch (JSONException e) {
             Log.e(TAG + " " + TAG, e.getMessage());
         }
@@ -375,7 +381,8 @@ public class GetResponseFromServer {
             jsonObject.put("longitude", longitude);
             jsonObject.put("distance", distance);
             jsonObject.put("business_id", business_id);
-            jsonObject.put("language", session.getLanguage());
+            jsonObject.put("language", session.getDefaultLanguage());
+//            jsonObject.put("language", session.getLanguage());
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -1,7 +1,9 @@
 package com.sample.honeybuser.Adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.sample.honeybuser.Activity.DashBoardActivity;
+import com.sample.honeybuser.Activity.SearchActivity;
 import com.sample.honeybuser.InterFaceClass.DialogBoxInterface;
 import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
 import com.sample.honeybuser.Models.ChangeAddress;
@@ -91,10 +94,11 @@ public class AddressRecyclerViewAdapter extends RecyclerView.Adapter<AddressRecy
             @Override
             public void onClick(View v) {
                 DashBoardActivity.distanceLatLng = new LatLng(Double.parseDouble(addressList.get(position).getLatitude()), Double.parseDouble(addressList.get(position).getLongitude()));
+                Log.d("AddressRecycler", "" + DashBoardActivity.distanceLatLng);
                 ChangeLocationSingleton.getInstance().locationChanges(new LatLng(Double.parseDouble(addressList.get(position).getLatitude()), Double.parseDouble(addressList.get(position).getLongitude())), null, null, "AddressRecyclerViewAdapter");
-//                Complete.getGetMapList().orderCompleted();
-                Complete.offerDialogInstance().orderCompleted();
 
+                Complete.offerDialogInstance().orderCompleted();
+                Complete.getGetMapList().orderCompleted();
                 activity.finish();
 
                 if (position == selectedPosition) {

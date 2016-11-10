@@ -54,7 +54,7 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
     private TabLayout.Tab onlineTab, offlineTab;
     private List<Vendor> listVendor = new ArrayList<Vendor>();
     public static LatLng distanceLatLng = null;
-    public static String locationName;
+
     private TimerTask timerTask;
     private Timer timer;
     private ImageView refreshImageView;
@@ -152,7 +152,7 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
     protected void onResume() {
         super.onResume();
 //        offLine();
-        Log.d(TAG,TAG);
+        Log.d(TAG, TAG);
     }
 
 

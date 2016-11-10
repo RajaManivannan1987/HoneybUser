@@ -209,7 +209,7 @@ public class CommonMethods extends AppCompatActivity {
             }
         }
 //        ChangeLocationSingleton.getInstance().locationChanges(null, null, address + ", " + subAddress, "VendorListFragment");
-        return subAddress + ", " + address + ".";
+        return subAddress + ", " + address;
     }
 }
 

@@ -60,6 +60,7 @@ public class ChangeLocationActivity extends CommonActionBar implements PlaceSele
         setView(R.layout.activity_change_location);
         setTitle("Change Location");
         hideNotification();
+
         autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.autocomplete_fragment);
         autocompleteFragment.setHint("Enter new address");

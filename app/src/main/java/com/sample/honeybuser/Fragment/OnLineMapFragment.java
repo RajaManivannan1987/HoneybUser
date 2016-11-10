@@ -82,7 +82,6 @@ public class OnLineMapFragment extends Fragment {
     private boolean isMove = false;
     private String distance = "5.0", previousDistance = "5.0", vendorId, callPhone;
     private boolean flagIsOnTouched = true;
-    private boolean onresume = false;
     private LatLng location;
     private String adres = "";
     private LinearLayout vendorItemLinearLayout;
@@ -151,20 +150,7 @@ public class OnLineMapFragment extends Fragment {
                             });
                         }
                     };
-                    handler.postDelayed(runnable, 1500);
-                   /* handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    getVendorLocation();
-                                    Complete.offerDialogInstance().orderCompleted();
-                                }
-                            });
-                        }
-                    }, 5000);*/
-
+                    handler.postDelayed(runnable, 500);
                 }
                 isMove = false;
             }
@@ -186,7 +172,6 @@ public class OnLineMapFragment extends Fragment {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
                         setVendorDetailsItem(getVendorByMarkerId(marker.getId()));
-
                         return true;
                     }
                 });
@@ -212,7 +197,7 @@ public class OnLineMapFragment extends Fragment {
                         @Override
                         public void onCancel() {
                             flagIsOnTouched = false;
-                            Log.d("OnLineMapFragment", "onCancel");
+                            Log.d("MapViewFragment", "onCancel");
                         }
                     });
                     googleMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
@@ -220,15 +205,6 @@ public class OnLineMapFragment extends Fragment {
                         public void onCameraChange(CameraPosition cameraPosition) {
                             DashBoardActivity.distanceLatLng = googleMap.getCameraPosition().target;
                             getMarkerMovedAddress(googleMap.getCameraPosition().target);
-                            // By Raja 4.11.16
-
-                            /*if (mapAddMarker != null)
-                                mapAddMarker.moveCircle(cameraPosition.target);
-                            if (flagIsOnTouched) {
-                                // getVendorLocation();
-                                // getMarkerMovedAddress(cameraPosition.target);
-                                Log.d("OnLineMapFragment", "onCameraChange");
-                            }*/
                         }
                     });
                     googleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
@@ -237,11 +213,11 @@ public class OnLineMapFragment extends Fragment {
                             location = new LatLng(MyApplication.locationInstance().getLocation().getLatitude(), MyApplication.locationInstance().getLocation().getLongitude());
                             CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(location, MapUtils.calculateZoomLevel(getActivity(), 15));
                             googleMap.animateCamera(yourLocation);
-                            DashBoardActivity.distanceLatLng = googleMap.getCameraPosition().target;
-//                            DashBoardActivity.distanceLatLng = yourLocation;
+                            //Now
+//                            DashBoardActivity.distanceLatLng = googleMap.getCameraPosition().target;
                             Complete.getGetMapList().orderCompleted();
                             //getVendorLocation();
-                            Log.d("OnLineMapFragment", "onMyLocationButtonClick");
+                            Log.d("MapViewFragment", "onMyLocationButtonClick");
                             return false;
 
                         }
@@ -252,7 +228,7 @@ public class OnLineMapFragment extends Fragment {
         ChangeLocationSingleton.getInstance().setChangeLocationListener(new ChangeLocationListener() {
             @Override
             public void locationChanged(LatLng latLng, String distance, String address, String classType) {
-                Log.d("OnLineMapFragment", "OnLineMapFragment "+classType);
+                Log.d("MapViewFragment", "OnLineMapFragment " + classType);
                 if (latLng != null) {
                     if (googleMap != null) {
                         googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
@@ -284,11 +260,11 @@ public class OnLineMapFragment extends Fragment {
     }
 
     private void getVendorLocation() {
-        Log.d("OnLineMapFragment", "getVendorLocation");
+        Log.d("MapViewFragment", "getVendorLocation");
 
         if (DashBoardActivity.distanceLatLng != null) {
-//            LatLng location1 = DashBoardActivity.distanceLatLng;
-            LatLng location1 = googleMap.getCameraPosition().target;
+            LatLng location1 = DashBoardActivity.distanceLatLng;
+//            LatLng location1 = googleMap.getCameraPosition().target;
             if (location1 != null) {
                 Log.d("OnLineMapFragment", "getVendorLocation +location1 ");
                 getVendorLocationWebService(location1);
@@ -306,6 +282,7 @@ public class OnLineMapFragment extends Fragment {
     }
 
     private void getVendorLocationWebService(final LatLng loc) {
+        Log.d("MapViewFragment", "getVendorLocationWebService");
         GetResponseFromServer.getWebService(getActivity(), TAG).getOnlineVendor(getActivity(), String.valueOf(loc.latitude), String.valueOf(loc.longitude), "online", new VolleyResponseListerner() {
             @Override
             public void onResponse(JSONObject response) throws JSONException {
@@ -321,7 +298,6 @@ public class OnLineMapFragment extends Fragment {
 
 
     private void urlResponse(JSONObject response) throws JSONException {
-        Log.d(TAG, response.toString());
         JSONArray jsonArrayVendor = response.getJSONObject("data").getJSONArray("online");
 
         listVendor.clear();
@@ -476,9 +452,8 @@ public class OnLineMapFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            Log.d(TAG, "isVisibleToUser call");
+            Log.d("MapViewFragment", "isVisibleToUser call");
             getVendorLocation();
-            onresume = true;
         }
 //        if (isVisibleToUser && DashBoardActivity.distanceLatLng == null) {
 //            getMarkerMovedAddress(googleMap.getCameraPosition().target);

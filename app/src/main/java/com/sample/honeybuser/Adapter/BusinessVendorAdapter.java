@@ -75,7 +75,7 @@ public class BusinessVendorAdapter extends RecyclerView.Adapter<BusinessVendorAd
             holder.notifyImage.setImageResource(R.drawable.nonotify);
         }
         holder.vendorName.setText(list.get(position).getName());
-        holder.distance.setText(list.get(position).getDistance() + " Km away");
+        holder.distance.setText(list.get(position).getDistance());
         holder.callImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +85,7 @@ public class BusinessVendorAdapter extends RecyclerView.Adapter<BusinessVendorAd
         holder.locateImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonWebserviceMethods.getVendorLocation(activity, TAG, list.get(position).getVendor_id(),list.get(position).getName());
+                CommonWebserviceMethods.getVendorLocation(activity, TAG, list.get(position).getVendor_id(), list.get(position).getName());
             }
         });
         holder.cv.setOnClickListener(new View.OnClickListener() {

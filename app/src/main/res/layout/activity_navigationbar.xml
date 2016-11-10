@@ -81,8 +81,7 @@
                                 <ImageView
                                     android:id="@+id/actionBarlocateImage"
                                     android:layout_width="18sp"
-                                    android:layout_height="18sp"
-                                     />
+                                    android:layout_height="18sp" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
