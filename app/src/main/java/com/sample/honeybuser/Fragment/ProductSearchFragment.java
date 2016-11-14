@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
@@ -48,6 +49,8 @@ public class ProductSearchFragment extends Fragment {
     private Product05SearchAdapter adapter05km;
     private Product3KmSearchAdapter adapter3Km;
 
+    private TextView fiveKmErrorTextView, threeKmErrorTextView;
+
     private EditText productSearch;
     private ImageView closeButton;
     int spancount = 3;
@@ -64,6 +67,9 @@ public class ProductSearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_product_search, container, false);
         productSearch = (EditText) view.findViewById(R.id.productSearch);
         closeButton = (ImageView) view.findViewById(R.id.productCloseButton);
+
+        fiveKmErrorTextView = (TextView) view.findViewById(R.id.fiveKmErrorTextView);
+        threeKmErrorTextView = (TextView) view.findViewById(R.id.threeKmErrorTextView);
 
         threeKmVendorRecyclerView = (RecyclerView) view.findViewById(R.id.threeKmVendorRecyclerView);
         fiveKmVendorRecyclerView = (RecyclerView) view.findViewById(R.id.fiveKmVendorRecyclerView);
@@ -166,6 +172,13 @@ public class ProductSearchFragment extends Fragment {
                         threeKmVendorList.add(gson.fromJson(response.getJSONArray("data").getJSONObject(i).toString(), ThreeKmProductSearchModel.class));
                     }
                 }
+                /*if (response.getJSONArray("data").length() == 0) {
+                    threeKmVendorRecyclerView.setVisibility(View.GONE);
+                    threeKmErrorTextView.setVisibility(View.VISIBLE);
+                } else {
+                    threeKmVendorRecyclerView.setVisibility(View.VISIBLE);
+                    threeKmErrorTextView.setVisibility(View.GONE);
+                }*/
                 adapter3Km.notifyDataSetChanged();
 //                getFiveKmProductList();
             }
@@ -187,6 +200,13 @@ public class ProductSearchFragment extends Fragment {
                         fiveKmVendorList.add(gson.fromJson(response.getJSONArray("data").getJSONObject(i).toString(), FiveKmProductSearchModel.class));
                     }
                 }
+               /* if (response.getJSONArray("data").length() == 0) {
+                    fiveKmVendorRecyclerView.setVisibility(View.GONE);
+                    fiveKmErrorTextView.setVisibility(View.VISIBLE);
+                } else {
+                    fiveKmVendorRecyclerView.setVisibility(View.VISIBLE);
+                    fiveKmErrorTextView.setVisibility(View.GONE);
+                }*/
                 // adapter.notifyDataSetChanged();
                 adapter05km.notifyDataSetChanged();
                 ChangeLocationSingleton.getInstance().locationChanges(null, null, address, TAG);

@@ -54,7 +54,7 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
     private TabLayout.Tab onlineTab, offlineTab;
     private List<Vendor> listVendor = new ArrayList<Vendor>();
     public static LatLng distanceLatLng = null;
-
+    private Selected selected;
     private TimerTask timerTask;
     private Timer timer;
     private ImageView refreshImageView;
@@ -129,8 +129,13 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
         refreshImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Complete.offerDialogInstance().orderCompleted();
-                Complete.getGetMapList().orderCompleted();
+                if (fragmentType == FragmentType.ONLINE) {
+                    Complete.offerDialogInstance().orderCompleted();
+                } else if (fragmentType == FragmentType.OFFLINE) {
+                    Complete.getGetMapList().orderCompleted();
+                }
+
+
             }
         });
         onLine();

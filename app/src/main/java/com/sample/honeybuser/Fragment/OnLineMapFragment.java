@@ -298,7 +298,7 @@ public class OnLineMapFragment extends Fragment {
 
 
     private void urlResponse(JSONObject response) throws JSONException {
-        JSONArray jsonArrayVendor = response.getJSONObject("data").getJSONArray("online");
+        JSONArray jsonArrayVendor = response.getJSONObject("data").getJSONArray("vendors");
 
         listVendor.clear();
         for (int i = 0; i < jsonArrayVendor.length(); i++) {
@@ -307,6 +307,7 @@ public class OnLineMapFragment extends Fragment {
         }
         if (jsonArrayVendor.length() == 0) {
             CommonMethods.toast(getActivity(), response.getJSONObject("data").getString("online_message"));
+//            CommonMethods.toast(getActivity(), getResources().getString(R.string.online));
         }
         OnLineMapFragment.this.distance = response.getJSONObject("data").getString("distance");
         //By Raja

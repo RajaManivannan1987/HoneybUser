@@ -3,29 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:descendantFocusability="beforeDescendants"
+    android:background="@drawable/bg"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="10dp"
         android:background="@color/white">
 
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentLeft="true"
+            android:layout_marginTop="4dp"
             android:src="@android:drawable/ic_menu_search" />
 
         <EditText
             android:id="@+id/vendorSearch"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:hint="Search Vendors"
             android:background="@android:color/transparent"
+            android:hint="Search Vendors"
             android:paddingLeft="30dp" />
 
         <ImageView
@@ -41,7 +40,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/vendorSearchRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="7dp" />
 
     <include layout="@layout/common_textview" />
 

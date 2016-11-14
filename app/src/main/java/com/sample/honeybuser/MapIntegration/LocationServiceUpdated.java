@@ -85,6 +85,7 @@ public class LocationServiceUpdated extends Service {
                 JSONObject jsonObject = response.getJSONObject("data");
                 int second = Integer.parseInt(jsonObject.getString("ping_interval"));
                 TEN_MINUTES = 1000 * second;
+//                TEN_MINUTES = 1000 * 10;
                 timerTask = new TimerTask() {
                     @Override
                     public void run() {
@@ -92,7 +93,7 @@ public class LocationServiceUpdated extends Service {
                         if (location != null) {
 
 //                            By Raja
-//                            sendLocation();
+                            sendLocation();
                         }
                     }
                 };

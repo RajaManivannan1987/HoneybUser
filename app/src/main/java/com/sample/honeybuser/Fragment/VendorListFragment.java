@@ -47,37 +47,37 @@ import java.util.TimerTask;
  */
 public class VendorListFragment extends Fragment {
     private String TAG = "VendorListFragment";
-    private RecyclerView onLineRecyclerView, offLineVendorRecyclerView;
+    private RecyclerView onLineRecyclerView;
     private OnLineVendorListAdapter onLineAdapter;
-    private OffLineVendorListAdapter offLineAdapter;
     private Gson gson = new Gson();
     private List<OnLineVendorListModel> onLineList = new ArrayList<OnLineVendorListModel>();
-    private List<OffLineVendorListModel> offLineList = new ArrayList<OffLineVendorListModel>();
+    //    private List<OffLineVendorListModel> offLineList = new ArrayList<OffLineVendorListModel>();
+//    private OffLineVendorListAdapter offLineAdapter;
     private String lat, lang, distance, address, subAddress;
     public static LatLng latLngValue = null;
-    private TextView offLineToastText, onLineToastText;
-    private FragmentType fragmentType;
-    TimerTask timerTask;
-    Timer timer = new Timer();
+    private TextView onLineToastText;
+//    private FragmentType fragmentType;
+//    TimerTask timerTask;
+//    Timer timer = new Timer();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_vendor_list, container, false);
         onLineToastText = (TextView) view.findViewById(R.id.onLineToastText);
-        offLineToastText = (TextView) view.findViewById(R.id.offLineToastText);
+//        offLineToastText = (TextView) view.findViewById(R.id.offLineToastText);
 
         onLineRecyclerView = (RecyclerView) view.findViewById(R.id.onLineVendorList);
-        offLineVendorRecyclerView = (RecyclerView) view.findViewById(R.id.offLineVendorRecyclerView);
+//        offLineVendorRecyclerView = (RecyclerView) view.findViewById(R.id.offLineVendorRecyclerView);
 
         onLineRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        offLineVendorRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        offLineVendorRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         onLineAdapter = new OnLineVendorListAdapter(getActivity(), onLineList, "1");
-        offLineAdapter = new OffLineVendorListAdapter(getActivity(), offLineList, "0");
+//        offLineAdapter = new OffLineVendorListAdapter(getActivity(), offLineList, "0");
 
         onLineRecyclerView.setAdapter(onLineAdapter);
-        offLineVendorRecyclerView.setAdapter(offLineAdapter);
+//        offLineVendorRecyclerView.setAdapter(offLineAdapter);
 
         Complete.offerDialogInstance().setListener(new SaveCompletedInterface() {
             @Override
@@ -175,7 +175,7 @@ public class VendorListFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) throws JSONException {
                 onLineList.clear();
-                offLineList.clear();
+//                offLineList.clear();
                 if (response.getString("status").equalsIgnoreCase("1")) {
                     JSONObject jsonObject = response.getJSONObject("data");
 
@@ -184,34 +184,22 @@ public class VendorListFragment extends Fragment {
 //                    distance = jsonObject.getString("distance");
 //                    NavigationBarActivity.distanceTextView.setText(" " + distance + " km ");
 
-                    for (int i = 0; i < jsonObject.getJSONArray("online").length(); i++) {
-                        onLineList.add(gson.fromJson(jsonObject.getJSONArray("online").getJSONObject(i).toString(), OnLineVendorListModel.class));
+                    for (int i = 0; i < jsonObject.getJSONArray("vendors").length(); i++) {
+                        onLineList.add(gson.fromJson(jsonObject.getJSONArray("vendors").getJSONObject(i).toString(), OnLineVendorListModel.class));
                     }
-                    for (int i = 0; i < jsonObject.getJSONArray("offline").length(); i++) {
-                        offLineList.add(gson.fromJson(jsonObject.getJSONArray("offline").getJSONObject(i).toString(), OffLineVendorListModel.class));
-                    }
-                    if (!jsonObject.getString("online_available").equalsIgnoreCase("Y")) {
+
+                   if (jsonObject.getJSONArray("vendors").length() == 0) {
                         onLineRecyclerView.setVisibility(View.GONE);
                         onLineToastText.setVisibility(View.VISIBLE);
                     } else {
                         onLineRecyclerView.setVisibility(View.VISIBLE);
                         onLineToastText.setVisibility(View.GONE);
                     }
-                    if (!jsonObject.getString("offline_available").equalsIgnoreCase("Y")) {
-                        offLineVendorRecyclerView.setVisibility(View.GONE);
-                        offLineToastText.setVisibility(View.VISIBLE);
-                    } else {
-                        offLineVendorRecyclerView.setVisibility(View.VISIBLE);
-                        offLineToastText.setVisibility(View.GONE);
-                    }
 
-                } else {
-                    //onLineRecyclerView.setVisibility(View.GONE);
-                    //txtView.setVisibility(View.VISIBLE);
-                    //txtView.setText(response.getString("message"));
+
                 }
                 onLineAdapter.notifyDataSetChanged();
-                offLineAdapter.notifyDataSetChanged();
+//                offLineAdapter.notifyDataSetChanged();
                 ChangeLocationSingleton.getInstance().locationChanges(null, null, address, TAG);
             }
 

@@ -70,21 +70,22 @@ public class OnLineVendorListAdapter extends RecyclerView.Adapter<OnLineVendorLi
             holder.onLineRatingTextView.setVisibility(View.GONE);
             holder.onLineRatingCountTextView.setVisibility(View.GONE);
         }
-        if (type.equalsIgnoreCase("0")) {
-            holder.locateImage.setVisibility(View.INVISIBLE);
-        }
+
         if (list.get(position).getFollow().startsWith("Y")) {
             holder.notifyImage.setImageResource(R.drawable.notify);
         } else {
             holder.notifyImage.setImageResource(R.drawable.nonotify);
         }
         if (list.get(position).getIs_available().equalsIgnoreCase("Y")) {
+            holder.locateImage.setVisibility(View.VISIBLE);
             holder.vendorListOnlineImageView.setImageResource(R.drawable.on);
+            holder.distance.setText(list.get(position).getDistance());
         } else {
             holder.vendorListOnlineImageView.setImageResource(R.drawable.off);
+            holder.locateImage.setVisibility(View.INVISIBLE);
         }
         holder.vendorName.setText(list.get(position).getName());
-        holder.distance.setText(list.get(position).getDistance());
+
         holder.callImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +95,7 @@ public class OnLineVendorListAdapter extends RecyclerView.Adapter<OnLineVendorLi
         holder.locateImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonWebserviceMethods.getVendorLocation(activity, TAG, list.get(position).getVendor_id(),list.get(position).getName());
+                CommonWebserviceMethods.getVendorLocation(activity, TAG, list.get(position).getVendor_id(), list.get(position).getName());
             }
         });
         holder.cv.setOnClickListener(new View.OnClickListener() {
