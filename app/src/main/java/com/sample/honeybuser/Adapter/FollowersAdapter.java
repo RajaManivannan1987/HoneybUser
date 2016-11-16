@@ -128,7 +128,7 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.Cust
             @Override
             public void onClick(View v) {
                 if (list.get(position).getNotification_status().equalsIgnoreCase("Y")) {
-                    AlertDialogManager.listenerDialogBox(context, "Disable!", "Disable Alert for this vendor?", new DialogBoxInterface() {
+                    AlertDialogManager.listenerDialogBox(context, "", "Disable Alert for this vendor", new DialogBoxInterface() {
                         @Override
                         public void yes() {
                             CommonWebserviceMethods.removeNtification(context, TAG, list.get(position).getVendor_id());

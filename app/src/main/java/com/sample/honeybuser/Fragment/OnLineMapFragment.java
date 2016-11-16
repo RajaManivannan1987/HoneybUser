@@ -82,6 +82,7 @@ public class OnLineMapFragment extends Fragment {
     private boolean isMove = false;
     private String distance = "5.0", previousDistance = "5.0", vendorId, callPhone;
     private boolean flagIsOnTouched = true;
+    public static boolean isVisibleView = false;
     private LatLng location;
     private String adres = "";
     private LinearLayout vendorItemLinearLayout;
@@ -305,12 +306,13 @@ public class OnLineMapFragment extends Fragment {
             Vendor vendor = new Gson().fromJson(jsonArrayVendor.getJSONObject(i).toString(), Vendor.class);
             listVendor.add(vendor);
         }
-        if (jsonArrayVendor.length() == 0) {
+       /* if (jsonArrayVendor.length() == 0) {
             CommonMethods.toast(getActivity(), response.getJSONObject("data").getString("online_message"));
 //            CommonMethods.toast(getActivity(), getResources().getString(R.string.online));
-        }
+        }*/
         OnLineMapFragment.this.distance = response.getJSONObject("data").getString("distance");
         //By Raja
+
         ChangeLocationSingleton.getInstance().locationChanges(null, response.getJSONObject("data").getString("distance"), null, "OnLineMap");
 
         if (googleMap != null) {
@@ -332,7 +334,7 @@ public class OnLineMapFragment extends Fragment {
             callPhone = vendor.getPhone_no();
             vendorId = vendor.getVendor_id();
             vendorNameTextView.setText(vendor.getName());
-            onlineMapKmTextView.setText(vendor.getDistance() + " Km away");
+            onlineMapKmTextView.setText(vendor.getDistance());
 
             if (vendor.getNew_vendor().startsWith("Y")) {
                 onlineMapratingImageView.setImageResource(R.drawable.new_icon);
@@ -442,11 +444,11 @@ public class OnLineMapFragment extends Fragment {
 
     @Override
     public void onResume() {
+        Log.d(TAG, "onResume");
         super.onResume();
-//        if (onresume) {
-//            Complete.getGetMapList().orderCompleted();
-//            Log.d(TAG, "onResume");
-//        }
+        if (isVisibleView) {
+            getVendorLocation();
+        }
     }
 
     @Override

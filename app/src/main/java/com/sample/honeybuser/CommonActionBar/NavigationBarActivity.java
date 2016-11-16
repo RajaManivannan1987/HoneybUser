@@ -30,6 +30,7 @@ import com.sample.honeybuser.Activity.SettingsActivity;
 import com.sample.honeybuser.Adapter.NavigationBarAdapter;
 import com.sample.honeybuser.EnumClass.IntentClasses;
 import com.sample.honeybuser.EnumClass.Selected;
+import com.sample.honeybuser.Fragment.OnLineMapFragment;
 import com.sample.honeybuser.InterFaceClass.ChangeLocationListener;
 import com.sample.honeybuser.R;
 import com.sample.honeybuser.Singleton.ChangeLocationSingleton;
@@ -95,6 +96,7 @@ public class NavigationBarActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (Selected.DASHBOARD != selected) {
+                    OnLineMapFragment.isVisibleView = true;
                     CommonMethods.commonIntent(NavigationBarActivity.this, IntentClasses.DASHBOARD);
                 }
             }
@@ -122,6 +124,9 @@ public class NavigationBarActivity extends AppCompatActivity {
                     TextView nameTextView = (TextView) view.findViewById(R.id.navigationTextView);
                     switch (nameTextView.getText().toString().toLowerCase().trim()) {
                         case "street":
+                            if (Selected.DASHBOARD != selected) {
+                                OnLineMapFragment.isVisibleView = true;
+                            }
                             CommonMethods.commonIntent(NavigationBarActivity.this, IntentClasses.DASHBOARD);
                             break;
                         case "alerts":

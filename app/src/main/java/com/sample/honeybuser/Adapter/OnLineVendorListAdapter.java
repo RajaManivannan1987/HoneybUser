@@ -115,7 +115,7 @@ public class OnLineVendorListAdapter extends RecyclerView.Adapter<OnLineVendorLi
                 if (list.get(position).getFollow().equalsIgnoreCase("N")) {
                     CommonWebserviceMethods.setFollows(activity, TAG, list.get(position).getVendor_id(), type);
                 } else {
-                    AlertDialogManager.listenerDialogBox(activity, "Remove!", "Remove alert?", new DialogBoxInterface() {
+                    AlertDialogManager.listenerDialogBox(activity, "", " Disable Alert for this Vendor", new DialogBoxInterface() {
                         @Override
                         public void yes() {
                             CommonWebserviceMethods.removeFollows(activity, TAG, list.get(position).getVendor_id(), type);

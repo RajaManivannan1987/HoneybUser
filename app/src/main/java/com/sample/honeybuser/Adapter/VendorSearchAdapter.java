@@ -77,7 +77,7 @@ public class VendorSearchAdapter extends RecyclerView.Adapter<VendorSearchAdapte
         holder.vendorSearchLocateImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonWebserviceMethods.getVendorLocation(context, TAG, vendorList.get(position).getVendor_id(),vendorList.get(position).getName());
+                CommonWebserviceMethods.getVendorLocation(context, TAG, vendorList.get(position).getVendor_id(), vendorList.get(position).getName());
             }
         });
         holder.vendorCardView.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +87,7 @@ public class VendorSearchAdapter extends RecyclerView.Adapter<VendorSearchAdapte
                 intent.putExtra("vendor_id", vendorList.get(position).getVendor_id());
                 intent.putExtra("notificationType", "");
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context, holder.vendorCardView, ConstandValue.transitionName);
-                context.startActivity(intent,options.toBundle());
+                context.startActivity(intent, options.toBundle());
 //                context.startActivity(new Intent(context, VendorDetailActivity.class).putExtra("vendor_id", vendorList.get(position).getVendor_id()));
             }
         });
@@ -95,7 +95,7 @@ public class VendorSearchAdapter extends RecyclerView.Adapter<VendorSearchAdapte
             @Override
             public void onClick(View v) {
                 if (vendorList.get(position).getFollow().equalsIgnoreCase("Y")) {
-                    AlertDialogManager.listenerDialogBox(context, "Remove!", "Remove Follow?", new DialogBoxInterface() {
+                    AlertDialogManager.listenerDialogBox(context, "", " Disable Alert for this Vendor", new DialogBoxInterface() {
                         @Override
                         public void yes() {
                             CommonWebserviceMethods.removeFollows(context, TAG, vendorList.get(position).getVendor_id(), "4");

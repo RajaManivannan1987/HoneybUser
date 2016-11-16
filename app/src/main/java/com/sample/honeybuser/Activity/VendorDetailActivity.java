@@ -81,6 +81,7 @@ public class VendorDetailActivity extends CommonActionBar {
             @Override
             public void completed() {
                 getRatings(vendor_Id);
+                addReviewTextView.setText("");
             }
         });
         vendorlocateImagiview.setOnClickListener(new View.OnClickListener() {
@@ -187,7 +188,11 @@ public class VendorDetailActivity extends CommonActionBar {
                     isReview = jsonObject.getString("already_rated");
                     largeImageUrl = jsonObject.getString("large_photo");
                     isOnLine = jsonObject.getString("is_online");
-
+                    if (isReview.equalsIgnoreCase("N")) {
+                        addReviewTextView.setVisibility(View.VISIBLE);
+                    } else {
+                        addReviewTextView.setText("");
+                    }
                     if (isOnLine.equalsIgnoreCase("Y")) {
                         vendorlocateImagiview.setVisibility(View.VISIBLE);
                     } else {

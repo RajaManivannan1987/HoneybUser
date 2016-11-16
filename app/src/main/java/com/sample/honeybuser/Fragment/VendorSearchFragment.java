@@ -134,6 +134,8 @@ public class VendorSearchFragment extends Fragment {
             public void onResponse(JSONObject response) throws JSONException {
                 vendorList.clear();
                 if (response.getString("status").equalsIgnoreCase("1")) {
+                    vendorSearchRecyclerView.setVisibility(View.VISIBLE);
+                    txtView.setVisibility(View.GONE);
                     JSONObject jsonObject = response.getJSONObject("data");
                     for (int i = 0; i < jsonObject.getJSONArray("vendors").length(); i++) {
                         vendorList.add(gson.fromJson(jsonObject.getJSONArray("vendors").getJSONObject(i).toString(), VendorSearchListModel.class));

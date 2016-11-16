@@ -19,6 +19,7 @@ import com.sample.honeybuser.InterFaceClass.DialogBoxInterface;
 import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
 import com.sample.honeybuser.MapIntegration.LocationServiceUpdated;
 import com.sample.honeybuser.R;
+import com.sample.honeybuser.Singleton.Complete;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.AlertDialogManager;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
 import com.sample.honeybuser.Utility.Fonts.Sharedpreferences.Session;
@@ -126,6 +127,8 @@ public class SettingsActivity extends NavigationBarActivity {
                         editor.putString(DEFAULT_LANGUAGE, finalLanguage);
                         editor.commit();
                         CommonMethods.toast(SettingsActivity.this, response.getString("message"));
+                        Complete.offerDialogInstance().orderCompleted();
+                        Complete.getVendorSearch().orderCompleted();
 //                        session.setLanguage(finalLanguage);
                         //PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putString(Session.DEFAULT_LANGUAGE, finalLanguage).commit();
                     } else {
