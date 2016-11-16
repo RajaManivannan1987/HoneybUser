@@ -264,18 +264,28 @@ public class OnLineMapFragment extends Fragment {
         Log.d("MapViewFragment", "getVendorLocation");
 
         if (DashBoardActivity.distanceLatLng != null) {
-            LatLng location1 = DashBoardActivity.distanceLatLng;
+            final LatLng location1 = DashBoardActivity.distanceLatLng;
 //            LatLng location1 = googleMap.getCameraPosition().target;
             if (location1 != null) {
-                Log.d("OnLineMapFragment", "getVendorLocation +location1 ");
-                getVendorLocationWebService(location1);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getVendorLocationWebService(location1);
+                    }
+                });
                 ChangeLocationSingleton.getInstance().locationChanges(location1, null, null, "OnLineMapFragment");
 
             }
         } else {
             if (MyApplication.locationInstance().getLocation() != null) {
                 location = new LatLng(MyApplication.locationInstance().getLocation().getLatitude(), MyApplication.locationInstance().getLocation().getLongitude());
-                getVendorLocationWebService(location);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getVendorLocationWebService(location);
+                    }
+                });
+
                 ChangeLocationSingleton.getInstance().locationChanges(location, null, null, "OnLineMapFragment");
                 Log.d("OnLineMapFragment", "getVendorLocation +location ");
             }
@@ -444,10 +454,11 @@ public class OnLineMapFragment extends Fragment {
 
     @Override
     public void onResume() {
-        Log.d(TAG, "onResume");
         super.onResume();
         if (isVisibleView) {
             getVendorLocation();
+            Log.d("volleyPostData", "onResume");
+            isVisibleView = false;
         }
     }
 
@@ -455,7 +466,6 @@ public class OnLineMapFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            Log.d("MapViewFragment", "isVisibleToUser call");
             getVendorLocation();
         }
 //        if (isVisibleToUser && DashBoardActivity.distanceLatLng == null) {

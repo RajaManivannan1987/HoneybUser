@@ -95,11 +95,9 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
 
     private void offLine() {
         setFragmentType(FragmentType.OFFLINE);
-//        refreshImageView.setVisibility(View.GONE);
         listVendor.clear();
         Complete.getGetMapList().orderCompleted();
         if (timer != null) {
-            Log.d("volleyPostData", "Timer cancel");
             timer.cancel();
             //timerTask.cancel();
         }
@@ -126,6 +124,7 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
         dashBoardViewPager.setCurrentItem(0);
         dashBoardViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(this);
+
         refreshImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

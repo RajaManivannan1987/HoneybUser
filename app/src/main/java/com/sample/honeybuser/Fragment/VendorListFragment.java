@@ -178,23 +178,27 @@ public class VendorListFragment extends Fragment {
 //                offLineList.clear();
                 if (response.getString("status").equalsIgnoreCase("1")) {
                     JSONObject jsonObject = response.getJSONObject("data");
+                    onLineRecyclerView.setVisibility(View.VISIBLE);
+                    onLineToastText.setVisibility(View.GONE);
 
-                    //                     By Raja 4.11.16
-//                    set distance in dashboard page
-//                    distance = jsonObject.getString("distance");
-//                    NavigationBarActivity.distanceTextView.setText(" " + distance + " km ");
-
-                    for (int i = 0; i < jsonObject.getJSONArray("vendors").length(); i++) {
-                        onLineList.add(gson.fromJson(jsonObject.getJSONArray("vendors").getJSONObject(i).toString(), OnLineVendorListModel.class));
-                    }
-
-                   if (jsonObject.getJSONArray("vendors").length() == 0) {
+                    if (jsonObject.getJSONArray("vendors").length() == 0) {
                         onLineRecyclerView.setVisibility(View.GONE);
                         onLineToastText.setVisibility(View.VISIBLE);
                     } else {
                         onLineRecyclerView.setVisibility(View.VISIBLE);
                         onLineToastText.setVisibility(View.GONE);
+                        for (int i = 0; i < jsonObject.getJSONArray("vendors").length(); i++) {
+                            onLineList.add(gson.fromJson(jsonObject.getJSONArray("vendors").getJSONObject(i).toString(), OnLineVendorListModel.class));
+                        }
                     }
+
+                  /*  if (jsonObject.getJSONArray("vendors").length() == 0) {
+                        onLineRecyclerView.setVisibility(View.GONE);
+                        onLineToastText.setVisibility(View.VISIBLE);
+                    } else {
+                        onLineRecyclerView.setVisibility(View.VISIBLE);
+                        onLineToastText.setVisibility(View.GONE);
+                    }*/
 
 
                 }
