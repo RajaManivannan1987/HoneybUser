@@ -79,11 +79,12 @@ public class OnLineVendorListAdapter extends RecyclerView.Adapter<OnLineVendorLi
         if (list.get(position).getIs_available().equalsIgnoreCase("Y")) {
             holder.locateImage.setVisibility(View.VISIBLE);
             holder.vendorListOnlineImageView.setImageResource(R.drawable.on);
-            holder.distance.setText(list.get(position).getDistance());
+
         } else {
             holder.vendorListOnlineImageView.setImageResource(R.drawable.off);
             holder.locateImage.setVisibility(View.INVISIBLE);
         }
+        holder.distance.setText(list.get(position).getDistance());
         holder.vendorName.setText(list.get(position).getName());
 
         holder.callImage.setOnClickListener(new View.OnClickListener() {

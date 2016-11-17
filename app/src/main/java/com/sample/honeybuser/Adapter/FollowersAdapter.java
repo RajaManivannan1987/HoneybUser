@@ -63,13 +63,14 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.Cust
         if (list.get(position).getIs_online().equalsIgnoreCase("Y")) {
             holder.followerOnlineImageView.setImageResource(R.drawable.on);
             holder.followerLocateImageview.setVisibility(View.VISIBLE);
-            holder.followerKmTextView.setText(list.get(position).getDistance());
-            holder.followerKmTextView.setVisibility(View.VISIBLE);
+
+//            holder.followerKmTextView.setVisibility(View.VISIBLE);
         } else {
             holder.followerOnlineImageView.setImageResource(R.drawable.off);
             holder.followerLocateImageview.setVisibility(View.INVISIBLE);
-            holder.followerKmTextView.setVisibility(View.INVISIBLE);
+//            holder.followerKmTextView.setVisibility(View.INVISIBLE);
         }
+        holder.followerKmTextView.setText(list.get(position).getDistance());
         if (list.get(position).getNotification_status().startsWith("Y")) {
             holder.followerNotificationStatusImageview.setImageResource(R.drawable.bellon);
         } else {

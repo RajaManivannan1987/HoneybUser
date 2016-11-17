@@ -68,7 +68,7 @@ public class Product05SearchAdapter extends RecyclerView.Adapter<Product05Search
             public void onClick(View v) {
                 Intent intent = new Intent(context, BusinessVendorActivity.class);
                 intent.putExtra("business_id", fiveKmList.get(position).getBusiness_id());
-                intent.putExtra("distance", "0.50");
+                intent.putExtra("distance", "3.0");
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, holder.productCardView, ConstandValue.transitionName);
                 context.startActivity(intent, options.toBundle());
 

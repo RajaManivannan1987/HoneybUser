@@ -82,7 +82,7 @@ public class BusinessVendorActivity extends CommonActionBar {
                 lang = String.valueOf(MyApplication.locationInstance().getLocation().getLongitude());
             }
         }
-        GetResponseFromServer.getWebService(BusinessVendorActivity.this, TAG).getBusinessVendorList(BusinessVendorActivity.this, lat, lang, "0.50", business_id, new VolleyResponseListerner() {
+        GetResponseFromServer.getWebService(BusinessVendorActivity.this, TAG).getBusinessVendorList(BusinessVendorActivity.this, lat, lang, distance, business_id, new VolleyResponseListerner() {
             @Override
             public void onResponse(JSONObject response) throws JSONException {
                 businessList.clear();
