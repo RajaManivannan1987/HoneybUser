@@ -124,7 +124,7 @@ public class VendorDetailActivity extends CommonActionBar {
             @Override
             public void onClick(View v) {
                 if (follow.equalsIgnoreCase("Y")) {
-                    AlertDialogManager.listenerDialogBox(VendorDetailActivity.this, "Remove!", "Remove alert?", new DialogBoxInterface() {
+                    AlertDialogManager.listenerDialogBox(VendorDetailActivity.this, "", "Disable Alert for this vendor", new DialogBoxInterface() {
                         @Override
                         public void yes() {
                             CommonWebserviceMethods.removeFollows(VendorDetailActivity.this, TAG, vendor_Id, "2");

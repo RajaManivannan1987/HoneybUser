@@ -105,7 +105,7 @@ public class BusinessVendorAdapter extends RecyclerView.Adapter<BusinessVendorAd
                 if (list.get(position).getFollow().equalsIgnoreCase("N")) {
                     CommonWebserviceMethods.setFollows(activity, TAG, list.get(position).getVendor_id(), "5");
                 } else {
-                    AlertDialogManager.listenerDialogBox(activity, "Remove!", "Remove alert?", new DialogBoxInterface() {
+                    AlertDialogManager.listenerDialogBox(activity, "", "Disable Alert for this vendor", new DialogBoxInterface() {
                         @Override
                         public void yes() {
                             CommonWebserviceMethods.removeFollows(activity, TAG, list.get(position).getVendor_id(), "5");

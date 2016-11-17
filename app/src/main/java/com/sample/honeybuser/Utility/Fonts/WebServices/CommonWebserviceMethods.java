@@ -66,6 +66,7 @@ public class CommonWebserviceMethods extends AppCompatActivity {
                     } else if (type.equalsIgnoreCase("6")) {
                         Complete.getGetMapList().orderCompleted();
                     } else {
+                        Complete.offerDialogInstance().orderCompleted();
                         Complete.ratingDialogInstance().orderCompleted();
 
                     }
@@ -98,6 +99,7 @@ public class CommonWebserviceMethods extends AppCompatActivity {
                     } else if (type.equalsIgnoreCase("6")) {
                         Complete.getGetMapList().orderCompleted();
                     } else {
+                        Complete.offerDialogInstance().orderCompleted();
                         Complete.ratingDialogInstance().orderCompleted();
                     }
                 }

@@ -322,6 +322,7 @@ public class OnLineMapFragment extends Fragment {
         }*/
         OnLineMapFragment.this.distance = response.getJSONObject("data").getString("distance");
         //By Raja
+        Log.d("volleyPostData",response.getJSONObject("data").getString("distance"));
 
         ChangeLocationSingleton.getInstance().locationChanges(null, response.getJSONObject("data").getString("distance"), null, "OnLineMap");
 
