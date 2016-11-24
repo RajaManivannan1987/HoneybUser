@@ -21,7 +21,7 @@ Maecenas mattis, erat et viverra euismod, neque diam porttitor tellus, in fringi
 
 Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent vitae blandit sapien. Curabitur est sapien, lobortis sit amet facilisis vel, faucibus eu quam. Nam tempus libero at tellus tempor laoreet. Pellentesque quam lorem, tincidunt in molestie eget, dictum vel risus. Nunc gravida convallis mattis.
     </string>
-    <string name="versionCode">version 2.0.6</string>
+    <string name="versionCode">version 2.0.7</string>
     <string name="transitionName">honeyb</string>
     <string name="online">Currently we have not enrolled any vendors in this area. \n If you would like to refer a vendor in this location, kindly contact us and earn a referral bonus of Rs. 500 for each vendor. \n Contact Number: 1234567890 \n Email: xyz@honeybsolutions.com</string>
 </resources>

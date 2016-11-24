@@ -10,6 +10,16 @@ public class ThreeKmProductSearchModel {
     private String business_name;
     private String featured;
     private String icon;
+    private String en_product;
+
+    public String getEn_product() {
+        return en_product;
+    }
+
+    public void setEn_product(String en_product) {
+        this.en_product = en_product;
+    }
+
 
     public String getIcon() {
         return icon;

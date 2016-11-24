@@ -18,6 +18,7 @@ import com.sample.honeybuser.InterFaceClass.DialogBoxInterface;
 import com.sample.honeybuser.Models.Ratings;
 import com.sample.honeybuser.Models.VendorSearchListModel;
 import com.sample.honeybuser.R;
+import com.sample.honeybuser.Singleton.Complete;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.AlertDialogManager;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
 import com.sample.honeybuser.Utility.Fonts.WebServices.CommonWebserviceMethods;
@@ -83,6 +84,7 @@ public class VendorSearchAdapter extends RecyclerView.Adapter<VendorSearchAdapte
         holder.vendorCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Complete.getClearSearch().orderCompleted();
                 Intent intent = new Intent(context, VendorDetailActivity.class);
                 intent.putExtra("vendor_id", vendorList.get(position).getVendor_id());
                 intent.putExtra("notificationType", "");

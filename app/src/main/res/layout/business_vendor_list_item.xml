@@ -9,7 +9,7 @@
         android:id="@+id/b_cv"
         android:layout_width="match_parent"
         android:layout_height="110dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="3dp"
         android:layout_marginTop="5dp"
         android:transitionName="@string/transitionName"
         app:cardUseCompatPadding="true"
@@ -41,7 +41,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="7dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_weight="1.3"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -49,7 +49,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -65,16 +64,14 @@
                         android:layout_width="match_parent"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:paddingLeft="5dp"
-                        android:text="Vendor"
-                        android:textSize="@dimen/text_sixe_normal" />
+                        android:paddingLeft="3dp"
+                        android:text="Vendor" />
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/b_onlineVendorKmTextView"
-                    style="@style/textview.style"
+                    style="@style/textview.content.style"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="7dp"
                     android:maxLines="1"
                     android:paddingLeft="5dp"
                     android:text=""
@@ -89,27 +86,22 @@
 
                     <ImageView
                         android:id="@+id/b_notifyImage"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".5" />
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1" />
 
                     <ImageView
                         android:id="@+id/b_callImage"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".5"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
                         android:src="@drawable/call" />
 
                     <ImageView
                         android:id="@+id/b_locateImage"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".5" />
-
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".5" />
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -128,23 +120,23 @@
 
                 <ImageView
                     android:id="@+id/b_ratingImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
 
                 <TextView
                     android:id="@+id/b_onLineRatingTextView"
                     style="@style/textview.style"
-                    android:layout_marginTop="3dp"
                     android:text=""
                     android:textSize="@dimen/text_sixe_small" />
 
                 <TextView
                     android:id="@+id/b_onLineRatingCountTextView"
-                    style="@style/textview.style"
+                    style="@style/textview.content.style"
                     android:layout_marginTop="3dp"
+                    android:gravity="center"
                     android:text=""
                     android:textColor="@color/textcolorLight"
-                    android:textSize="@dimen/text_sixe_small" />
+                    android:textSize="10sp" />
             </LinearLayout>
 
         </LinearLayout>

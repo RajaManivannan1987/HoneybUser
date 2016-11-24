@@ -44,29 +44,29 @@
 
                     <TextView
                         style="@style/textview.style"
+                        android:layout_gravity="center"
                         android:paddingTop="15dp"
                         android:text="Login with phone"
-                        android:layout_gravity="center"
                         android:textSize="@dimen/text_sixe_large" />
 
                     <android.support.design.widget.TextInputLayout style="@style/InputTextView.style">
 
                         <EditText
-                            style="@style/editText.stype"
                             android:id="@+id/phoneNoEditText"
+                            style="@style/editText.stype"
                             android:hint="Phone Number" />
                     </android.support.design.widget.TextInputLayout>
 
 
                     <TextView
                         android:id="@+id/newUserTextView"
-                        style="@style/textview.style"
+                        style="@style/textview.content.style"
                         android:layout_gravity="left"
                         android:layout_marginTop="10dp"
                         android:paddingBottom="35dp"
-                        android:textSize="@dimen/text_sixe_small"
                         android:text="HoneyB will send a one time SMS to verify your phone number. Carrier SMS charges may apply."
-                        android:textColor="@color/textcolorGray" />
+                        android:textColor="@color/textcolorGray"
+                        android:textSize="@dimen/text_sixe_small" />
 
                 </LinearLayout>
             </RelativeLayout>
@@ -77,28 +77,29 @@
         android:id="@+id/imageView"
         android:layout_width="130dp"
         android:layout_height="130dp"
-        android:src="@drawable/logo"
-        android:layout_marginTop="30dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/logo" />
 
     <Button
         android:id="@+id/loginButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/tick"
-        android:layout_marginBottom="67dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="67dp"
+        android:background="@drawable/tick" />
 
     <TextView
-        android:text="Register Now"
+        android:id="@+id/registerTextView"
+        style="@style/textview.content.style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#ffffff"
-        android:layout_marginBottom="23dp"
-        android:id="@+id/registerTextView"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="23dp"
+        android:text="Register Now"
+        android:textColor="#ffffff" />
 
 </RelativeLayout>

@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.sample.honeybuser.R;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 /**
  * Created by Im033 on 10/14/2016.
  */
@@ -82,6 +84,9 @@ public class CommonActionBar extends AppCompatActivity {
     public void onBackPressed() {
         supportFinishAfterTransition();
         super.onBackPressed();
-
+    }
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }

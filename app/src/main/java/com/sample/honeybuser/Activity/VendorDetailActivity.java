@@ -3,6 +3,7 @@ package com.sample.honeybuser.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -50,6 +51,7 @@ public class VendorDetailActivity extends CommonActionBar {
     private Gson gson = new Gson();
     private String phoneNo, follow, vendor_Id = "", largeImageUrl = "", isOnLine = "", name = "";
     private String isReview = "";
+    private NestedScrollView scrollView;
 
 
     @Override
@@ -71,6 +73,8 @@ public class VendorDetailActivity extends CommonActionBar {
 
         adapter = new RatingsAdapter(VendorDetailActivity.this, arrayList);
         vendorReviewRecyclerView.setAdapter(adapter);
+        scrollView = (NestedScrollView) findViewById(R.id.nestedScrollView);
+        scrollView.getParent().requestChildFocus(scrollView, scrollView);
         Complete.ratingDialogInstance().setListener(new SaveCompletedInterface() {
             @Override
             public void completed() {
@@ -217,7 +221,7 @@ public class VendorDetailActivity extends CommonActionBar {
                     setTitle(jsonObject.getString("name"));
                     setNotification(jsonObject.getString("is_online"));
 
-                    vendorRatingtextView.setText(jsonObject.getString("star_rating") + " (" + jsonObject.getString("rating_count") + " Ratings)");
+                    vendorRatingtextView.setText(jsonObject.getString("star_rating") + " \n(" + jsonObject.getString("rating_count") + " Ratings)");
                 }
 
             }

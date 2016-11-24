@@ -1,5 +1,6 @@
 package com.sample.honeybuser.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +19,8 @@ import com.sample.honeybuser.Utility.Fonts.WebServices.GetResponseFromServer;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by IM0033 on 10/5/2016.
@@ -60,7 +63,7 @@ public class OTPActivity extends AppCompatActivity {
                                 Session.getSession(OTPActivity.this, TAG).createSession(response.getJSONObject("data"));
                                 startService(new Intent(OTPActivity.this, RegistrationIntentService.class));
 //                                    if (languageFlag) {
-                                CommonMethods.commonIntent(OTPActivity.this, IntentClasses.LOCATIONCHECK);
+                                CommonMethods.commonIntent(OTPActivity.this, IntentClasses.HELPER);
                                 finish();
 //                                    }
 
@@ -88,5 +91,10 @@ public class OTPActivity extends AppCompatActivity {
 //                CommonMethods.commonIntent(OTPActivity.this, IntentClasses.DASHBOARD);
             }
         });
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }

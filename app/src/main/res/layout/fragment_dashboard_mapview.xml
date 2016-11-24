@@ -47,8 +47,9 @@
                 android:id="@+id/onlineMapCardView"
                 android:layout_width="match_parent"
                 android:layout_height="110dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="7dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginTop="5dp"
+                android:transitionName="@string/transitionName"
                 app:cardUseCompatPadding="true"
                 app:elevation="0dp">
 
@@ -71,14 +72,14 @@
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             app:civ_border_color="#f3f3f3"
-                            app:civ_border_width=".5dp" />
+                            app:civ_border_width="1dp" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="7dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
                         android:layout_weight="1.3"
                         android:gravity="center"
                         android:orientation="vertical">
@@ -86,7 +87,6 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
                             android:orientation="horizontal">
 
                             <ImageView
@@ -103,14 +103,13 @@
                                 android:ellipsize="end"
                                 android:maxLines="1"
                                 android:paddingLeft="3dp"
-                                android:text="" />
+                                android:text="Vendor" />
                         </LinearLayout>
 
                         <TextView
                             android:id="@+id/onlineMapKmTextView"
-                            style="@style/textview.style"
+                            style="@style/textview.content.style"
                             android:layout_width="match_parent"
-                            android:layout_marginTop="7dp"
                             android:maxLines="1"
                             android:paddingLeft="5dp"
                             android:text=""
@@ -125,28 +124,23 @@
 
                             <ImageView
                                 android:id="@+id/onlineMapnotifyImage"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".5" />
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_weight="1" />
 
                             <ImageView
                                 android:id="@+id/onlineMapcallImage"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".5"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_weight="1"
                                 android:src="@drawable/call" />
 
                             <ImageView
                                 android:id="@+id/onlineMaplocateImage"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".5"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_weight="1"
                                 android:src="@drawable/locate" />
-
-                            <ImageView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".5" />
 
                         </LinearLayout>
                     </LinearLayout>
@@ -165,23 +159,23 @@
 
                         <ImageView
                             android:id="@+id/onlineMapratingImageView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_width="20dp"
+                            android:layout_height="20dp" />
 
                         <TextView
                             android:id="@+id/onlineMapRatingTextView"
                             style="@style/textview.style"
-                            android:layout_marginTop="3dp"
                             android:text=""
                             android:textSize="@dimen/text_sixe_small" />
 
                         <TextView
                             android:id="@+id/onlineMapRatingCountTextView"
-                            style="@style/textview.style"
+                            style="@style/textview.content.style"
                             android:layout_marginTop="3dp"
+                            android:gravity="center"
                             android:text=""
                             android:textColor="@color/textcolorLight"
-                            android:textSize="@dimen/text_sixe_small" />
+                            android:textSize="10sp" />
                     </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>

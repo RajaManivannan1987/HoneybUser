@@ -65,6 +65,7 @@ public class OnLineVendorListAdapter extends RecyclerView.Adapter<OnLineVendorLi
             holder.ratingImageView.setImageResource(R.drawable.star);
             holder.onLineRatingTextView.setText(list.get(position).getStar_rating());
             holder.onLineRatingCountTextView.setText("(" + list.get(position).getRating_count() + " Ratings)");
+//            holder.onLineRatingCountTextView.setText("(" + "999"+ " Ratings)");
         } else {
             holder.ratingImageView.setImageResource(R.drawable.new_icon);
             holder.onLineRatingTextView.setVisibility(View.GONE);

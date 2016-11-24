@@ -1,5 +1,6 @@
 package com.sample.honeybuser.Activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -15,6 +16,7 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+
         Thread thread = new Thread() {
             public void run() {
                 try {
@@ -34,6 +36,7 @@ public class SplashScreen extends AppCompatActivity {
         };
         thread.start();
     }
+
 
     @Override
     protected void onPause() {

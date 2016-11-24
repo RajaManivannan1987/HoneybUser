@@ -98,6 +98,7 @@
                 </RadioGroup>
 
                 <TextView
+                    style="@style/textview.content.style"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -120,6 +121,7 @@
                 android:id="@+id/registerTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/textview.content.style"
                 android:layout_below="@+id/registerButton"
                 android:layout_marginTop="15dp"
                 android:gravity="center"

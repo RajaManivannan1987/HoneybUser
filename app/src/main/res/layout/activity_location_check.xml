@@ -5,9 +5,10 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.example.im028.streetwalla.ActivityClasses.LocationCheckActivity">
+    tools:context="com.sample.honeybuser.Activity.LocationCheckActivity">
 
     <TextView
+        style="@style/textview.style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

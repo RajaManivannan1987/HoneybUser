@@ -9,8 +9,8 @@
         android:id="@+id/followerCv"
         android:layout_width="match_parent"
         android:layout_height="110dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="5dp"
         android:transitionName="@string/transitionName"
         app:cardUseCompatPadding="true"
         app:elevation="0dp">
@@ -41,7 +41,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="7dp"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="5dp"
                 android:layout_weight="1.3"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -49,7 +49,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -72,9 +71,8 @@
 
                 <TextView
                     android:id="@+id/followerKmTextView"
-                    style="@style/textview.style"
+                    style="@style/textview.content.style"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="7dp"
                     android:maxLines="1"
                     android:paddingLeft="5dp"
                     android:text=""
@@ -84,34 +82,29 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="7dp"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/followerNotificationStatusImageview"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".5" />
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1" />
 
                     <ImageView
                         android:id="@+id/followerCallImageview"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".5"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
                         android:src="@drawable/call" />
 
                     <ImageView
                         android:id="@+id/followerLocateImageview"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".5"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
                         android:src="@drawable/locate"
                         android:visibility="gone" />
-
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".5" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -124,36 +117,53 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight=".6"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingLeft="10dp">
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/followerratingImageView"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/followerRatingTextView"
-                    style="@style/textview.style"
-                    android:layout_marginTop="3dp"
-                    android:text="" />
+                    <ImageView
+                        android:id="@+id/followerratingImageView"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp" />
 
-                <TextView
-                    android:id="@+id/followerRatingCountTextView"
-                    style="@style/textview.style"
-                    android:layout_marginTop="3dp"
-                    android:text=""
-                    android:textColor="@color/textcolorLight"
-                    android:textSize="10sp" />
+                    <TextView
+                        android:id="@+id/followerRatingTextView"
+                        style="@style/textview.style"
+                        android:text="" />
+
+                    <TextView
+                        android:id="@+id/followerRatingCountTextView"
+                        style="@style/textview.content.style"
+                        android:layout_marginTop="3dp"
+                        android:text=""
+                        android:textColor="@color/textcolorLight"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/onOffFollowerStatusImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    style="@style/textview.content.style"
+                    android:layout_weight=".4"
+                    android:background="@color/background_color"
+                    android:text="Remove"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/onOffFollowerStatusImageView"
+                android:id="@+id/onOffFollowerStatusImageView1"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/close"
-                android:visibility="visible" />
+                android:visibility="gone" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

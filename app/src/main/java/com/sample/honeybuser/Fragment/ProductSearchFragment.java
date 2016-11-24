@@ -20,11 +20,13 @@ import com.sample.honeybuser.Activity.DashBoardActivity;
 import com.sample.honeybuser.Adapter.Product05SearchAdapter;
 import com.sample.honeybuser.Adapter.Product3KmSearchAdapter;
 import com.sample.honeybuser.Application.MyApplication;
+import com.sample.honeybuser.InterFaceClass.SaveCompletedInterface;
 import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
 import com.sample.honeybuser.Models.FiveKmProductSearchModel;
 import com.sample.honeybuser.Models.ThreeKmProductSearchModel;
 import com.sample.honeybuser.R;
 import com.sample.honeybuser.Singleton.ChangeLocationSingleton;
+import com.sample.honeybuser.Singleton.Complete;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
 import com.sample.honeybuser.Utility.Fonts.GridSpacingItemDecoration;
 import com.sample.honeybuser.Utility.Fonts.WebServices.GetResponseFromServer;
@@ -88,6 +90,12 @@ public class ProductSearchFragment extends Fragment {
 
         fiveKmVendorRecyclerView.setAdapter(adapter05km);
         threeKmVendorRecyclerView.setAdapter(adapter3Km);
+        Complete.getClearSearch().setListener(new SaveCompletedInterface() {
+            @Override
+            public void completed() {
+                productSearch.setText("");
+            }
+        });
 
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,13 +115,13 @@ public class ProductSearchFragment extends Fragment {
                 ArrayList<ThreeKmProductSearchModel> threeKmfilterList = new ArrayList<>();
                 ArrayList<FiveKmProductSearchModel> fiveKmfilterList = new ArrayList<>();
                 for (int j = 0; j < threeKmVendorList.size(); j++) {
-                    String threeKmText = threeKmVendorList.get(j).getBusiness_name().toLowerCase();
+                    String threeKmText = threeKmVendorList.get(j).getEn_product().toLowerCase();
                     if (threeKmText.contains(charSequence)) {
                         threeKmfilterList.add(threeKmVendorList.get(j));
                     }
                 }
                 for (int k = 0; k < fiveKmVendorList.size(); k++) {
-                    String fiveKmText = fiveKmVendorList.get(k).getBusiness_name().toLowerCase();
+                    String fiveKmText = fiveKmVendorList.get(k).getEn_product().toLowerCase();
                     if (fiveKmText.contains(charSequence)) {
                         fiveKmfilterList.add(fiveKmVendorList.get(k));
                     }
@@ -163,22 +171,23 @@ public class ProductSearchFragment extends Fragment {
     }
 
     private void getThreeKmProducts() {
-        GetResponseFromServer.getWebService(getActivity(), TAG).getProductList(getActivity(), lat, lang, "0.50", new VolleyResponseListerner() {
+        GetResponseFromServer.getWebService(getActivity(), TAG).getProductList(getActivity(), lat, lang, "3.00", new VolleyResponseListerner() {
             @Override
             public void onResponse(JSONObject response) throws JSONException {
                 threeKmVendorList.clear();
                 if (response.getString("status").equalsIgnoreCase("1")) {
+                    threeKmVendorRecyclerView.setVisibility(View.VISIBLE);
+                    threeKmErrorTextView.setVisibility(View.GONE);
+
                     for (int i = 0; i < response.getJSONArray("data").length(); i++) {
                         threeKmVendorList.add(gson.fromJson(response.getJSONArray("data").getJSONObject(i).toString(), ThreeKmProductSearchModel.class));
                     }
-                }
-                /*if (response.getJSONArray("data").length() == 0) {
+
+                } else {
                     threeKmVendorRecyclerView.setVisibility(View.GONE);
                     threeKmErrorTextView.setVisibility(View.VISIBLE);
-                } else {
-                    threeKmVendorRecyclerView.setVisibility(View.VISIBLE);
-                    threeKmErrorTextView.setVisibility(View.GONE);
-                }*/
+                }
+
                 adapter3Km.notifyDataSetChanged();
 //                getFiveKmProductList();
             }
@@ -191,26 +200,29 @@ public class ProductSearchFragment extends Fragment {
     }
 
     private void getFiveKmProductList() {
-        GetResponseFromServer.getWebService(getActivity(), TAG).getProductList(getActivity(), lat, lang, "3.00", new VolleyResponseListerner() {
+        GetResponseFromServer.getWebService(getActivity(), TAG).getProductList(getActivity(), lat, lang, "0.50", new VolleyResponseListerner() {
             @Override
             public void onResponse(JSONObject response) throws JSONException {
                 fiveKmVendorList.clear();
                 if (response.getString("status").equalsIgnoreCase("1")) {
+                    fiveKmVendorRecyclerView.setVisibility(View.VISIBLE);
+                    fiveKmErrorTextView.setVisibility(View.GONE);
+
                     for (int i = 0; i < response.getJSONArray("data").length(); i++) {
                         fiveKmVendorList.add(gson.fromJson(response.getJSONArray("data").getJSONObject(i).toString(), FiveKmProductSearchModel.class));
                     }
-                }
-               /* if (response.getJSONArray("data").length() == 0) {
+
+
+                } else {
                     fiveKmVendorRecyclerView.setVisibility(View.GONE);
                     fiveKmErrorTextView.setVisibility(View.VISIBLE);
-                } else {
-                    fiveKmVendorRecyclerView.setVisibility(View.VISIBLE);
-                    fiveKmErrorTextView.setVisibility(View.GONE);
-                }*/
+                }
+
                 // adapter.notifyDataSetChanged();
                 adapter05km.notifyDataSetChanged();
-                ChangeLocationSingleton.getInstance().locationChanges(null, null, address, TAG);
                 getThreeKmProducts();
+                ChangeLocationSingleton.getInstance().locationChanges(null, null, address, TAG);
+
 
             }
 

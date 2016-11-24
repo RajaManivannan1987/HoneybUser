@@ -29,12 +29,14 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 import com.sample.honeybuser.Activity.DashBoardActivity;
 import com.sample.honeybuser.Activity.FollowerActivity;
+import com.sample.honeybuser.Activity.HelperActivity;
 import com.sample.honeybuser.Activity.LocationCheckActivity;
 import com.sample.honeybuser.Activity.LoginActivity;
 import com.sample.honeybuser.Activity.OTPActivity;
 import com.sample.honeybuser.Activity.RegistrationActivity;
 import com.sample.honeybuser.Activity.SearchActivity;
 import com.sample.honeybuser.Activity.SettingsActivity;
+import com.sample.honeybuser.Activity.SplashScreen;
 import com.sample.honeybuser.Activity.VendorDetailActivity;
 import com.sample.honeybuser.Adapter.BusinessVendorAdapter;
 import com.sample.honeybuser.EnumClass.FragmentType;
@@ -56,6 +58,12 @@ public class CommonMethods extends AppCompatActivity {
     public static void commonIntent(Activity context, IntentClasses intentValue) {
         Serializable act = null;
         switch (intentValue) {
+            case HELPER:
+                act = HelperActivity.class;
+                break;
+            case SPLASH:
+                act = SplashScreen.class;
+                break;
             case LOGIN:
                 act = LoginActivity.class;
                 break;

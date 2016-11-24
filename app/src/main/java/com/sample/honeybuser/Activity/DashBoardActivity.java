@@ -1,16 +1,19 @@
 package com.sample.honeybuser.Activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 
@@ -28,6 +31,8 @@ import com.sample.honeybuser.R;
 import com.sample.honeybuser.Singleton.Complete;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
 import com.sample.honeybuser.Utility.Fonts.CustomViewPager;
+import com.sample.honeybuser.Utility.Fonts.FontChangeCrawler;
+import com.sample.honeybuser.Utility.Fonts.FontsOverride;
 import com.sample.honeybuser.Utility.Fonts.WebServices.ConstandValue;
 import com.sample.honeybuser.Utility.Fonts.WebServices.GetResponseFromServer;
 
@@ -41,6 +46,8 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by IM0033 on 10/5/2016.
@@ -108,6 +115,7 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setView(R.layout.activity_dashboard);
+
         //setSelectTab("dashboard");
         setSelected(Selected.DASHBOARD);
         enableMyLocation();
@@ -216,4 +224,10 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
     public void onTabReselected(TabLayout.Tab tab) {
 
     }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
 }

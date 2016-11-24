@@ -90,9 +90,10 @@
             android:layout_height="wrap_content"
             android:paddingEnd="10dp"
             android:paddingStart="10dp"
+            style="@style/textview.style"
             android:text="Previous five locations \n(long press to delete)"
             android:textColor="@color/colorAccent"
-            android:textSize="@dimen/text_sixe_normal" />
+            android:textSize="@dimen/text_sixe_large" />
 
         <View
             android:layout_width="match_parent"

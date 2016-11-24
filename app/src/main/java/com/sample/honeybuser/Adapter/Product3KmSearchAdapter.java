@@ -16,6 +16,7 @@ import com.sample.honeybuser.Activity.BusinessVendorActivity;
 import com.sample.honeybuser.Activity.VendorDetailActivity;
 import com.sample.honeybuser.Models.ThreeKmProductSearchModel;
 import com.sample.honeybuser.R;
+import com.sample.honeybuser.Singleton.Complete;
 import com.sample.honeybuser.Utility.Fonts.WebServices.ConstandValue;
 import com.squareup.picasso.Picasso;
 
@@ -66,9 +67,10 @@ public class Product3KmSearchAdapter extends RecyclerView.Adapter<Product3KmSear
         holder.productCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Complete.getClearSearch().orderCompleted();
                 Intent intent = new Intent(context, BusinessVendorActivity.class);
                 intent.putExtra("business_id", threeKmList.get(position).getBusiness_id());
-                intent.putExtra("distance", "0.50");
+                intent.putExtra("distance", "3.00");
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, holder.productCardView, ConstandValue.transitionName);
                 context.startActivity(intent, options.toBundle());
 

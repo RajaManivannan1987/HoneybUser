@@ -31,6 +31,7 @@ import com.sample.honeybuser.R;
 import com.sample.honeybuser.Singleton.ChangeLocationSingleton;
 import com.sample.honeybuser.Singleton.Complete;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
+import com.sample.honeybuser.Utility.Fonts.FontChangeCrawler;
 import com.sample.honeybuser.Utility.Fonts.WebServices.GetResponseFromServer;
 
 import org.json.JSONException;
@@ -64,6 +65,8 @@ public class VendorListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_vendor_list, container, false);
+//        FontChangeCrawler fontChanger = new FontChangeCrawler(getActivity().getAssets(), "fonts/gothamroundedbold_21016.ttf");
+//        fontChanger.replaceFonts((ViewGroup)view);
         onLineToastText = (TextView) view.findViewById(R.id.onLineToastText);
 //        offLineToastText = (TextView) view.findViewById(R.id.offLineToastText);
 

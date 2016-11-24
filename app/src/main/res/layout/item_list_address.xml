@@ -7,6 +7,7 @@
 
     <TextView
         android:id="@+id/itemListAddressTitleTextView"
+        style="@style/textview.style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="2dp"
@@ -16,11 +17,11 @@
 
     <TextView
         android:id="@+id/itemListAddressContentTextView"
+        style="@style/textview.content.style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="2dp"
-        android:text="0.5"
-        android:textSize="14sp" />
+        android:text="0.5" />
 
     <View
         android:layout_width="match_parent"

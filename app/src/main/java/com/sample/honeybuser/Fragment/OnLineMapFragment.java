@@ -322,7 +322,7 @@ public class OnLineMapFragment extends Fragment {
         }*/
         OnLineMapFragment.this.distance = response.getJSONObject("data").getString("distance");
         //By Raja
-        Log.d("volleyPostData",response.getJSONObject("data").getString("distance"));
+        Log.d("volleyPostData", response.getJSONObject("data").getString("distance"));
 
         ChangeLocationSingleton.getInstance().locationChanges(null, response.getJSONObject("data").getString("distance"), null, "OnLineMap");
 
@@ -354,7 +354,7 @@ public class OnLineMapFragment extends Fragment {
             } else {
                 onlineMapratingImageView.setImageResource(R.drawable.star);
                 onlineMapRatingTextView.setText(vendor.getStar_rating());
-                onlineMapRatingCountTextView.setText(vendor.getRating_count() + " Ratings)");
+                onlineMapRatingCountTextView.setText("(" + vendor.getRating_count() + " Ratings)");
             }
             if (vendor.getFollow().equalsIgnoreCase("Y")) {
                 onlineMapnotifyImage.setImageResource(R.drawable.notify);

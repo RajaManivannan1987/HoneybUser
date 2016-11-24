@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -110,7 +111,7 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.Cust
             @Override
             public void onClick(View v) {
                 if (list.get(position).getFollow().equalsIgnoreCase("Y")) {
-                    AlertDialogManager.listenerDialogBox(context, "", "Delete this alert?", new DialogBoxInterface() {
+                    AlertDialogManager.listenerDialogBox(context, "", "Delete this alert", new DialogBoxInterface() {
                         @Override
                         public void yes() {
                             CommonWebserviceMethods.removeFollows(context, TAG, list.get(position).getVendor_id(), "3");
@@ -153,9 +154,10 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.Cust
     }
 
     public class CustomHolder extends RecyclerView.ViewHolder {
-        public ImageView onOffFollowerStatusImageView, followerratingImageView, followerOnlineImageView, followerCallImageview, followerLocateImageview, followerNotificationStatusImageview;
+        public ImageView followerratingImageView, followerOnlineImageView, followerCallImageview, followerLocateImageview, followerNotificationStatusImageview;
         public CircleImageView follower_profile_image;
         private CardView followerCv;
+        Button onOffFollowerStatusImageView;
         public TextView followerRatingCountTextView, followerRatingTextView, followerKmTextView, followerNameTextView;
 
         public CustomHolder(View itemView) {
@@ -171,7 +173,7 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.Cust
             followerCallImageview = (ImageView) itemView.findViewById(R.id.followerCallImageview);
             followerNotificationStatusImageview = (ImageView) itemView.findViewById(R.id.followerNotificationStatusImageview);
             followerCv = (CardView) itemView.findViewById(R.id.followerCv);
-            onOffFollowerStatusImageView = (ImageView) itemView.findViewById(R.id.onOffFollowerStatusImageView);
+            onOffFollowerStatusImageView = (Button) itemView.findViewById(R.id.onOffFollowerStatusImageView);
         }
     }
 }

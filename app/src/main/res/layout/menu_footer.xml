@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <TextView
+        style="@style/textview.content.style"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:gravity="right|center"

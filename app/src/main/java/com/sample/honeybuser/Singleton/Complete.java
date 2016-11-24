@@ -14,6 +14,7 @@ public class Complete {
     private static Complete getVendorSearch = new Complete();
     private static Complete getBusinessList = new Complete();
     private static Complete getMapList = new Complete();
+    private static Complete clearSearch = new Complete();
 
 
     private SaveCompletedInterface completedInterface;
@@ -44,6 +45,10 @@ public class Complete {
 
     public static Complete getGetMapList() {
         return getMapList;
+    }
+
+    public static Complete getClearSearch() {
+        return clearSearch;
     }
 
     private Complete() {

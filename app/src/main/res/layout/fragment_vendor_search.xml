@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:descendantFocusability="beforeDescendants"
     android:background="@drawable/bg"
+    android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
@@ -21,11 +21,17 @@
 
         <EditText
             android:id="@+id/vendorSearch"
+            style="@style/textview.content.style"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@android:color/transparent"
             android:hint="Search Vendors"
-            android:paddingLeft="30dp" />
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingLeft="30dp"
+            android:singleLine="true"
+            android:textColorHint="@color/textcolorLight" />
 
         <ImageView
             android:id="@+id/vendorCloseButton"

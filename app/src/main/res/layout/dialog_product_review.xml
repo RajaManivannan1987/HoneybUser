@@ -6,12 +6,13 @@
     android:orientation="vertical">
 
     <TextView
+        style="@style/textview.style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:text="Add Review"
         android:textColor="@color/colorPrimary"
-        android:textSize="22sp" />
+        android:textSize="@dimen/text_sixe_large" />
 
     <RatingBar
         android:id="@+id/vendorDetailsRatingBar"
@@ -26,6 +27,7 @@
 
     <EditText
         android:id="@+id/vendorDetailsEditText"
+        style="@style/textview.content.style"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_margin="5dp"
@@ -41,6 +43,7 @@
 
         <Button
             android:id="@+id/vendorDetailsCancelButton"
+            style="@style/textview.content.style"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -50,6 +53,7 @@
 
         <Button
             android:id="@+id/vendorDetailsSubmitButton"
+            style="@style/textview.content.style"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

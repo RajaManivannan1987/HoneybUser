@@ -37,6 +37,7 @@
 
         <TextView
             android:id="@+id/reviewListItemDescriptionTextView"
+            style="@style/textview.content.style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -50,6 +51,7 @@
 
             <TextView
                 android:id="@+id/reviewListItemNameTextView"
+                style="@style/textview.content.style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="by Name"
@@ -58,6 +60,7 @@
 
             <TextView
                 android:id="@+id/reviewListItemDaysTextView"
+                style="@style/textview.content.style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2 days ago"

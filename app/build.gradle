@@ -43,4 +43,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:design:24.1.1'
     compile 'com.intuit.sdp:sdp-android:1.0.3'
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
+    compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
+
 }

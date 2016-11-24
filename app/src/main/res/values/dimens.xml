@@ -3,7 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="text_sixe_normal">16sp</dimen>
+    <dimen name="text_sixe_normal">14sp</dimen>
     <dimen name="text_sixe_small">12sp</dimen>
     <dimen name="text_sixe_large">19sp</dimen>
     <dimen name="text_sixe_heading">22sp</dimen>

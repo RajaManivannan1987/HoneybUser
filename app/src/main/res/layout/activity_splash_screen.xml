@@ -17,6 +17,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:textSize="@dimen/text_sixe_normal"
+        style="@style/textview.style"
         android:textColor="#ffffff"
         android:text="Welcome to HoneyB" />
 </LinearLayout>

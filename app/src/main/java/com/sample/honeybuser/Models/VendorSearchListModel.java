@@ -15,6 +15,16 @@ public class VendorSearchListModel {
     private String is_online;
     private String phone_no;
     private String follow;
+    private String en_name;
+
+    public String getEn_name() {
+        return en_name;
+    }
+
+    public void setEn_name(String en_name) {
+        this.en_name = en_name;
+    }
+
 
     public String getFollow() {
         return follow;

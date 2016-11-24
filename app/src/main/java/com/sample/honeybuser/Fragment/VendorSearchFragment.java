@@ -1,5 +1,6 @@
 package com.sample.honeybuser.Fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -7,10 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -68,7 +72,12 @@ public class VendorSearchFragment extends Fragment {
 
         adapter = new VendorSearchAdapter(getActivity(), vendorList);
         vendorSearchRecyclerView.setAdapter(adapter);
-
+        Complete.getClearSearch().setListener(new SaveCompletedInterface() {
+            @Override
+            public void completed() {
+                vendorSearch.setText("");
+            }
+        });
         Complete.getVendorSearch().setListener(new SaveCompletedInterface() {
             @Override
             public void completed() {
@@ -92,7 +101,7 @@ public class VendorSearchFragment extends Fragment {
                 charSequence = charSequence.toString().toLowerCase();
                 ArrayList<VendorSearchListModel> filterList = new ArrayList<VendorSearchListModel>();
                 for (int j = 0; j < vendorList.size(); j++) {
-                    String text = vendorList.get(j).getName().toLowerCase();
+                    String text = vendorList.get(j).getEn_name().toLowerCase();
                     if (text.contains(charSequence)) {
                         filterList.add(vendorList.get(j));
                     }
@@ -112,6 +121,7 @@ public class VendorSearchFragment extends Fragment {
 
         return view;
     }
+
 
     @Override
     public void onResume() {

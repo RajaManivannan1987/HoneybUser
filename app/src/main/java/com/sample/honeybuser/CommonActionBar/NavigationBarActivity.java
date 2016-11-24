@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AnimationSet;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
@@ -35,7 +36,10 @@ import com.sample.honeybuser.InterFaceClass.ChangeLocationListener;
 import com.sample.honeybuser.R;
 import com.sample.honeybuser.Singleton.ChangeLocationSingleton;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
+import com.sample.honeybuser.Utility.Fonts.FontChangeCrawler;
 import com.sample.honeybuser.Utility.Fonts.Sharedpreferences.Session;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by IM0033 on 10/5/2016.
@@ -59,6 +63,7 @@ public class NavigationBarActivity extends AppCompatActivity {
     //public static String locationName;
     private Selected selected;
     private ImageView tab1, tab2, tab3;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -239,4 +244,8 @@ public class NavigationBarActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 }
