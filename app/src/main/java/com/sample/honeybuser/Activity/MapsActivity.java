@@ -78,6 +78,7 @@ public class MapsActivity extends CommonActionBar implements OnMapReadyCallback 
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
+//                CommonMethods.commonBundleIntent(activity, VendorDetailActivity.class, vendorId, holder.cv);
                 startActivity(new Intent(MapsActivity.this, VendorDetailActivity.class).putExtra("vendor_id", vendorId).putExtra("notificationType", ""));
                 MapsActivity.this.finish();
                 return true;

@@ -129,7 +129,7 @@ public class OnLineMapFragment extends Fragment {
                 //mapAddMarker.removeAll();
                 hideVendorItem();
                 handler.removeCallbacks(runnable);
-                CommonMethods.toast(getActivity(), "Loading vendors");
+//                CommonMethods.toast(getActivity(), "Loading vendors");
             }
 
             @Override
@@ -151,7 +151,7 @@ public class OnLineMapFragment extends Fragment {
                             });
                         }
                     };
-                    handler.postDelayed(runnable, 500);
+                    handler.postDelayed(runnable, 300);
                 }
                 isMove = false;
             }
@@ -310,16 +310,16 @@ public class OnLineMapFragment extends Fragment {
 
     private void urlResponse(JSONObject response) throws JSONException {
         JSONArray jsonArrayVendor = response.getJSONObject("data").getJSONArray("vendors");
-
         listVendor.clear();
+
         for (int i = 0; i < jsonArrayVendor.length(); i++) {
             Vendor vendor = new Gson().fromJson(jsonArrayVendor.getJSONObject(i).toString(), Vendor.class);
             listVendor.add(vendor);
         }
-       /* if (jsonArrayVendor.length() == 0) {
-            CommonMethods.toast(getActivity(), response.getJSONObject("data").getString("online_message"));
+        if (jsonArrayVendor.length() == 0) {
+            CommonMethods.toast(getActivity(), response.getJSONObject("data").getString("message"));
 //            CommonMethods.toast(getActivity(), getResources().getString(R.string.online));
-        }*/
+        }
         OnLineMapFragment.this.distance = response.getJSONObject("data").getString("distance");
         //By Raja
         Log.d("volleyPostData", response.getJSONObject("data").getString("distance"));
@@ -382,7 +382,8 @@ public class OnLineMapFragment extends Fragment {
             vendorItemBackgroundCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(getActivity(), VendorDetailActivity.class).putExtra("vendor_id", vendorId).putExtra("notificationType", ""));
+                    CommonMethods.commonBundleIntent(getActivity(), VendorDetailActivity.class, vendorId, vendorItemBackgroundCardView);
+//                    startActivity(new Intent(getActivity(), VendorDetailActivity.class).putExtra("vendor_id", vendorId).putExtra("notificationType", ""));
                     vendorItemLinearLayout.setVisibility(View.GONE);
                 }
             });

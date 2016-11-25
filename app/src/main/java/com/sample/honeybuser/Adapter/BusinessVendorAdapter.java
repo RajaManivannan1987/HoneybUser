@@ -91,11 +91,12 @@ public class BusinessVendorAdapter extends RecyclerView.Adapter<BusinessVendorAd
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(activity, VendorDetailActivity.class);
+                CommonMethods.commonBundleIntent(activity, VendorDetailActivity.class, list.get(position).getVendor_id(), holder.cv);
+                /*Intent intent = new Intent(activity, VendorDetailActivity.class);
                 intent.putExtra("vendor_id", list.get(position).getVendor_id());
                 intent.putExtra("notificationType", "");
                 ActivityOptionsCompat options1 = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, holder.cv, ConstandValue.transitionName);
-                activity.startActivity(intent, options1.toBundle());
+                activity.startActivity(intent, options1.toBundle());*/
 //                activity.startActivity(new Intent(activity, VendorDetailActivity.class).putExtra("vendor_id", list.get(position).getVendor_id()));
             }
         });

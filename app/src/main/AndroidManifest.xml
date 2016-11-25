@@ -28,67 +28,82 @@
         </activity>
         <activity
             android:name=".Activity.HelperActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/MyAppTheme" />
 
         <activity
             android:name=".Activity.LoginActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/MyAppTheme" />
         <activity
             android:name=".Activity.RegistrationActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/MyAppTheme" />
         <activity
             android:name=".Activity.OTPActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.ChangeLocationActivity"
             android:label=""
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/MyAppTheme" />
         <activity
             android:name=".Activity.DashBoardActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/MyAppTheme" />
         <activity
             android:name=".Activity.FollowerActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/MyAppTheme" />
         <activity
             android:name=".Activity.SettingsActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/MyAppTheme" />
         <activity
             android:name=".Activity.SearchActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/MyAppTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Activity.LocationCheckActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/SplashAppTheme" />
         <activity
             android:name=".Activity.VendorDetailsActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/MyAppTheme" />
         <activity
             android:name=".Activity.MapsActivity"
             android:label="@string/title_activity_maps"
+            android:launchMode="singleTask"
             android:theme="@style/MyAppTheme" />
         <activity
             android:name=".Activity.VendorDetailActivity"
             android:label=""
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/MyAppTheme" />
         <activity
             android:name=".Activity.BusinessVendorActivity"
             android:label=""
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/MyAppTheme" />
         <activity
             android:name=".Utility.Fonts.WebServices.CommonWebserviceMethods"
             android:label=""
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/MyAppTheme" />
 

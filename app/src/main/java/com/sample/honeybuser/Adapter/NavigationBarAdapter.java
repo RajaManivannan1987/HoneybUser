@@ -17,11 +17,12 @@ import com.sample.honeybuser.R;
 
 public class NavigationBarAdapter extends BaseAdapter {
     Context context;
-    private String[] listName = {"Street", "Alerts", "Search", "Settings"};
+    private String[] listName = {"Street", "Alerts", "Search", "Settings","Help"};
     private int[] listImage = {
             R.drawable.street,
             R.drawable.bell,
             R.drawable.search,
+            R.drawable.settings1,
             R.drawable.settings1,
 
     };

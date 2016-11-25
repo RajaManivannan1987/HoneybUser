@@ -103,11 +103,7 @@ public class OnLineVendorListAdapter extends RecyclerView.Adapter<OnLineVendorLi
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(activity, VendorDetailActivity.class);
-                intent.putExtra("vendor_id", list.get(position).getVendor_id());
-                intent.putExtra("notificationType", "");
-                ActivityOptionsCompat options1 = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, holder.cv, ConstandValue.transitionName);
-                activity.startActivity(intent, options1.toBundle());
+                CommonMethods.commonBundleIntent(activity, VendorDetailActivity.class, list.get(position).getVendor_id(), holder.cv);
 //                activity.startActivity(new Intent(activity, VendorDetailActivity.class).putExtra("vendor_id", list.get(position).getVendor_id()));
             }
         });
@@ -134,6 +130,14 @@ public class OnLineVendorListAdapter extends RecyclerView.Adapter<OnLineVendorLi
             }
         });
     }
+
+    /*private void commonBundleIntent(Context context, Class<?> a, String vendorId, CardView holder) {
+        Intent intent = new Intent(context, a);
+        intent.putExtra("vendor_id", vendorId);
+        intent.putExtra("notificationType", "");
+        ActivityOptionsCompat options1 = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, holder, ConstandValue.transitionName);
+        activity.startActivity(intent, options1.toBundle());
+    }*/
 
     @Override
     public int getItemCount() {

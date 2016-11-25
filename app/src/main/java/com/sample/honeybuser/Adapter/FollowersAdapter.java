@@ -98,12 +98,13 @@ public class FollowersAdapter extends RecyclerView.Adapter<FollowersAdapter.Cust
         holder.followerCv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, VendorDetailActivity.class);
+                CommonMethods.commonBundleIntent(context, VendorDetailActivity.class, list.get(position).getVendor_id(), holder.followerCv);
+                /*Intent intent = new Intent(context, VendorDetailActivity.class);
                 intent.putExtra("vendor_id", list.get(position).getVendor_id());
                 intent.putExtra("notificationType", "");
 //                intent.putExtra("distance", "3.00");
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, holder.followerCv, ConstandValue.transitionName);
-                context.startActivity(intent, options.toBundle());
+                context.startActivity(intent, options.toBundle());*/
 //                context.startActivity(new Intent(context, VendorDetailActivity.class).putExtra("vendor_id", list.get(position).getVendor_id()));
             }
         });

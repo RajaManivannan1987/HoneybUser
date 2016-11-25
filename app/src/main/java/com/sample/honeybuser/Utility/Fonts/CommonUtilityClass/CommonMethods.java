@@ -18,6 +18,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -39,6 +40,7 @@ import com.sample.honeybuser.Activity.SettingsActivity;
 import com.sample.honeybuser.Activity.SplashScreen;
 import com.sample.honeybuser.Activity.VendorDetailActivity;
 import com.sample.honeybuser.Adapter.BusinessVendorAdapter;
+import com.sample.honeybuser.Adapter.OnLineVendorListAdapter;
 import com.sample.honeybuser.EnumClass.FragmentType;
 import com.sample.honeybuser.EnumClass.IntentClasses;
 import com.sample.honeybuser.R;
@@ -90,6 +92,13 @@ public class CommonMethods extends AppCompatActivity {
                 break;
         }
         context.startActivity(new Intent(context, (Class<?>) act).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+    }
+    public static void commonBundleIntent(Context context, Class<?> a, String vendorId, CardView holder) {
+        Intent intent = new Intent(context, a);
+        intent.putExtra("vendor_id", vendorId);
+        intent.putExtra("notificationType", "");
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, holder, ConstandValue.transitionName);
+        context.startActivity(intent, options.toBundle());
     }
 
     public static void toast(Context context, String msg) {

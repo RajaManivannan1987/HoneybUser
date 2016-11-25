@@ -143,7 +143,9 @@ public class NavigationBarActivity extends AppCompatActivity {
                         case "settings":
                             CommonMethods.commonIntent(NavigationBarActivity.this, IntentClasses.SETTINGS);
                             break;
-
+                        case "help":
+                            CommonMethods.commonIntent(NavigationBarActivity.this, IntentClasses.HELPER);
+                            break;
                         default:
                             break;
                     }
