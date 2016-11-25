@@ -34,6 +34,7 @@ import com.google.gson.Gson;
 import com.sample.honeybuser.Activity.DashBoardActivity;
 import com.sample.honeybuser.Activity.VendorDetailActivity;
 import com.sample.honeybuser.Application.MyApplication;
+import com.sample.honeybuser.EnumClass.FragmentType;
 import com.sample.honeybuser.InterFaceClass.ChangeLocationListener;
 import com.sample.honeybuser.InterFaceClass.DialogBoxInterface;
 import com.sample.honeybuser.InterFaceClass.SaveCompletedInterface;
@@ -95,10 +96,13 @@ public class OnLineMapFragment extends Fragment {
     private TimerTask timerTask;
     Handler handler = new Handler();
     Runnable runnable;
+    FragmentType fragmentType;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dashboard_mapview, container, false);
+
         mapFrameLayout = (FrameLayout) view.findViewById(R.id.mapFrameLayout);
         touchFrameLayout = (TouchableWrapper) view.findViewById(R.id.onlineMapFragmentTouchableWrapper);
         mapView = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapFragment);
@@ -317,8 +321,7 @@ public class OnLineMapFragment extends Fragment {
             listVendor.add(vendor);
         }
         if (jsonArrayVendor.length() == 0) {
-            CommonMethods.toast(getActivity(), response.getJSONObject("data").getString("message"));
-//            CommonMethods.toast(getActivity(), getResources().getString(R.string.online));
+                CommonMethods.toast(getActivity(), response.getJSONObject("data").getString("message"));
         }
         OnLineMapFragment.this.distance = response.getJSONObject("data").getString("distance");
         //By Raja
@@ -395,7 +398,7 @@ public class OnLineMapFragment extends Fragment {
                         CommonWebserviceMethods.setFollows(getActivity(), TAG, vendor.getVendor_id(), "6");
                         vendorItemLinearLayout.setVisibility(View.GONE);
                     } else {
-                        AlertDialogManager.listenerDialogBox(getActivity(), "Remove!", "Remove alert?", new DialogBoxInterface() {
+                        AlertDialogManager.listenerDialogBox(getActivity(), "", "Disable Alert for this vendor", new DialogBoxInterface() {
                             @Override
                             public void yes() {
                                 CommonWebserviceMethods.removeFollows(getActivity(), TAG, vendor.getVendor_id(), "6");
@@ -456,8 +459,10 @@ public class OnLineMapFragment extends Fragment {
 
     @Override
     public void onResume() {
+//        getVendorLocation();
         super.onResume();
         if (isVisibleView) {
+//            if (FragmentType.OFFLINE==OnLineMapFragment.isVisibleView)
             getVendorLocation();
             Log.d("volleyPostData", "onResume");
             isVisibleView = false;
@@ -475,5 +480,15 @@ public class OnLineMapFragment extends Fragment {
 //        } else if (getActivity() != null) {
 //            getMarkerMovedAddress(new LatLng(MyApplication.locationInstance().getLocation().getLatitude(), MyApplication.locationInstance().getLocation().getLongitude()));
 //        }
+    }
+
+    public static Fragment mapInstance() {
+        OnLineMapFragment fragment=new OnLineMapFragment();
+        fragment.setFragmentType(FragmentType.OFFLINE);
+        return fragment;
+    }
+
+    private void setFragmentType(FragmentType offline) {
+        this.fragmentType = offline;
     }
 }

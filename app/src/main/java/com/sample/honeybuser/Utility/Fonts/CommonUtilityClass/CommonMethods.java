@@ -95,7 +95,7 @@ public class CommonMethods extends AppCompatActivity {
     }
     public static void commonBundleIntent(Context context, Class<?> a, String vendorId, CardView holder) {
         Intent intent = new Intent(context, a);
-        intent.putExtra("vendor_id", vendorId);
+        intent.putExtra(ConstandValue.vendorId, vendorId);
         intent.putExtra("notificationType", "");
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, holder, ConstandValue.transitionName);
         context.startActivity(intent, options.toBundle());

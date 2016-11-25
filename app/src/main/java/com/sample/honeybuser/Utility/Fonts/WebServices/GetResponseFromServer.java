@@ -416,7 +416,7 @@ public class GetResponseFromServer {
     }
 
     private void setResponse1(Context context, String url, final VolleyResponseListerner listerner, JSONObject jsonObject) {
-        volleyClass.volleyPostDataNoProgression(url, jsonObject, new VolleyResponseListerner() {
+        volleyClass.volleyPostDataNoProgression(context, url, jsonObject, new VolleyResponseListerner() {
             @Override
             public void onResponse(JSONObject response) throws JSONException {
                 listerner.onResponse(response);

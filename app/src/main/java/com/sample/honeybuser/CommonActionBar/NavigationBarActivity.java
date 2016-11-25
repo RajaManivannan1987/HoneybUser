@@ -52,7 +52,7 @@ public class NavigationBarActivity extends AppCompatActivity {
     private LinearLayout actionBarViewLocationLinearLayout;
     private ImageView menuImageView, searchImageView, actionBarlocateImage;
     private NavigationBarAdapter navigationBarAdapter;
-    private Toolbar toolbar;
+    private Toolbar toolbar, bottomActionBar;
     private View headerSection, footerSection;
     public static TextView distanceTextView;
     //    public static TextView distanceTextView1;
@@ -70,6 +70,7 @@ public class NavigationBarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigationbar);
         toolbar = (Toolbar) findViewById(R.id.actionBarViewToolBar);
+        bottomActionBar = (Toolbar) findViewById(R.id.bottomActionBar);
         setSupportActionBar(toolbar);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.actionBarViewDrawerLayout);
@@ -183,6 +184,9 @@ public class NavigationBarActivity extends AppCompatActivity {
             textcolor = getResources().getColor(R.color.colorPrimary, getTheme());
         } else {
             textcolor = getResources().getColor(R.color.colorPrimary);
+        }
+        if (selected == Selected.SETTINGS) {
+            bottomActionBar.setVisibility(View.GONE);
         }
         if (selected == Selected.DASHBOARD || selected == Selected.SEARCH) {
             ChangeLocationSingleton.getInstance().setChangeLocationListener(new ChangeLocationListener() {

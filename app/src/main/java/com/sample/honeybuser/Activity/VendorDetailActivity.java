@@ -151,7 +151,7 @@ public class VendorDetailActivity extends CommonActionBar {
     protected void onResume() {
         super.onResume();
         if (getIntent().getExtras() != null) {
-            vendor_Id = getIntent().getExtras().getString("vendor_id");
+            vendor_Id = getIntent().getExtras().getString(ConstandValue.vendorId, "");
             getData(vendor_Id);
             getRatings(vendor_Id);
         }

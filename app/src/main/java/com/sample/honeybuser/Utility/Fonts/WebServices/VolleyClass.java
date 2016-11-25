@@ -2,6 +2,7 @@ package com.sample.honeybuser.Utility.Fonts.WebServices;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -19,9 +20,12 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.sample.honeybuser.Activity.LoginActivity;
 import com.sample.honeybuser.Application.MyApplication;
 import com.sample.honeybuser.InterFaceClass.VolleyResponseImageListener;
 import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
+import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
+import com.sample.honeybuser.Utility.Fonts.Sharedpreferences.Session;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,14 +49,14 @@ public class VolleyClass {
     //RequestQueue queue;
 
     public VolleyClass(Context context, String TAG) {
-       this.act = context;
+        this.act = context;
         //if (queue == null) {
-         //   queue = Volley.newRequestQueue(context);
-       // }
+        //   queue = Volley.newRequestQueue(context);
+        // }
         this.TAG = TAG + " WebService";
     }
 
-    public void volleyPostData(Context context,final String url, JSONObject jsonObject, final VolleyResponseListerner listener) {
+    public void volleyPostData(final Context context, final String url, JSONObject jsonObject, final VolleyResponseListerner listener) {
         final ProgressDialog pDialog = new ProgressDialog(context);
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
@@ -71,7 +75,18 @@ public class VolleyClass {
                         public void onResponse(JSONObject response) {
                             Log.d(TAG, "volleyPostData response - " + response.toString());
                             try {
-                                listener.onResponse(response);
+                                if (response.has("token_status")) {
+                                    if (response.getString("token_status").equalsIgnoreCase("1")) {
+                                        listener.onResponse(response);
+                                    } else {
+                                        Session.getSession(context, TAG).clearSession();
+                                        CommonMethods.toast(context, response.getString("token_status"));
+                                        context.startActivity(new Intent(context, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                    }
+
+                                } else {
+                                    listener.onResponse(response);
+                                }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -180,9 +195,7 @@ public class VolleyClass {
         }
     }
 
-    public void volleyPostDataNoProgression(final String url, JSONObject jsonObject, final VolleyResponseListerner listener) {
-
-
+    public void volleyPostDataNoProgression(final Context context, final String url, JSONObject jsonObject, final VolleyResponseListerner listener) {
         Log.d(TAG, "volleyPostDataNoProgression request url - " + url);
         Log.d(TAG, "volleyPostDataNoProgression request data - " + jsonObject.toString());
         if (isOnline()) {
@@ -193,7 +206,18 @@ public class VolleyClass {
                         public void onResponse(JSONObject response) {
                             Log.d(TAG, "volleyPostDataNoProgression response - " + response.toString());
                             try {
-                                listener.onResponse(response);
+                                if (response.has("token_status")) {
+                                    if (response.getString("token_status").equalsIgnoreCase("1")) {
+                                        listener.onResponse(response);
+                                    } else {
+                                        Session.getSession(context, TAG).clearSession();
+                                        CommonMethods.toast(context, response.getString("token_status"));
+                                        context.startActivity(new Intent(context, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                    }
+
+                                } else {
+                                    listener.onResponse(response);
+                                }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -273,7 +297,7 @@ public class VolleyClass {
                     DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             MyApplication.getInstance().addToRequestQueue(imageRequest);
-           // queue.add(imageRequest);
+            // queue.add(imageRequest);
         } else {
             listener.onError(networkErrorMessage, networkErrorMessage);
         }

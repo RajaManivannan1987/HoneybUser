@@ -15,6 +15,7 @@ import android.widget.Switch;
 import com.sample.honeybuser.Adapter.DistanceSelectRecyclerViewAdapter;
 import com.sample.honeybuser.CommonActionBar.NavigationBarActivity;
 import com.sample.honeybuser.EnumClass.IntentClasses;
+import com.sample.honeybuser.EnumClass.Selected;
 import com.sample.honeybuser.InterFaceClass.DialogBoxInterface;
 import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
 import com.sample.honeybuser.MapIntegration.LocationServiceUpdated;
@@ -52,6 +53,7 @@ public class SettingsActivity extends NavigationBarActivity {
         super.onCreate(savedInstanceState);
         setView(R.layout.activity_settings);
         setTitle("Settings");
+        setSelected(Selected.SETTINGS);
         pref = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         editor = pref.edit();
         session = new Session(SettingsActivity.this, TAG);
@@ -79,7 +81,7 @@ public class SettingsActivity extends NavigationBarActivity {
         findViewById(R.id.logoutButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialogManager.listenerDialogBox(SettingsActivity.this, "Logout!", "Are you sure want to logout?", new DialogBoxInterface() {
+                AlertDialogManager.listenerDialogBox(SettingsActivity.this, "", "Are you sure want to logout?", new DialogBoxInterface() {
                     @Override
                     public void yes() {
                         GetResponseFromServer.getWebService(SettingsActivity.this, TAG).logout(SettingsActivity.this, new VolleyResponseListerner() {

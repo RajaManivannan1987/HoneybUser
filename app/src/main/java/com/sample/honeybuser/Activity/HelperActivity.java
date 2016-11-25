@@ -47,6 +47,7 @@ public class HelperActivity extends AppCompatActivity implements ViewPager.OnPag
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_helps);
+
         init();
         /*pref = getSharedPreferences("com.sample.honeybuser.HelperActivity", MODE_APPEND);
         if (pref.getBoolean("firstrun", true)) {

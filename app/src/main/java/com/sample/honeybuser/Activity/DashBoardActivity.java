@@ -11,6 +11,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,7 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
     private String TAG = "DashBoardActivity";
     private TabLayout tabLayout;
     private CustomViewPager dashBoardViewPager;
+
     private FragmentType fragmentType = FragmentType.ONLINE;
     private TabLayout.Tab onlineTab, offlineTab;
     private List<Vendor> listVendor = new ArrayList<Vendor>();
@@ -103,7 +105,9 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
     private void offLine() {
         setFragmentType(FragmentType.OFFLINE);
         listVendor.clear();
-        Complete.getGetMapList().orderCompleted();
+        if (fragmentType==FragmentType.OFFLINE){
+            Complete.getGetMapList().orderCompleted();
+        }
         if (timer != null) {
             timer.cancel();
             //timerTask.cancel();
@@ -123,13 +127,14 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
         refreshImageView = (ImageView) findViewById(R.id.refreshImageView);
         tabLayout = (TabLayout) findViewById(R.id.dashboardMapActivityTabLayout);
         dashBoardViewPager = (CustomViewPager) findViewById(R.id.dashBoardViewPager);
+
         onlineTab = tabLayout.newTab().setText(CommonMethods.getTabHeading(DashBoardActivity.this, FragmentType.ONLINE, true));
         tabLayout.addTab(onlineTab);
         offlineTab = tabLayout.newTab().setText(CommonMethods.getTabHeading(DashBoardActivity.this, FragmentType.OFFLINE, false));
         tabLayout.addTab(offlineTab);
         dashBoardViewPager.setSwipeable(false);
         dashBoardViewPager.setAdapter(new DashBoardViewPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount()));
-        dashBoardViewPager.setCurrentItem(0);
+//        dashBoardViewPager.setCurrentItem(0);
         dashBoardViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(this);
 
@@ -164,6 +169,7 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
     protected void onResume() {
         super.onResume();
 //        offLine();
+        dashBoardViewPager.setCurrentItem(0);
         Log.d(TAG, TAG);
     }
 

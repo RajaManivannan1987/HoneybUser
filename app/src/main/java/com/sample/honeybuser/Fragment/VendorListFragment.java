@@ -57,7 +57,7 @@ public class VendorListFragment extends Fragment {
     private String lat, lang, distance, address, subAddress;
     public static LatLng latLngValue = null;
     private TextView onLineToastText;
-//    private FragmentType fragmentType;
+    FragmentType fragmentType;
 //    TimerTask timerTask;
 //    Timer timer = new Timer();
 
@@ -219,4 +219,13 @@ public class VendorListFragment extends Fragment {
     }
 
 
+    public static Fragment listInstance() {
+        VendorListFragment fragment = new VendorListFragment();
+        fragment.setFragmentType(FragmentType.ONLINE);
+        return fragment;
+    }
+
+    private void setFragmentType(FragmentType online) {
+        this.fragmentType = online;
+    }
 }

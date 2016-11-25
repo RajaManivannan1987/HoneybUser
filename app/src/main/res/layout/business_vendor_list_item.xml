@@ -101,6 +101,7 @@
                         android:id="@+id/b_locateImage"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
+                        android:src="@drawable/locate"
                         android:layout_weight="1" />
 
                 </LinearLayout>

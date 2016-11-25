@@ -25,7 +25,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="110dp"
                 android:layout_gravity="center"
-                android:scaleType="centerCrop" />
+                android:scaleType="fitXY"
+                android:src="@drawable/nouser" />
 
 
             <LinearLayout
@@ -45,9 +46,9 @@
 
                 <TextView
                     android:id="@+id/vendorSearchNameTextView"
+                    style="@style/textview.style"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    style="@style/textview.style"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:maxLines="1"
@@ -72,11 +73,11 @@
 
                 <TextView
                     android:id="@+id/vendorSearchRatingTextView"
+                    style="@style/textview.content.style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="right|center_vertical"
                     android:paddingLeft="5dp"
-                    style="@style/textview.content.style"
                     android:text=""
                     android:textColor="@color/textcolorLight"
                     android:textSize="11sp" />
