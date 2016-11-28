@@ -208,7 +208,7 @@ public class OnLineMapFragment extends Fragment {
                     googleMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
                         @Override
                         public void onCameraChange(CameraPosition cameraPosition) {
-                            DashBoardActivity.distanceLatLng = googleMap.getCameraPosition().target;
+//                            DashBoardActivity.distanceLatLng = googleMap.getCameraPosition().target;
                             getMarkerMovedAddress(googleMap.getCameraPosition().target);
                         }
                     });
@@ -256,6 +256,7 @@ public class OnLineMapFragment extends Fragment {
             }
         });
         return view;
+
     }
 
     private void hideVendorItem() {
@@ -321,7 +322,7 @@ public class OnLineMapFragment extends Fragment {
             listVendor.add(vendor);
         }
         if (jsonArrayVendor.length() == 0) {
-                CommonMethods.toast(getActivity(), response.getJSONObject("data").getString("message"));
+            CommonMethods.toast(getActivity(), response.getJSONObject("data").getString("message"));
         }
         OnLineMapFragment.this.distance = response.getJSONObject("data").getString("distance");
         //By Raja
@@ -338,6 +339,7 @@ public class OnLineMapFragment extends Fragment {
 
     private void getMarkerMovedAddress(LatLng target) {
         adres = CommonMethods.getAddressName(getActivity(), target, TAG);
+        // today
         ChangeLocationSingleton.getInstance().locationChanges(null, null, adres, "OnLineMapFragment");
     }
 
@@ -459,14 +461,14 @@ public class OnLineMapFragment extends Fragment {
 
     @Override
     public void onResume() {
-//        getVendorLocation();
         super.onResume();
-        if (isVisibleView) {
+//        getVendorLocation();
+/*        if (isVisibleView) {
 //            if (FragmentType.OFFLINE==OnLineMapFragment.isVisibleView)
             getVendorLocation();
             Log.d("volleyPostData", "onResume");
-            isVisibleView = false;
-        }
+            isVisibleView = false;*/
+//        }
     }
 
     @Override
@@ -483,7 +485,7 @@ public class OnLineMapFragment extends Fragment {
     }
 
     public static Fragment mapInstance() {
-        OnLineMapFragment fragment=new OnLineMapFragment();
+        OnLineMapFragment fragment = new OnLineMapFragment();
         fragment.setFragmentType(FragmentType.OFFLINE);
         return fragment;
     }

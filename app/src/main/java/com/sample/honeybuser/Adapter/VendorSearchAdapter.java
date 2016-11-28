@@ -84,8 +84,8 @@ public class VendorSearchAdapter extends RecyclerView.Adapter<VendorSearchAdapte
         holder.vendorCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Complete.getClearSearch().orderCompleted();
                 CommonMethods.commonBundleIntent(context, VendorDetailActivity.class, vendorList.get(position).getVendor_id(), holder.vendorCardView);
+                Complete.getClearSearch().orderCompleted();
                 /*Intent intent = new Intent(context, VendorDetailActivity.class);
                 intent.putExtra("vendor_id", vendorList.get(position).getVendor_id());
                 intent.putExtra("notificationType", "");

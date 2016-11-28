@@ -35,6 +35,7 @@ public class MapsActivity extends CommonActionBar implements OnMapReadyCallback 
         vendorLocationActivityDirectionImageView = (ImageView) findViewById(R.id.vendorLocationActivityDirectionImageView);
 
         vendorId = getIntent().getExtras().getString(ConstandValue.vendorId, "");
+        Log.d(TAG,vendorId);
         if (getIntent().getExtras().getString(ConstandValue.IS_ONLINE, "").equalsIgnoreCase("Y")) {
             setNotification("Y");
         } else {
@@ -79,7 +80,7 @@ public class MapsActivity extends CommonActionBar implements OnMapReadyCallback 
             @Override
             public boolean onMarkerClick(Marker marker) {
 //                CommonMethods.commonBundleIntent(activity, VendorDetailActivity.class, vendorId, holder.cv);
-                startActivity(new Intent(MapsActivity.this, VendorDetailActivity.class).putExtra("vendor_id", vendorId).putExtra("notificationType", ""));
+                startActivity(new Intent(MapsActivity.this, VendorDetailActivity.class).putExtra(ConstandValue.vendorId, vendorId).putExtra("notificationType", ""));
                 MapsActivity.this.finish();
                 return true;
             }

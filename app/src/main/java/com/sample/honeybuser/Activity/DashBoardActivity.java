@@ -77,7 +77,10 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
         setFragmentType(FragmentType.ONLINE);
         refreshImageView.setVisibility(View.VISIBLE);
         listVendor.clear();
-        timerTask = new TimerTask() {
+
+        //today
+
+      /*  timerTask = new TimerTask() {
             @Override
             public void run() {
                 Log.d("volleyPostData", "Timer started");
@@ -93,7 +96,7 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
         };
         timer = new Timer();
         timer.schedule(timerTask, 01, 30000);
-
+*/
     }
 
     @Override
@@ -106,7 +109,7 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
         setFragmentType(FragmentType.OFFLINE);
         listVendor.clear();
         if (fragmentType==FragmentType.OFFLINE){
-            Complete.getGetMapList().orderCompleted();
+//            Complete.getGetMapList().orderCompleted();
         }
         if (timer != null) {
             timer.cancel();
@@ -150,7 +153,8 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
 
             }
         });
-        onLine();
+        // today
+//        onLine();
 
     }
 

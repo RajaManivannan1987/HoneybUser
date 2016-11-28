@@ -67,13 +67,13 @@ public class Product3KmSearchAdapter extends RecyclerView.Adapter<Product3KmSear
         holder.productCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Complete.getClearSearch().orderCompleted();
+
                 Intent intent = new Intent(context, BusinessVendorActivity.class);
                 intent.putExtra("business_id", threeKmList.get(position).getBusiness_id());
                 intent.putExtra("distance", "3.00");
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, holder.productCardView, ConstandValue.transitionName);
                 context.startActivity(intent, options.toBundle());
-
+                Complete.getClearSearch().orderCompleted();
 //                context.startActivity(new Intent(context, BusinessVendorActivity.class).putExtra("business_id", threeKmList.get(position).getBusiness_id()).putExtra("distance", "3.00"));
             }
         });

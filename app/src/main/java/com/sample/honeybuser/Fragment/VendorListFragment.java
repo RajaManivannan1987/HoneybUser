@@ -58,8 +58,8 @@ public class VendorListFragment extends Fragment {
     public static LatLng latLngValue = null;
     private TextView onLineToastText;
     FragmentType fragmentType;
-//    TimerTask timerTask;
-//    Timer timer = new Timer();
+    private TimerTask timerTask;
+    private Timer timer;
 
     @Nullable
     @Override
@@ -95,7 +95,6 @@ public class VendorListFragment extends Fragment {
 
             }
         });
-
         return view;
     }
 
@@ -127,37 +126,43 @@ public class VendorListFragment extends Fragment {
 
     @Override
     public void onResume() {
-//        getData();
         super.onResume();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Log.d("volleyPostData", "Timer started");
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getData();
+                    }
+                });
+
+            }
+        };
+        timer = new Timer();
+        timer.schedule(timerTask, 01, 30000);
 
     }
 
     @Override
     public void onPause() {
         super.onPause();
-       /* Log.e(TAG, "OnPause");
-        if (timer != null)
+        if (timer != null) {
             timer.cancel();
-        if (timerTask != null)
-            timerTask.cancel();*/
+//            timerTask.cancel();
+            Log.d(TAG,"Timer Off");
+        }
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-//        if (isVisibleToUser) {
-//            TimerTask timerTask = new TimerTask() {
-//                @Override
-//                public void run() {
-//                    getData();
-//                    // Complete.offerDialogInstance().orderCompleted();
-//                    Log.e(TAG, "Timer start");
-//                }
-//            };
-//            timer = new Timer();
-//            timer.schedule(timerTask, 10, 10000);
-//
-//        }
+        if (isVisibleToUser) {
+        }else {
+
+
+        }
     }
 
     private void getData() {
@@ -195,13 +200,13 @@ public class VendorListFragment extends Fragment {
                         }
                     }
 
-                  /*  if (jsonObject.getJSONArray("vendors").length() == 0) {
+                    if (jsonObject.getJSONArray("vendors").length() == 0) {
                         onLineRecyclerView.setVisibility(View.GONE);
                         onLineToastText.setVisibility(View.VISIBLE);
                     } else {
                         onLineRecyclerView.setVisibility(View.VISIBLE);
                         onLineToastText.setVisibility(View.GONE);
-                    }*/
+                    }
 
 
                 }
