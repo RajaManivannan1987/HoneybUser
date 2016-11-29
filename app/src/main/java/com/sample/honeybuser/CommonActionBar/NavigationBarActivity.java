@@ -35,6 +35,7 @@ import com.sample.honeybuser.Fragment.OnLineMapFragment;
 import com.sample.honeybuser.InterFaceClass.ChangeLocationListener;
 import com.sample.honeybuser.R;
 import com.sample.honeybuser.Singleton.ChangeLocationSingleton;
+import com.sample.honeybuser.Singleton.Complete;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
 import com.sample.honeybuser.Utility.Fonts.FontChangeCrawler;
 import com.sample.honeybuser.Utility.Fonts.Sharedpreferences.Session;
@@ -103,6 +104,7 @@ public class NavigationBarActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (Selected.DASHBOARD != selected) {
                     OnLineMapFragment.isVisibleView = true;
+                    Complete.getTabInstance1().orderCompleted();
                     CommonMethods.commonIntent(NavigationBarActivity.this, IntentClasses.DASHBOARD);
                 }
             }
@@ -133,6 +135,7 @@ public class NavigationBarActivity extends AppCompatActivity {
                             if (Selected.DASHBOARD != selected) {
                                 OnLineMapFragment.isVisibleView = true;
                             }
+                            Complete.getTabInstance1().orderCompleted();
                             CommonMethods.commonIntent(NavigationBarActivity.this, IntentClasses.DASHBOARD);
                             break;
                         case "alerts":

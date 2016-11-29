@@ -2,6 +2,7 @@ package com.sample.honeybuser.Activity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -25,6 +26,7 @@ import com.sample.honeybuser.CommonActionBar.NavigationBarActivity;
 import com.sample.honeybuser.EnumClass.FragmentType;
 import com.sample.honeybuser.EnumClass.Selected;
 import com.sample.honeybuser.InterFaceClass.ChangeLocationListener;
+import com.sample.honeybuser.InterFaceClass.SaveCompletedInterface;
 import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
 import com.sample.honeybuser.MapIntegration.MapAddMarker;
 import com.sample.honeybuser.Models.Vendor;
@@ -67,6 +69,7 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
     private TimerTask timerTask;
     private Timer timer;
     private ImageView refreshImageView;
+    private String Type;
 
 
     public void setFragmentType(FragmentType fragmentType) {
@@ -108,7 +111,7 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
     private void offLine() {
         setFragmentType(FragmentType.OFFLINE);
         listVendor.clear();
-        if (fragmentType==FragmentType.OFFLINE){
+        if (fragmentType == FragmentType.OFFLINE) {
 //            Complete.getGetMapList().orderCompleted();
         }
         if (timer != null) {
@@ -137,10 +140,21 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
         tabLayout.addTab(offlineTab);
         dashBoardViewPager.setSwipeable(false);
         dashBoardViewPager.setAdapter(new DashBoardViewPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount()));
-//        dashBoardViewPager.setCurrentItem(0);
+        dashBoardViewPager.setCurrentItem(0);
         dashBoardViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(this);
-
+        Complete.getTabInstance().setListener(new SaveCompletedInterface() {
+            @Override
+            public void completed() {
+                dashBoardViewPager.setCurrentItem(1);
+            }
+        });
+        Complete.getTabInstance1().setListener(new SaveCompletedInterface() {
+            @Override
+            public void completed() {
+                dashBoardViewPager.setCurrentItem(0);
+            }
+        });
         refreshImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,6 +172,7 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
 
     }
 
+
     private boolean enableMyLocation() {
         if (ActivityCompat.checkSelfPermission(DashBoardActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(DashBoardActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(DashBoardActivity.this,
@@ -172,9 +187,7 @@ public class DashBoardActivity extends NavigationBarActivity implements TabLayou
     @Override
     protected void onResume() {
         super.onResume();
-//        offLine();
-        dashBoardViewPager.setCurrentItem(0);
-        Log.d(TAG, TAG);
+//        dashBoardViewPager.setCurrentItem(0);
     }
 
 

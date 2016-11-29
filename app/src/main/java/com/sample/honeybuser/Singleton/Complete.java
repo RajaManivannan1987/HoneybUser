@@ -15,6 +15,8 @@ public class Complete {
     private static Complete getBusinessList = new Complete();
     private static Complete getMapList = new Complete();
     private static Complete clearSearch = new Complete();
+    private static Complete tabSetInstance = new Complete();
+    private static Complete tabSetInstance1 = new Complete();
 
 
     private SaveCompletedInterface completedInterface;
@@ -51,6 +53,14 @@ public class Complete {
         return clearSearch;
     }
 
+    public static Complete getTabInstance() {
+        return tabSetInstance;
+    }
+
+    public static Complete getTabInstance1() {
+        return tabSetInstance1;
+    }
+
     private Complete() {
     }
 
@@ -62,4 +72,6 @@ public class Complete {
         if (completedInterface != null)
             completedInterface.completed();
     }
+
+
 }

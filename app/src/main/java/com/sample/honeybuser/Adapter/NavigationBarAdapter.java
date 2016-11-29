@@ -23,7 +23,7 @@ public class NavigationBarAdapter extends BaseAdapter {
             R.drawable.bell,
             R.drawable.search,
             R.drawable.settings1,
-            R.drawable.settings1,
+            R.drawable.help,
 
     };
     private LayoutInflater inflater;

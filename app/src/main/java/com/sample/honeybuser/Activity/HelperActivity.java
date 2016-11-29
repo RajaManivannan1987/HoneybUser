@@ -35,7 +35,7 @@ public class HelperActivity extends AppCompatActivity implements ViewPager.OnPag
     private static int NUM_PAGES = 0;
     private Button skipButton;
     private int[] mImageResources = {
-            R.drawable.helpscreen2,
+            R.drawable.helpscreen,
             R.drawable.helpscreen1,
 
     };

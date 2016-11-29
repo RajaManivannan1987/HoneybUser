@@ -387,8 +387,8 @@ public class OnLineMapFragment extends Fragment {
             vendorItemBackgroundCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CommonMethods.commonBundleIntent(getActivity(), VendorDetailActivity.class, vendorId, vendorItemBackgroundCardView);
-//                    startActivity(new Intent(getActivity(), VendorDetailActivity.class).putExtra("vendor_id", vendorId).putExtra("notificationType", ""));
+//                    CommonMethods.commonBundleIntent(getActivity(), VendorDetailActivity.class, vendorId, vendorItemBackgroundCardView);
+                    startActivity(new Intent(getActivity(), VendorDetailActivity.class).putExtra(ConstandValue.vendorId, vendorId).putExtra("notificationType", "onlineMapview"));
                     vendorItemLinearLayout.setVisibility(View.GONE);
                 }
             });

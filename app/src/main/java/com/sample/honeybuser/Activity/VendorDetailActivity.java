@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.sample.honeybuser.Adapter.RatingsAdapter;
 import com.sample.honeybuser.CommonActionBar.CommonActionBar;
+import com.sample.honeybuser.EnumClass.IntentClasses;
 import com.sample.honeybuser.InterFaceClass.DialogBoxInterface;
 import com.sample.honeybuser.InterFaceClass.SaveCompletedInterface;
 import com.sample.honeybuser.InterFaceClass.VolleyResponseListerner;
@@ -186,42 +187,46 @@ public class VendorDetailActivity extends CommonActionBar {
                 if (response.getString("status").equalsIgnoreCase("1")) {
                     JSONObject jsonObject = response.getJSONObject("data");
                     name = jsonObject.getString("name");
-                    phoneNo = jsonObject.getString("phone_no");
-                    follow = jsonObject.getString("follow");
-                    vendor_Id = jsonObject.getString("vendor_id");
-                    isReview = jsonObject.getString("already_rated");
-                    largeImageUrl = jsonObject.getString("large_photo");
-                    isOnLine = jsonObject.getString("is_online");
-                    if (isReview.equalsIgnoreCase("N")) {
-                        addReviewTextView.setVisibility(View.VISIBLE);
+                    if (!name.equalsIgnoreCase("null") || !name.equalsIgnoreCase("")) {
+                        phoneNo = jsonObject.getString("phone_no");
+                        follow = jsonObject.getString("follow");
+                        vendor_Id = jsonObject.getString("vendor_id");
+                        isReview = jsonObject.getString("already_rated");
+                        largeImageUrl = jsonObject.getString("large_photo");
+                        isOnLine = jsonObject.getString("is_online");
+                        if (isReview.equalsIgnoreCase("N")) {
+                            addReviewTextView.setVisibility(View.VISIBLE);
+                        } else {
+                            addReviewTextView.setText("");
+                        }
+                        if (isOnLine.equalsIgnoreCase("Y")) {
+                            vendorlocateImagiview.setVisibility(View.VISIBLE);
+                        } else {
+                            vendorlocateImagiview.setVisibility(View.INVISIBLE);
+                        }
+                        if (follow.equalsIgnoreCase("Y")) {
+                            vendorNotifyImagiview.setImageResource(R.drawable.notify);
+                        } else {
+                            vendorNotifyImagiview.setImageResource(R.drawable.nonotify);
+                        }
+                        if (!jsonObject.getString("photo").equalsIgnoreCase("")) {
+                            Picasso.with(VendorDetailActivity.this).load(jsonObject.getString("photo")).into(vendorProfileImageView);
+                        } else {
+                            vendorProfileImageView.setImageResource(R.drawable.no_image);
+                        }
+                        if (!jsonObject.getString("photo").equalsIgnoreCase("")) {
+                            Picasso.with(VendorDetailActivity.this).load(jsonObject.getString("business_icon")).into(bannerImageView);
+                        } else {
+                            bannerImageView.setImageResource(R.drawable.no_image);
+                        }
+                        vendorDescriptionTextView1.setText(jsonObject.getString("description"));
+                        setTitle(jsonObject.getString("name"));
+                        setNotification(jsonObject.getString("is_online"));
+                        vendorRatingtextView.setText(jsonObject.getString("star_rating") + " \n(" + jsonObject.getString("rating_count") + " Ratings)");
                     } else {
-                        addReviewTextView.setText("");
+                        CommonMethods.commonIntent(VendorDetailActivity.this, IntentClasses.DASHBOARD);
                     }
-                    if (isOnLine.equalsIgnoreCase("Y")) {
-                        vendorlocateImagiview.setVisibility(View.VISIBLE);
-                    } else {
-                        vendorlocateImagiview.setVisibility(View.INVISIBLE);
-                    }
-                    if (follow.equalsIgnoreCase("Y")) {
-                        vendorNotifyImagiview.setImageResource(R.drawable.notify);
-                    } else {
-                        vendorNotifyImagiview.setImageResource(R.drawable.nonotify);
-                    }
-                    if (!jsonObject.getString("photo").equalsIgnoreCase("")) {
-                        Picasso.with(VendorDetailActivity.this).load(jsonObject.getString("photo")).into(vendorProfileImageView);
-                    } else {
-                        vendorProfileImageView.setImageResource(R.drawable.no_image);
-                    }
-                    if (!jsonObject.getString("photo").equalsIgnoreCase("")) {
-                        Picasso.with(VendorDetailActivity.this).load(jsonObject.getString("business_icon")).into(bannerImageView);
-                    } else {
-                        bannerImageView.setImageResource(R.drawable.no_image);
-                    }
-                    vendorDescriptionTextView1.setText(jsonObject.getString("description"));
-                    setTitle(jsonObject.getString("name"));
-                    setNotification(jsonObject.getString("is_online"));
 
-                    vendorRatingtextView.setText(jsonObject.getString("star_rating") + " \n(" + jsonObject.getString("rating_count") + " Ratings)");
                 }
 
             }
@@ -237,6 +242,10 @@ public class VendorDetailActivity extends CommonActionBar {
     public void onBackPressed() {
         if (getIntent().getExtras() != null && getIntent().getExtras().getString("notificationType").equalsIgnoreCase("vendor_alert")) {
             startActivity(new Intent(VendorDetailActivity.this, DashBoardActivity.class));
+        } else if (getIntent().getExtras() != null && getIntent().getExtras().getString("notificationType").equalsIgnoreCase("onlineMapview")) {
+            Complete.getTabInstance().orderCompleted();
+            supportFinishAfterTransition();
+//            startActivity(new Intent(VendorDetailActivity.this, DashBoardActivity.class));
         } else {
             supportFinishAfterTransition();
         }

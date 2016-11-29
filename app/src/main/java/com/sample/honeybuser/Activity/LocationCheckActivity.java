@@ -18,6 +18,7 @@ import com.sample.honeybuser.Application.MyApplication;
 import com.sample.honeybuser.InterFaceClass.TimerInterface;
 import com.sample.honeybuser.MapIntegration.LocationServiceUpdated;
 import com.sample.honeybuser.R;
+import com.sample.honeybuser.Singleton.Complete;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
 import com.sample.honeybuser.Utility.Fonts.ScheduleThread;
 import com.sample.honeybuser.Utility.Fonts.Sharedpreferences.Session;
@@ -77,6 +78,7 @@ public class LocationCheckActivity extends AppCompatActivity {
                     if (!isPassed) {
                         switch (notificationType) {
                             case "":
+//                                Complete.getTabInstance1().orderCompleted();
                                 startActivity(new Intent(LocationCheckActivity.this, DashBoardActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
                                 break;
                             case redeemOffers:
@@ -101,6 +103,7 @@ public class LocationCheckActivity extends AppCompatActivity {
 //                                startActivity(new Intent(LocationCheckActivity.this, OffersActivity.class));
                                 break;
                             default:
+//                                Complete.getTabInstance1().orderCompleted();
                                 startActivity(new Intent(LocationCheckActivity.this, DashBoardActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
                                 break;
                         }
