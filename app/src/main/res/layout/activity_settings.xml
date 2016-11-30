@@ -28,6 +28,7 @@
             android:paddingRight="10dp" />
 
         <TextView
+            android:id="@+id/animation"
             style="@style/textview.style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,6 +39,7 @@
             android:textSize="@dimen/text_sixe_large" />
 
         <LinearLayout
+            android:id="@+id/aniLayout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"

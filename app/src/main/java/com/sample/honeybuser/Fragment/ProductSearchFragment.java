@@ -55,7 +55,7 @@ public class ProductSearchFragment extends Fragment {
 
     private EditText productSearch;
     private ImageView closeButton;
-    int spancount = 3;
+    int spancount = 2;
     int spacing = 30;
     private LatLng latLng = null;
     boolean includeEdge = true;

@@ -9,8 +9,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.sample.honeybuser.Adapter.DistanceSelectRecyclerViewAdapter;
 import com.sample.honeybuser.CommonActionBar.NavigationBarActivity;
@@ -41,10 +45,12 @@ public class SettingsActivity extends NavigationBarActivity {
     private static final String PREF_NAME = "VVNear";
     public String DEFAULT_LANGUAGE = "default_language";
     private Switch languageSwitch;
+    private LinearLayout aniLayout;
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
     Session session;
     private RecyclerView distanceRecyclerView;
+    private TextView animation1;
     private DistanceSelectRecyclerViewAdapter distanceAdapter;
     private List<String> distanceList = new ArrayList<String>();
 
@@ -59,6 +65,8 @@ public class SettingsActivity extends NavigationBarActivity {
         session = new Session(SettingsActivity.this, TAG);
         languageSwitch = (Switch) findViewById(R.id.languageSwitch);
 
+        animation1 = (TextView) findViewById(R.id.animation);
+        aniLayout = (LinearLayout) findViewById(R.id.aniLayout);
         distanceRecyclerView = (RecyclerView) findViewById(R.id.settingsChangeDistanceRecyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -66,6 +74,19 @@ public class SettingsActivity extends NavigationBarActivity {
 
         distanceAdapter = new DistanceSelectRecyclerViewAdapter(this, distanceList, "Settings");
         distanceRecyclerView.setAdapter(distanceAdapter);
+
+
+      /*  animation1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Animation animation = AnimationUtils.loadAnimation(
+                        getApplicationContext(), R.anim.slide_in_up);
+                animation.setDuration(1000);
+                aniLayout.setAnimation(animation);
+                animation.start();
+            }
+        });*/
 
         if (Session.getSession(SettingsActivity.this, TAG).getDefaultLanguage().equalsIgnoreCase("ta")) {
             languageSwitch.setChecked(true);
