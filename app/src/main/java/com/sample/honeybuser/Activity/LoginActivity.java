@@ -56,8 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                                 if (response.getString("status").equalsIgnoreCase("1")) {
                                     phoneNoEditText.setText("");
                                     JSONObject object = response.getJSONObject("data");
-                                    startActivity(new Intent(LoginActivity.this, OTPActivity.class).putExtra("otp_type", "login").putExtra("response", object.getString("user_id")));
-
+                                    startActivity(new Intent(LoginActivity.this, OTPActivity.class).putExtra("otp_type", "login").putExtra("response", object.getString("user_id")).putExtra("activity","Login"));
                                     finish();
 // CommonMethods.commonIntent(activity, IntentClasses.OTP);
                                 } else {

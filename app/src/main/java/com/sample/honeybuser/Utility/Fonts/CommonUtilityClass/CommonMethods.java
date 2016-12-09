@@ -198,7 +198,7 @@ public class CommonMethods extends AppCompatActivity {
         ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_BASELINE);
         sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         sb.setSpan(new CustomTypefaceSpan("", Typeface.MONOSPACE), 3, text.length() + 3, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-        sb.setSpan(new AbsoluteSizeSpan((int) context.getResources().getDimension(R.dimen.text_sixe_large)), 3, text.length() + 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//resize size
+        sb.setSpan(new AbsoluteSizeSpan((int) context.getResources().getDimension(R.dimen.text_sixe_normal)), 3, text.length() + 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//resize size
         return sb;
     }
 

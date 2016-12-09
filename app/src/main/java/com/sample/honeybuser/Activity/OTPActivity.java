@@ -29,7 +29,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class OTPActivity extends AppCompatActivity {
     private String TAG = "OTPActivity";
     private EditText otpEditText;
-    private String otpType = "login", userId;
+    private String otpType = "login", userId, activity;
     public boolean languageFlag = false;
     private Button optSubmitButton;
 
@@ -42,6 +42,7 @@ public class OTPActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null) {
             otpType = getIntent().getExtras().getString("otp_type");
             userId = getIntent().getExtras().getString("response");
+            activity = getIntent().getExtras().getString("activity");
         }
        /* optSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,10 +63,13 @@ public class OTPActivity extends AppCompatActivity {
                             if (response.getString("status").equalsIgnoreCase("1")) {
                                 Session.getSession(OTPActivity.this, TAG).createSession(response.getJSONObject("data"));
                                 startService(new Intent(OTPActivity.this, RegistrationIntentService.class));
-//                                    if (languageFlag) {
-                                CommonMethods.commonIntent(OTPActivity.this, IntentClasses.HELPER);
-                                finish();
-//                                    }
+                                if (activity.equalsIgnoreCase("Register")) {
+                                    CommonMethods.commonIntent(OTPActivity.this, IntentClasses.HELPER);
+                                    finish();
+                                } else {
+                                    CommonMethods.commonIntent(OTPActivity.this, IntentClasses.DASHBOARD);
+                                    finish();
+                                }
 
                             } else {
                                 CommonMethods.toast(OTPActivity.this, response.getString("message"));

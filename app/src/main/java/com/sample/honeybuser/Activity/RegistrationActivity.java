@@ -66,7 +66,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
 //                                    Session.getSession(RegistrationActivity.this, TAG).createSession(response.getJSONObject("data"));
                                         startService(new Intent(RegistrationActivity.this, RegistrationIntentService.class));
-                                        startActivity(new Intent(RegistrationActivity.this, OTPActivity.class).putExtra("otp_type", "register").putExtra("response", object.getString("user_id")));
+                                        startActivity(new Intent(RegistrationActivity.this, OTPActivity.class).putExtra("otp_type", "register").putExtra("response", object.getString("user_id")).putExtra("activity", "Register"));
                                         finish();
 // CommonMethods.commonIntent(RegistrationActivity.this, IntentClasses.OTP);
                                     } else {

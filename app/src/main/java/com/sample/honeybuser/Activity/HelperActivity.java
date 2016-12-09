@@ -3,6 +3,7 @@ package com.sample.honeybuser.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -20,6 +21,7 @@ import com.sample.honeybuser.Adapter.HelperViewPager;
 import com.sample.honeybuser.EnumClass.IntentClasses;
 import com.sample.honeybuser.R;
 import com.sample.honeybuser.Utility.Fonts.CommonUtilityClass.CommonMethods;
+import com.sample.honeybuser.Utility.Fonts.Sharedpreferences.Session;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
@@ -29,17 +31,23 @@ import java.util.ArrayList;
  */
 
 public class HelperActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
+    private String TAG = HelperActivity.class.getName();
     SharedPreferences pref = null;
     private static ViewPager mPager;
     private static int currentPage = 0;
     private static int NUM_PAGES = 0;
-    private Button skipButton;
+    private ImageView skipButton;
     private int[] mImageResources = {
             R.drawable.screen1,
             R.drawable.screen2,
             R.drawable.screen3,
             R.drawable.screen4,
-
+    };
+    private int[] mImageResources1 = {
+            R.drawable.tscreen1,
+            R.drawable.tscreen2,
+            R.drawable.tscreen3,
+            R.drawable.tscreen4,
     };
     private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
 
@@ -66,10 +74,21 @@ public class HelperActivity extends AppCompatActivity implements ViewPager.OnPag
     }
 
     private void init() {
-        for (int i = 0; i < mImageResources.length; i++) {
-            ImagesArray.add(mImageResources[i]);
+        skipButton = (ImageView) findViewById(R.id.skipButton);
+        String language = Session.getSession(HelperActivity.this, TAG).getDefaultLanguage();
+        if (language.equalsIgnoreCase("ta")) {
+            skipButton.setImageResource(R.drawable.skip_btn_tamil);
+            for (int i = 0; i < mImageResources1.length; i++) {
+                ImagesArray.add(mImageResources1[i]);
+            }
+        } else {
+            skipButton.setImageResource(R.drawable.skip_btn);
+            for (int i = 0; i < mImageResources.length; i++) {
+                ImagesArray.add(mImageResources[i]);
+            }
         }
-        skipButton = (Button) findViewById(R.id.skipButton);
+
+
         mPager = (ViewPager) findViewById(R.id.pager_introduction);
         mPager.setAdapter(new HelperViewPager(HelperActivity.this, ImagesArray));
         CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator);
@@ -78,7 +97,12 @@ public class HelperActivity extends AppCompatActivity implements ViewPager.OnPag
         final float density = getResources().getDisplayMetrics().density;
 
         indicator.setRadius(5 * density);
-        NUM_PAGES = mImageResources.length;
+        if (language.equalsIgnoreCase("ta")) {
+            NUM_PAGES = mImageResources1.length;
+        } else {
+            NUM_PAGES = mImageResources.length;
+        }
+
 
         skipButton.setOnClickListener(new View.OnClickListener() {
             @Override

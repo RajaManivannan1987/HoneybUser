@@ -32,21 +32,14 @@
             app:pageColor="@color/white"
             app:snap="false" />
 
-        <Button
+        <ImageView
             android:id="@+id/skipButton"
             style="@style/textview.style"
             android:layout_width="100dp"
-            android:layout_height="45dp"
+            android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="15dp"
-            android:background="@android:color/transparent"
-            android:gravity="center"
-            android:text="skip"
-            android:textAllCaps="true"
-            android:textColor="@color/colorPrimary"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            />
     </RelativeLayout>
 
 </RelativeLayout>
