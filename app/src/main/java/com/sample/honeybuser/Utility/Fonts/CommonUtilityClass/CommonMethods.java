@@ -230,7 +230,7 @@ public class CommonMethods extends AppCompatActivity {
         return subAddress + ", " + address;
     }
 
-    public static void check(Activity activity, String permision, int requestCode) {
+    public static void checkPermision(Activity activity, String permision, int requestCode) {
         if (ActivityCompat.checkSelfPermission(activity, permision) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity, new String[]{permision}, requestCode);
         }

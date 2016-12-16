@@ -88,6 +88,7 @@ public class OTPActivity extends AppCompatActivity {
                 if (response.getString("status").equalsIgnoreCase("1")) {
                     Session.getSession(OTPActivity.this, TAG).createSession(response.getJSONObject("data"));
                     startService(new Intent(OTPActivity.this, RegistrationIntentService.class));
+                    otpEditText.setText("");
                     if (activity.equalsIgnoreCase("Register")) {
                         CommonMethods.commonIntent(OTPActivity.this, IntentClasses.HELPER);
                         finish();
@@ -117,12 +118,11 @@ public class OTPActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        CommonMethods.check(OTPActivity.this, Manifest.permission.RECEIVE_SMS, ConstandValue.MY_PERMISSIONS_REQUEST_LOCATION);
+        CommonMethods.checkPermision(OTPActivity.this, Manifest.permission.RECEIVE_SMS, ConstandValue.MY_PERMISSIONS_REQUEST_LOCATION);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == ConstandValue.MY_PERMISSIONS_REQUEST_LOCATION) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
