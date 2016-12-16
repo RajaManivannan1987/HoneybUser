@@ -9,6 +9,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- <uses-permission android:name="android.permission.CALL_PHONE" /> -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:name=".Application.MyApplication"
@@ -115,6 +118,14 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
                 <category android:name="com.example.im028.streetwalla" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".Utility.Fonts.ImComingSms"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"></action>
             </intent-filter>
         </receiver>
 

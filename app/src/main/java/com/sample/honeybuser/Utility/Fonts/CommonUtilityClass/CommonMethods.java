@@ -93,6 +93,7 @@ public class CommonMethods extends AppCompatActivity {
         }
         context.startActivity(new Intent(context, (Class<?>) act).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
     }
+
     public static void commonBundleIntent(Context context, Class<?> a, String vendorId, CardView holder) {
         Intent intent = new Intent(context, a);
         intent.putExtra(ConstandValue.vendorId, vendorId);
@@ -227,6 +228,12 @@ public class CommonMethods extends AppCompatActivity {
         }
 //        ChangeLocationSingleton.getInstance().locationChanges(null, null, address + ", " + subAddress, "VendorListFragment");
         return subAddress + ", " + address;
+    }
+
+    public static void check(Activity activity, String permision, int requestCode) {
+        if (ActivityCompat.checkSelfPermission(activity, permision) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity, new String[]{permision}, requestCode);
+        }
     }
 }
 
